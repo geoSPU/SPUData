@@ -1,0 +1,1485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Área do porto organizado de Imbituba.kmz</name>
+	<StyleMap id="msn_placemark_circle">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_placemark_circle</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_placemark_circle_highlight</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_placemark_circle">
+		<IconStyle>
+			<color>ff0000ff</color>
+			<scale>0.5</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>ff0000ff</color>
+			<scale>0.5</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>000000ff</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f0000ff</color>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_placemark_circle_highlight">
+		<IconStyle>
+			<color>ff0000ff</color>
+			<scale>0.590909</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle_highlight.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>ff0000ff</color>
+			<scale>0.5</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>000000ff</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f0000ff</color>
+		</PolyStyle>
+	</Style>
+	<Folder>
+		<name>Área do porto organizado de Imbituba</name>
+		<open>1</open>
+		<description>Definida pela Portaria MINFRA n.º 557, de 27 de setembro de 2019.</description>
+		<Folder>
+			<name>Anexo I</name>
+			<Placemark>
+				<name>Anexo I (Área = 4.072.233,19 m²)</name>
+				<description>Memorial descritivo (SIRGAS2000) #Área (4.072.233,185482260000 m²) - Perímetro (13.173,267754246700 m.)#				
+Vértices	Latitude[UTM(m)]	Longitude[UTM(m)]	Zona(Fuso)	Hemisfério	Latitude(°)	Longitude(°)	
+BRIBB-001	6.874.290,68669784m	729.464,200689819m	22	Sul	-28,2373286000000°	-48,6614260000000°	
+BRIBB-002	6.873.897,63520973m	729.734,852947544m	22	Sul	-28,2408265000000°	-48,6585921000000°	
+BRIBB-003	6.873.903,85625155m	729.744,536569290m	22	Sul	-28,2407687000000°	-48,6584947000000°	
+BRIBB-004	6.874.206,97780082m	730.199,248578479m	22	Sul	-28,2379553000000°	-48,6539234000000°	
+BRIBB-005	6.874.334,85446886m	730.228,022450571m	22	Sul	-28,2367969000000°	-48,6536556000000°	
+BRIBB-006	6.874.400,82126735m	730.344,782517291m	22	Sul	-28,2361815000000°	-48,6524795000000°	
+BRIBB-007	6.874.537,03696431m	730.523,756240483m	22	Sul	-28,2349216000000°	-48,6506837000000°	
+BRIBB-008	6.874.614,00295247m	730.588,957037498m	22	Sul	-28,2342160000000°	-48,6500349000000°	
+BRIBB-009	6.874.769,66408456m	730.774,127728335m	22	Sul	-28,2327796000000°	-48,6481799000000°	
+BRIBB-010	6.874.880,18469799m	730.930,302763213m	22	Sul	-28,2317554000000°	-48,6466113000000°	
+BRIBB-011	6.874.896,67722053m	730.957,950967167m	22	Sul	-28,2316018000000°	-48,6463330000000°	
+BRIBB-012	6.875.259,96489424m	731.406,256343834m	22	Sul	-28,2282465000000°	-48,6418396000000°	
+BRIBB-013	6.876.498,50071265m	731.430,386105474m	22	Sul	-28,2170715000000°	-48,6418395000000°	
+BRIBB-014	6.877.227,37328348m	730.983,117494093m	22	Sul	-28,2105760000000°	-48,6465380000000°	
+BRIBB-015	6.877.268,77783882m	731.022,245105798m	22	Sul	-28,2101957000000°	-48,6461478000000°	
+BRIBB-016	6.877.267,43643586m	731.029,084218553m	22	Sul	-28,2102066000000°	-48,6460779000000°	
+BRIBB-017	6.877.266,58096652m	731.036,021165793m	22	Sul	-28,2102131000000°	-48,6460071000000°	
+BRIBB-018	6.877.266,20149236m	731.042,996826676m	22	Sul	-28,2102153000000°	-48,6459360000000°	
+BRIBB-019	6.877.266,30966879m	731.049,981964266m	22	Sul	-28,2102131000000°	-48,6458649000000°	
+BRIBB-020	6.877.266,89498518m	731.056,946910867m	22	Sul	-28,2102066000000°	-48,6457941000000°	
+BRIBB-021	6.877.267,96947872m	731.063,842794084m	22	Sul	-28,2101957000000°	-48,6457241000000°	
+BRIBB-022	6.877.269,52225731m	731.070,659581599m	22	Sul	-28,2101805000000°	-48,6456550000000°	
+BRIBB-023	6.877.271,54319215m	731.077,347970128m	22	Sul	-28,2101611000000°	-48,6455873000000°	
+BRIBB-024	6.877.274,01088065m	731.083,868258611m	22	Sul	-28,2101377000000°	-48,6455214000000°	
+BRIBB-025	6.877.276,93659702m	731.090,210845309m	22	Sul	-28,2101102000000°	-48,6454574000000°	
+BRIBB-026	6.877.280,29912960m	731.096,326211240m	22	Sul	-28,2100788000000°	-48,6453958000000°	
+BRIBB-027	6.877.284,06561123m	731.102,194075051m	22	Sul	-28,2100438000000°	-48,6453368000000°	
+BRIBB-028	6.877.288,24769789m	731.107,785199239m	22	Sul	-28,2100051000000°	-48,6452807000000°	
+BRIBB-029	6.877.292,79073802m	731.113,059235840m	22	Sul	-28,2099632000000°	-48,6452279000000°	
+BRIBB-030	6.877.297,69473206m	731.118,016184890m	22	Sul	-28,2099181000000°	-48,6451784000000°	
+BRIBB-031	6.877.302,92738543m	731.122,606311251m	22	Sul	-28,2098701000000°	-48,6451327000000°	
+BRIBB-032	6.877.308,47780636m	731.126,819581526m	22	Sul	-28,2098193000000°	-48,6450909000000°	
+BRIBB-033	6.877.314,29096160m	731.130,635282649m	22	Sul	-28,2097662000000°	-48,6450532000000°	
+BRIBB-034	6.877.320,36723322m	731.134,033778673m	22	Sul	-28,2097108000000°	-48,6450198000000°	
+BRIBB-035	6.877.326,66248016m	731.137,004389507m	22	Sul	-28,2096535000000°	-48,6449908000000°	
+BRIBB-036	6.877.333,14402607m	731.139,517014846m	22	Sul	-28,2095946000000°	-48,6449665000000°	
+BRIBB-037	6.877.339,78970509m	731.141,571223081m	22	Sul	-28,2095343000000°	-48,6449469000000°	
+BRIBB-038	6.877.346,55537599m	731.143,156333840m	22	Sul	-28,2094730000000°	-48,6449321000000°	
+BRIBB-039	6.877.353,41906364m	731.144,262097608m	22	Sul	-28,2094109000000°	-48,6449222000000°	
+BRIBB-040	6.877.360,34751894m	731.144,887867169m	22	Sul	-28,2093483000000°	-48,6449172000000°	
+BRIBB-041	6.877.367,29660049m	731.145,022962017m	22	Sul	-28,2092856000000°	-48,6449172000000°	
+BRIBB-042	6.877.374,23305908m	731.144,666734904m	22	Sul	-28,2092231000000°	-48,6449222000000°	
+BRIBB-043	6.877.381,13453760m	731.143,828571884m	22	Sul	-28,2091610000000°	-48,6449321000000°	
+BRIBB-044	6.877.387,95670363m	731.142,507610305m	22	Sul	-28,2090997000000°	-48,6449469000000°	
+BRIBB-045	6.877.393,56259521m	731.141,015679154m	22	Sul	-28,2090494000000°	-48,6449632000000°	
+BRIBB-046	6.878.646,77340986m	732.394,204386413m	22	Sul	-28,1975260000000°	-48,6324530000000°	
+BRIBB-047	6.878.796,93583869m	732.261,583257618m	22	Sul	-28,1961950000000°	-48,6338330000000°	
+BRIBB-048	6.877.503,73239073m	730.968,352086283m	22	Sul	-28,2080860000000°	-48,6467430000000°	
+BRIBB-049	6.877.349,99541292m	730.800,561227927m	22	Sul	-28,2095020000000°	-48,6484210000000°	
+BRIBB-050	6.877.248,91768737m	730.690,072765509m	22	Sul	-28,2104330000000°	-48,6495260000000°	
+BRIBB-051	6.877.119,30644220m	730.558,702772652m	22	Sul	-28,2116250000000°	-48,6508380000000°	
+BRIBB-052	6.877.028,16942253m	730.478,660461982m	22	Sul	-28,2124610000000°	-48,6516350000000°	
+BRIBB-053	6.876.901,27605865m	730.378,578850573m	22	Sul	-28,2136230000000°	-48,6526290000000°	
+BRIBB-054	6.876.689,08017550m	730.229,117308016m	22	Sul	-28,2155630000000°	-48,6541090000000°	
+BRIBB-055	6.876.538,34071864m	730.123,668974128m	22	Sul	-28,2169410000000°	-48,6551530000000°	
+BRIBB-056	6.876.365,17664547m	730.002,469087693m	22	Sul	-28,2185240000000°	-48,6563530000000°	
+BRIBB-057	6.876.050,03910603m	729.781,010559598m	22	Sul	-28,2214050000000°	-48,6585460000000°	
+BRIBB-058	6.876.021,18306217m	729.765,329359495m	22	Sul	-28,2216680000000°	-48,6587000000000°	
+BRIBB-059	6.875.995,33914796m	729.754,420193232m	22	Sul	-28,2219030000000°	-48,6588060000000°	
+BRIBB-060	6.875.957,72824602m	729.744,265600406m	22	Sul	-28,2222440000000°	-48,6589020000000°	
+BRIBB-061	6.875.916,78939262m	729.739,938842634m	22	Sul	-28,2226140000000°	-48,6589380000000°	
+BRIBB-062	6.875.878,06030473m	729.741,743326571m	22	Sul	-28,2229630000000°	-48,6589120000000°	
+BRIBB-063	6.875.866,25851635m	729.743,724691148m	22	Sul	-28,2230691000000°	-48,6588895000000°	
+BRIBB-064	6.875.530,14115071m	729.976,340327248m	22	Sul	-28,2260601000000°	-48,6564545000000°	
+BRIBB-065	6.875.202,14290515m	730.203,335509904m	22	Sul	-28,2289788000000°	-48,6540782000000°	
+BRIBB-066	6.875.167,99673156m	730.153,997972747m	22	Sul	-28,2292954000000°	-48,6545739000000°	
+BRIBB-067	6.875.154,93342343m	730.135,244746955m	22	Sul	-28,2294165000000°	-48,6547623000000°	
+BRIBB-068	6.874.904,97427771m	729.766,299532289m	22	Sul	-28,2317354000000°	-48,6584703000000°	
+BRIBB-069	6.874.828,48252536m	729.654,568829520m	22	Sul	-28,2324448000000°	-48,6595931000000°	
+BRIBB-070	6.874.825,48501910m	729.650,759905376m	22	Sul	-28,2324725000000°	-48,6596313000000°	
+BRIBB-071	6.874.742,51412020m	729.534,035211464m	22	Sul	-28,2332412000000°	-48,6608037000000°	
+BRIBB-072	6.874.464,47329153m	729.723,107566973m	22	Sul	-28,2357160000000°	-48,6588234000000°	
+BRIBB-073	6.874.429,05794850m	729.671,088963306m	22	Sul	-28,2360445000000°	-48,6593462000000°	
+BRIBB-074	6.874.379,37053446m	729.602,004384818m	22	Sul	-28,2365047000000°	-48,6600400000000°	
+BRIBB-075	6.874.354,25728404m	729.560,750801509m	22	Sul	-28,2367384000000°	-48,6604552000000°	
+BRIBB-076	6.874.321,42802687m	729.511,424454630m	22	Sul	-28,2370431000000°	-48,6609511000000°</description>
+				<styleUrl>#msn_placemark_circle</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								-48.661426,-28.2373286,0 -48.6585921,-28.2408265,0 -48.6584947,-28.2407687,0 -48.6539234,-28.2379553,0 -48.6536556,-28.2367969,0 -48.6524795,-28.2361815,0 -48.65068370000001,-28.2349216,0 -48.6500349,-28.234216,0 -48.6481799,-28.2327796,0 -48.6466113,-28.2317554,0 -48.646333,-28.2316018,0 -48.6418396,-28.2282465,0 -48.64183950000001,-28.2170715,0 -48.64653799999999,-28.210576,0 -48.6461478,-28.2101957,0 -48.64607790000001,-28.2102066,0 -48.64600710000001,-28.2102131,0 -48.64593599999999,-28.2102153,0 -48.6458649,-28.2102131,0 -48.6457941,-28.2102066,0 -48.6457241,-28.2101957,0 -48.645655,-28.2101805,0 -48.6455873,-28.2101611,0 -48.64552140000001,-28.2101377,0 -48.64545739999999,-28.2101102,0 -48.6453958,-28.2100788,0 -48.64533680000001,-28.2100438,0 -48.6452807,-28.2100051,0 -48.6452279,-28.2099632,0 -48.6451784,-28.2099181,0 -48.6451327,-28.2098701,0 -48.64509089999999,-28.2098193,0 -48.64505320000001,-28.2097662,0 -48.6450198,-28.2097108,0 -48.64499080000001,-28.2096535,0 -48.6449665,-28.2095946,0 -48.6449469,-28.2095343,0 -48.6449321,-28.209473,0 -48.6449222,-28.2094109,0 -48.6449172,-28.2093483,0 -48.6449172,-28.2092856,0 -48.6449222,-28.2092231,0 -48.6449321,-28.209161,0 -48.6449469,-28.2090997,0 -48.6449632,-28.2090494,0 -48.63245299999999,-28.197526,0 -48.63383300000001,-28.196195,0 -48.646743,-28.208086,0 -48.648421,-28.209502,0 -48.649526,-28.210433,0 -48.650838,-28.211625,0 -48.651635,-28.212461,0 -48.652629,-28.213623,0 -48.65410900000001,-28.215563,0 -48.65515300000001,-28.216941,0 -48.656353,-28.218524,0 -48.65854600000001,-28.221405,0 -48.65870000000001,-28.221668,0 -48.658806,-28.221903,0 -48.658902,-28.222244,0 -48.658938,-28.222614,0 -48.658912,-28.222963,0 -48.6588895,-28.2230691,0 -48.65645450000001,-28.22606010000001,0 -48.6540782,-28.2289788,0 -48.6545739,-28.2292954,0 -48.6547623,-28.2294165,0 -48.6584703,-28.2317354,0 -48.6595931,-28.2324448,0 -48.65963130000001,-28.2324725,0 -48.6608037,-28.2332412,0 -48.6588234,-28.235716,0 -48.6593462,-28.2360445,0 -48.66004,-28.2365047,0 -48.6604552,-28.2367384,0 -48.66095109999999,-28.23704310000001,0 -48.661426,-28.2373286,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Folder>
+				<name>Vértices</name>
+				<Placemark>
+					<name>BRIBB-001</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.661426,-28.2373286,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-002</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6585921,-28.2408265,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-003</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6584947,-28.2407687,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-004</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6539234,-28.2379553,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-005</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6536556,-28.2367969,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-006</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6524795,-28.2361815,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-007</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65068370000001,-28.2349216,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-008</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6500349,-28.234216,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-009</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6481799,-28.2327796,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-010</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6466113,-28.2317554,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-011</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.646333,-28.2316018,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-012</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6418396,-28.2282465,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-013</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64183950000001,-28.2170715,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-014</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64653799999999,-28.210576,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-015</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6461478,-28.2101957,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-016</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64607790000001,-28.2102066,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-017</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64600710000001,-28.2102131,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-018</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64593599999999,-28.2102153,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-019</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6458649,-28.2102131,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-020</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6457941,-28.2102066,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-021</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6457241,-28.2101957,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-022</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.645655,-28.2101805,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-023</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6455873,-28.2101611,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-024</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64552140000001,-28.2101377,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-025</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64545739999999,-28.2101102,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-026</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6453958,-28.2100788,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-027</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64533680000001,-28.2100438,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-028</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6452807,-28.2100051,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-029</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6452279,-28.2099632,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-030</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6451784,-28.2099181,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-031</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6451327,-28.2098701,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-032</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64509089999999,-28.2098193,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-033</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64505320000001,-28.2097662,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-034</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6450198,-28.2097108,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-035</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64499080000001,-28.2096535,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-036</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449665,-28.2095946,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-037</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449469,-28.2095343,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-038</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449321,-28.209473,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-039</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449222,-28.2094109,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-040</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449172,-28.2093483,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-041</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449172,-28.2092856,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-042</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449222,-28.2092231,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-043</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449321,-28.209161,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-044</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449469,-28.2090997,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-045</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6449632,-28.2090494,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-046</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63245299999999,-28.197526,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-047</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63383300000001,-28.196195,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-048</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.646743,-28.208086,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-049</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.648421,-28.209502,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-050</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.649526,-28.210433,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-051</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.650838,-28.211625,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-052</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.651635,-28.212461,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-053</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.652629,-28.213623,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-054</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65410900000001,-28.215563,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-055</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65515300000001,-28.216941,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-056</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.656353,-28.218524,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-057</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65854600000001,-28.221405,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-058</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65870000000001,-28.221668,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-059</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.658806,-28.221903,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-060</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.658902,-28.222244,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-061</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.658938,-28.222614,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-062</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.658912,-28.222963,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-063</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6588895,-28.2230691,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-064</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65645450000001,-28.22606010000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-065</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6540782,-28.2289788,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-066</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6545739,-28.2292954,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-067</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6547623,-28.2294165,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-068</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6584703,-28.2317354,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-069</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6595931,-28.2324448,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-070</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65963130000001,-28.2324725,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-071</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6608037,-28.2332412,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-072</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6588234,-28.235716,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-073</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6593462,-28.2360445,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-074</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.66004,-28.2365047,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-075</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6604552,-28.2367384,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-076</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.66095109999999,-28.23704310000001,0</coordinates>
+					</Point>
+				</Placemark>
+			</Folder>
+		</Folder>
+		<Folder>
+			<name>Anexo II</name>
+			<Placemark>
+				<name>Anexo II (Área = 31.290,76 m²)</name>
+				<description>Memorial descritivo (SIRGAS2000) #Área (31.290,757676059100 m²) - Perímetro (627,196285678307 m.)#				
+Vértices	Latitude[UTM(m)]	Longitude[UTM(m)]	Zona(Fuso)	Hemisfério	Latitude(°)	Longitude(°)	
+BRIBB-077	6.877.757,31763756m	732.439,381560733m	22	Sul	-28,2055403000000°	-48,6318161000000°	
+BRIBB-078	6.877.756,72202345m	732.432,415974553m	22	Sul	-28,2055469000000°	-48,6318869000000°	
+BRIBB-079	6.877.755,64848797m	732.425,509802015m	22	Sul	-28,2055578000000°	-48,6319570000000°	
+BRIBB-080	6.877.754,10734681m	732.418,702533334m	22	Sul	-28,2055729000000°	-48,6320260000000°	
+BRIBB-081	6.877.752,08713330m	732.412,013589022m	22	Sul	-28,2055923000000°	-48,6320937000000°	
+BRIBB-082	6.877.749,60924637m	732.405,482675780m	22	Sul	-28,2056158000000°	-48,6321597000000°	
+BRIBB-083	6.877.746,68400193m	732.399,149283579m	22	Sul	-28,2056433000000°	-48,6322236000000°	
+BRIBB-084	6.877.743,33318280m	732.393,033482496m	22	Sul	-28,2056746000000°	-48,6322852000000°	
+BRIBB-085	6.877.739,55621374m	732.387,164727494m	22	Sul	-28,2057097000000°	-48,6323442000000°	
+BRIBB-086	6.877.735,38576889m	732.381,573123194m	22	Sul	-28,2057483000000°	-48,6324003000000°	
+BRIBB-087	6.877.730,83235618m	732.376,288340898m	22	Sul	-28,2057903000000°	-48,6324532000000°	
+BRIBB-088	6.877.725,92864979m	732.371,340484932m	22	Sul	-28,2058354000000°	-48,6325026000000°	
+BRIBB-089	6.877.720,69643266m	732.366,749624716m	22	Sul	-28,2058834000000°	-48,6325483000000°	
+BRIBB-090	6.877.715,15748772m	732.362,535829545m	22	Sul	-28,2059341000000°	-48,6325901000000°	
+BRIBB-091	6.877.709,33359789m	732.358,719168587m	22	Sul	-28,2059873000000°	-48,6326278000000°	
+BRIBB-092	6.877.703,25762917m	732.355,319927455m	22	Sul	-28,2060427000000°	-48,6326612000000°	
+BRIBB-093	6.877.696,97372249m	732.352,348790043m	22	Sul	-28,2060999000000°	-48,6326902000000°	
+BRIBB-094	6.877.690,48130262m	732.349,835210198m	22	Sul	-28,2061589000000°	-48,6327145000000°	
+BRIBB-095	6.877.683,84686848m	732.347,780486585m	22	Sul	-28,2062191000000°	-48,6327341000000°	
+BRIBB-096	6.877.677,07022843m	732.346,194436599m	22	Sul	-28,2062805000000°	-48,6327489000000°	
+BRIBB-097	6.877.670,20660632m	732.345,087960360m	22	Sul	-28,2063426000000°	-48,6327588000000°	
+BRIBB-098	6.877.663,28925158m	732.344,461706702m	22	Sul	-28,2064051000000°	-48,6327638000000°	
+BRIBB-099	6.877.656,34013862m	732.344,325926010m	22	Sul	-28,2064678000000°	-48,6327638000000°	
+BRIBB-100	6.877.649,39251675m	732.344,681267089m	22	Sul	-28,2065304000000°	-48,6327588000000°	
+BRIBB-101	6.877.642,49091015m	732.345,518777216m	22	Sul	-28,2065925000000°	-48,6327489000000°	
+BRIBB-102	6.877.635,66856802m	732.346,839105260m	22	Sul	-28,2066538000000°	-48,6327341000000°	
+BRIBB-103	6.877.628,94784822m	732.348,632865479m	22	Sul	-28,2067141000000°	-48,6327145000000°	
+BRIBB-104	6.877.622,37327479m	732.350,891105328m	22	Sul	-28,2067730000000°	-48,6326902000000°	
+BRIBB-105	6.877.615,96701367m	732.353,614257307m	22	Sul	-28,2068303000000°	-48,6326612000000°	
+BRIBB-106	6.877.609,77397250m	732.356,773732891m	22	Sul	-28,2068856000000°	-48,6326278000000°	
+BRIBB-107	6.877.603,80542590m	732.360,359930139m	22	Sul	-28,2069388000000°	-48,6325901000000°	
+BRIBB-108	6.877.598,10608962m	732.364,354078865m	22	Sul	-28,2069895000000°	-48,6325483000000°	
+BRIBB-109	6.877.592,68743009m	732.368,736759286m	22	Sul	-28,2070376000000°	-48,6325026000000°	
+BRIBB-110	6.877.587,59416306m	732.373,489201497m	22	Sul	-28,2070827000000°	-48,6324532000000°	
+BRIBB-111	6.877.582,84883809m	732.378,592202573m	22	Sul	-28,2071246000000°	-48,6324003000000°	
+BRIBB-112	6.877.578,46311346m	732.384,016525065m	22	Sul	-28,2071632000000°	-48,6323442000000°	
+BRIBB-113	6.877.574,45973064m	732.389,733148249m	22	Sul	-28,2071983000000°	-48,6322852000000°	
+BRIBB-114	6.877.570,87251423m	732.395,713268151m	22	Sul	-28,2072296000000°	-48,6322236000000°	
+BRIBB-115	6.877.567,70203956m	732.401,927431098m	22	Sul	-28,2072571000000°	-48,6321597000000°	
+BRIBB-116	6.877.564,97085633m	732.408,356434783m	22	Sul	-28,2072806000000°	-48,6320937000000°	
+BRIBB-117	6.877.562,69081495m	732.414,961224292m	22	Sul	-28,2073000000000°	-48,6320260000000°	
+BRIBB-118	6.877.560,87376594m	732.421,702744804m	22	Sul	-28,2073152000000°	-48,6319570000000°	
+BRIBB-119	6.877.559,54225918m	732.428,561794288m	22	Sul	-28,2073260000000°	-48,6318869000000°	
+BRIBB-120	6.877.558,67489597m	732.435,498668119m	22	Sul	-28,2073326000000°	-48,6318161000000°	
+BRIBB-121	6.877.558,29461018m	732.442,474528268m	22	Sul	-28,2073348000000°	-48,6317450000000°	
+BRIBB-122	6.877.558,40197758m	732.449,459921474m	22	Sul	-28,2073326000000°	-48,6316739000000°	
+BRIBB-123	6.877.558,99776597m	732.456,415576431m	22	Sul	-28,2073260000000°	-48,6316032000000°	
+BRIBB-124	6.877.560,06019310m	732.463,321424541m	22	Sul	-28,2073152000000°	-48,6315331000000°	
+BRIBB-125	6.877.561,61238509m	732.470,128809721m	22	Sul	-28,2073000000000°	-48,6314641000000°	
+BRIBB-126	6.877.563,63255983m	732.476,817663271m	22	Sul	-28,2072806000000°	-48,6313964000000°	
+BRIBB-127	6.877.566,11040228m	732.483,348496986m	22	Sul	-28,2072571000000°	-48,6313304000000°	
+BRIBB-128	6.877.569,03559747m	732.489,681822561m	22	Sul	-28,2072296000000°	-48,6312665000000°	
+BRIBB-129	6.877.572,38636344m	732.495,797570983m	22	Sul	-28,2071983000000°	-48,6312049000000°	
+BRIBB-130	6.877.576,16327648m	732.501,666288479m	22	Sul	-28,2071632000000°	-48,6311459000000°	
+BRIBB-131	6.877.580,33366354m	732.507,257871042m	22	Sul	-28,2071246000000°	-48,6310898000000°	
+BRIBB-132	6.877.584,87593472m	732.512,542431217m	22	Sul	-28,2070827000000°	-48,6310369000000°	
+BRIBB-133	6.877.589,77958326m	732.517,490298133m	22	Sul	-28,2070376000000°	-48,6309875000000°	
+BRIBB-134	6.877.595,02282732m	732.522,081402135m	22	Sul	-28,2069895000000°	-48,6309418000000°	
+BRIBB-135	6.877.600,56152679m	732.526,305058059m	22	Sul	-28,2069388000000°	-48,6308999000000°	
+BRIBB-136	6.877.606,38536690m	732.530,121776553m	22	Sul	-28,2068856000000°	-48,6308622000000°	
+BRIBB-137	6.877.612,45020751m	732.533,520872182m	22	Sul	-28,2068303000000°	-48,6308288000000°	
+BRIBB-138	6.877.618,74534983m	732.536,482491512m	22	Sul	-28,2067730000000°	-48,6307999000000°	
+BRIBB-139	6.877.625,22665365m	732.538,995948891m	22	Sul	-28,2067141000000°	-48,6307756000000°	
+BRIBB-140	6.877.631,87195295m	732.541,060810165m	22	Sul	-28,2066538000000°	-48,6307559000000°	
+BRIBB-141	6.877.638,63768345m	732.542,636935198m	22	Sul	-28,2065925000000°	-48,6307412000000°	
+BRIBB-142	6.877.645,50129501m	732.543,743525916m	22	Sul	-28,2065304000000°	-48,6307313000000°	
+BRIBB-143	6.877.652,42973035m	732.544,370113151m	22	Sul	-28,2064678000000°	-48,6307263000000°	
+BRIBB-144	6.877.659,37884900m	732.544,506010957m	22	Sul	-28,2064051000000°	-48,6307263000000°	
+BRIBB-145	6.877.666,31540154m	732.544,150568246m	22	Sul	-28,2063426000000°	-48,6307313000000°	
+BRIBB-146	6.877.673,21702962m	732.543,313168825m	22	Sul	-28,2062805000000°	-48,6307412000000°	
+BRIBB-147	6.877.680,05029171m	732.542,002979811m	22	Sul	-28,2062191000000°	-48,6307559000000°	
+BRIBB-148	6.877.686,76015599m	732.540,199280452m	22	Sul	-28,2061589000000°	-48,6307756000000°	
+BRIBB-149	6.877.693,34585419m	732.537,941342642m	22	Sul	-28,2060999000000°	-48,6307999000000°	
+BRIBB-150	6.877.699,74088728m	732.535,227865357m	22	Sul	-28,2060427000000°	-48,6308288000000°	
+BRIBB-151	6.877.705,94506291m	732.532,068666223m	22	Sul	-28,2059873000000°	-48,6308622000000°	
+BRIBB-152	6.877.711,91366424m	732.528,482514209m	22	Sul	-28,2059341000000°	-48,6308999000000°	
+BRIBB-153	6.877.717,61324950m	732.524,478576975m	22	Sul	-28,2058834000000°	-48,6309418000000°	
+BRIBB-154	6.877.723,02088408m	732.520,095693565m	22	Sul	-28,2058354000000°	-48,6309875000000°	
+BRIBB-155	6.877.728,11420935m	732.515,343248630m	22	Sul	-28,2057903000000°	-48,6310369000000°	
+BRIBB-156	6.877.732,87067467m	732.510,240445120m	22	Sul	-28,2057483000000°	-48,6310898000000°	
+BRIBB-157	6.877.737,25645433m	732.504,816087608m	22	Sul	-28,2057097000000°	-48,6311459000000°	
+BRIBB-158	6.877.741,25988891m	732.499,099414220m	22	Sul	-28,2056746000000°	-48,6312049000000°	
+BRIBB-159	6.877.744,84715277m	732.493,119229816m	22	Sul	-28,2056433000000°	-48,6312665000000°	
+BRIBB-160	6.877.748,01766970m	732.486,904989460m	22	Sul	-28,2056158000000°	-48,6313304000000°	
+BRIBB-161	6.877.750,74888923m	732.480,475896736m	22	Sul	-28,2055923000000°	-48,6313964000000°	
+BRIBB-162	6.877.753,02896017m	732.473,871008413m	22	Sul	-28,2055729000000°	-48,6314641000000°	
+BRIBB-163	6.877.754,83494831m	732.467,129164683m	22	Sul	-28,2055578000000°	-48,6315331000000°	
+BRIBB-164	6.877.756,17755272m	732.460,270219399m	22	Sul	-28,2055469000000°	-48,6316032000000°	
+BRIBB-165	6.877.757,04473052m	732.453,343047731m	22	Sul	-28,2055403000000°	-48,6316739000000°	
+BRIBB-166	6.877.757,42501469m	732.446,367070282m	22	Sul	-28,2055381000000°	-48,6317450000000°</description>
+				<styleUrl>#msn_placemark_circle</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								-48.6318161,-28.2055403,0 -48.6318869,-28.2055469,0 -48.631957,-28.2055578,0 -48.632026,-28.2055729,0 -48.6320937,-28.2055923,0 -48.63215970000001,-28.2056158,0 -48.6322236,-28.2056433,0 -48.6322852,-28.2056746,0 -48.63234419999999,-28.2057097,0 -48.6324003,-28.2057483,0 -48.6324532,-28.2057903,0 -48.6325026,-28.2058354,0 -48.6325483,-28.2058834,0 -48.63259009999999,-28.2059341,0 -48.6326278,-28.2059873,0 -48.6326612,-28.2060427,0 -48.6326902,-28.20609990000001,0 -48.6327145,-28.2061589,0 -48.6327341,-28.2062191,0 -48.63274890000001,-28.2062805,0 -48.6327588,-28.2063426,0 -48.6327638,-28.2064051,0 -48.6327638,-28.2064678,0 -48.6327588,-28.2065304,0 -48.63274890000001,-28.2065925,0 -48.6327341,-28.2066538,0 -48.6327145,-28.2067141,0 -48.6326902,-28.206773,0 -48.6326612,-28.2068303,0 -48.6326278,-28.2068856,0 -48.63259009999999,-28.2069388,0 -48.6325483,-28.2069895,0 -48.6325026,-28.2070376,0 -48.6324532,-28.2070827,0 -48.6324003,-28.2071246,0 -48.63234419999999,-28.2071632,0 -48.6322852,-28.2071983,0 -48.6322236,-28.2072296,0 -48.63215970000001,-28.2072571,0 -48.6320937,-28.2072806,0 -48.632026,-28.2073,0 -48.631957,-28.2073152,0 -48.6318869,-28.207326,0 -48.6318161,-28.2073326,0 -48.631745,-28.2073348,0 -48.6316739,-28.2073326,0 -48.63160320000001,-28.207326,0 -48.6315331,-28.2073152,0 -48.63146410000001,-28.2073,0 -48.6313964,-28.2072806,0 -48.6313304,-28.2072571,0 -48.6312665,-28.2072296,0 -48.6312049,-28.2071983,0 -48.6311459,-28.2071632,0 -48.63108980000001,-28.2071246,0 -48.63103690000001,-28.2070827,0 -48.6309875,-28.2070376,0 -48.63094180000001,-28.2069895,0 -48.63089990000001,-28.2069388,0 -48.6308622,-28.2068856,0 -48.6308288,-28.2068303,0 -48.6307999,-28.206773,0 -48.63077560000001,-28.2067141,0 -48.6307559,-28.2066538,0 -48.6307412,-28.2065925,0 -48.63073129999999,-28.2065304,0 -48.6307263,-28.2064678,0 -48.6307263,-28.2064051,0 -48.63073129999999,-28.2063426,0 -48.6307412,-28.2062805,0 -48.6307559,-28.2062191,0 -48.63077560000001,-28.2061589,0 -48.6307999,-28.20609990000001,0 -48.6308288,-28.2060427,0 -48.6308622,-28.2059873,0 -48.63089990000001,-28.2059341,0 -48.63094180000001,-28.2058834,0 -48.6309875,-28.2058354,0 -48.63103690000001,-28.2057903,0 -48.63108980000001,-28.2057483,0 -48.6311459,-28.2057097,0 -48.6312049,-28.2056746,0 -48.6312665,-28.2056433,0 -48.6313304,-28.2056158,0 -48.6313964,-28.2055923,0 -48.63146410000001,-28.2055729,0 -48.6315331,-28.2055578,0 -48.63160320000001,-28.2055469,0 -48.6316739,-28.2055403,0 -48.631745,-28.2055381,0 -48.6318161,-28.2055403,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Folder>
+				<name>Vértices</name>
+				<Placemark>
+					<name>BRIBB-077</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6318161,-28.2055403,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-078</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6318869,-28.2055469,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-079</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.631957,-28.2055578,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-080</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.632026,-28.2055729,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-081</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6320937,-28.2055923,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-082</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63215970000001,-28.2056158,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-083</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6322236,-28.2056433,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-084</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6322852,-28.2056746,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-085</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63234419999999,-28.2057097,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-086</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6324003,-28.2057483,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-087</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6324532,-28.2057903,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-088</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6325026,-28.2058354,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-089</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6325483,-28.2058834,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-090</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63259009999999,-28.2059341,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-091</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6326278,-28.2059873,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-092</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6326612,-28.2060427,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-093</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6326902,-28.20609990000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-094</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6327145,-28.2061589,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-095</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6327341,-28.2062191,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-096</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63274890000001,-28.2062805,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-097</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6327588,-28.2063426,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-098</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6327638,-28.2064051,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-099</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6327638,-28.2064678,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-100</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6327588,-28.2065304,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-101</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63274890000001,-28.2065925,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-102</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6327341,-28.2066538,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-103</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6327145,-28.2067141,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-104</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6326902,-28.206773,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-105</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6326612,-28.2068303,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-106</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6326278,-28.2068856,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-107</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63259009999999,-28.2069388,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-108</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6325483,-28.2069895,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-109</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6325026,-28.2070376,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-110</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6324532,-28.2070827,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-111</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6324003,-28.2071246,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-112</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63234419999999,-28.2071632,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-113</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6322852,-28.2071983,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-114</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6322236,-28.2072296,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-115</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63215970000001,-28.2072571,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-116</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6320937,-28.2072806,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-117</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.632026,-28.2073,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-118</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.631957,-28.2073152,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-119</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6318869,-28.207326,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-120</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6318161,-28.2073326,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-121</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.631745,-28.2073348,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-122</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6316739,-28.2073326,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-123</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63160320000001,-28.207326,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-124</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6315331,-28.2073152,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-125</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63146410000001,-28.2073,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-126</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6313964,-28.2072806,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-127</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6313304,-28.2072571,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-128</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6312665,-28.2072296,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-129</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6312049,-28.2071983,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-130</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6311459,-28.2071632,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-131</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63108980000001,-28.2071246,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-132</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63103690000001,-28.2070827,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-133</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6309875,-28.2070376,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-134</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63094180000001,-28.2069895,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-135</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63089990000001,-28.2069388,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-136</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6308622,-28.2068856,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-137</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6308288,-28.2068303,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-138</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6307999,-28.206773,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-139</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63077560000001,-28.2067141,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-140</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6307559,-28.2066538,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-141</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6307412,-28.2065925,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-142</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63073129999999,-28.2065304,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-143</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6307263,-28.2064678,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-144</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6307263,-28.2064051,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-145</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63073129999999,-28.2063426,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-146</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6307412,-28.2062805,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-147</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6307559,-28.2062191,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-148</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63077560000001,-28.2061589,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-149</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6307999,-28.20609990000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-150</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6308288,-28.2060427,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-151</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6308622,-28.2059873,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-152</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63089990000001,-28.2059341,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-153</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63094180000001,-28.2058834,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-154</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6309875,-28.2058354,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-155</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63103690000001,-28.2057903,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-156</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63108980000001,-28.2057483,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-157</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6311459,-28.2057097,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-158</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6312049,-28.2056746,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-159</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6312665,-28.2056433,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-160</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6313304,-28.2056158,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-161</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6313964,-28.2055923,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-162</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63146410000001,-28.2055729,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-163</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6315331,-28.2055578,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-164</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.63160320000001,-28.2055469,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-165</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6316739,-28.2055403,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-166</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.631745,-28.2055381,0</coordinates>
+					</Point>
+				</Placemark>
+			</Folder>
+		</Folder>
+		<Folder>
+			<name>Anexo III</name>
+			<Placemark>
+				<name>Anexo III (Área = 2.999.168,97 m²)</name>
+				<description>Memorial descritivo (SIRGAS2000) #Área (2.999.168,972032090000 m²) - Perímetro (6.999,041796589360 m.)#				
+Vértices	Latitude[UTM(m)]	Longitude[UTM(m)]	Zona(Fuso)	Hemisfério	Latitude(°)	Longitude(°)	
+BRIBB-167	6.875.858,10631888m	733.586,112099736m	22	Sul	-28,2224670000000°	-48,6197610000000°	
+BRIBB-168	6.875.858,13401181m	735.085,908564490m	22	Sul	-28,2222000000000°	-48,6044890000000°	
+BRIBB-169	6.877.857,89131251m	735.085,874547279m	22	Sul	-28,2041640000000°	-48,6048920000000°	
+BRIBB-170	6.877.857,84054138m	733.586,120740071m	22	Sul	-28,2044310000000°	-48,6201610000000°</description>
+				<styleUrl>#msn_placemark_circle</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								-48.619761,-28.222467,0 -48.604489,-28.2222,0 -48.604892,-28.204164,0 -48.620161,-28.204431,0 -48.619761,-28.222467,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Folder>
+				<name>Vértices</name>
+				<Placemark>
+					<name>BRIBB-167</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.619761,-28.222467,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-168</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.604489,-28.2222,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-169</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.604892,-28.204164,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRIBB-170</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.620161,-28.204431,0</coordinates>
+					</Point>
+				</Placemark>
+			</Folder>
+		</Folder>
+	</Folder>
+</Document>
+</kml>

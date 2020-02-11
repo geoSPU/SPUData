@@ -1,0 +1,92 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "Mar Azul Logística, Armazenamento, Terminal e Transporte S/A"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sf)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#                          
+#                     X            Y
+subaquatica <- matrix(c(733991.597,	7092285.349, #V01
+                        734002.478,	7092288.860, #V02
+                        734134.398, 7092165.678, #V03
+                        734127.968,	7092157.652, #V04
+                        733991.597, 7092285.349),#V01
+                      ncol = 2, byrow = TRUE)
+
+#                         X         Y
+aquatica <- matrix(c(733991.597, 7092285.349, #V01
+                     733323.498, 7092910.954, #V05
+                     733251.711, 7092962.974, #V06
+                     733386.695, 7093149.161, #V07
+                     733398.615, 7093140.420, #V08
+                     733468.114, 7093236.722, #V09
+                     733497.570, 7093215.366, #V10
+                     733494.683, 7093211.385, #V11
+                     733477.086, 7093195.632, #V12
+                     733429.762, 7093130.356, #V13
+                     733454.050, 7093112.747, #V14 
+                     733329.154, 7092940.420, #V15
+                     733331.127, 7092918.713, #V16
+                     733331.377, 7092918.531, #V17
+                     734003.491, 7092289.187, #V18
+                     734002.478, 7092165.678, #V02
+                     733991.597, 7092285.349),#V01
+                   ncol = 2, byrow = TRUE)
+#
+# 3. Criação da feição  
+#
+pl <- st_sfc(st_multipolygon(
+  list(list(aquatica), 
+       list(subaquatica))))
+#
+# 4. Digitação dos metadados
+#
+Mar_Azul<- data.frame(
+  interessado = "Mar Azul Logística, Armazenamento, Terminal e Transporte S/A",
+  cnpj = "07.628.866/0001-90",
+  protocolo = NA,
+  nup = "04972.000210/2014-75",
+  onerosa = TRUE,
+  ref = 2671132,
+  concedida = FALSE,
+  area = st_area(pl),
+  municipio = 8319,
+  logradouro = "08-00",
+  aval = 54245.55,
+  dataaval = as.Date("10/11/2016", format = "%d/%m/%Y"),
+  refaval = 2747795)
+#
+# 5.Unir metadados e feição em um único objeto espacial
+#
+# Atentar para a definição do crs apropriado
+# 
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(Mar_Azul, 
+              geom = pl, 
+              crs = 31982) %>%
+   st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "mar_azul.geojson", delete_dsn = TRUE)
+```

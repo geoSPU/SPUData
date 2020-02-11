@@ -1,0 +1,72 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "Golar Power Latam Participações e Comércio Ltda."
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+#                             E             N
+coords <- matrix(data = c(742705.3725, 7102405.0328, #V1
+                          743046.4183, 7102636.9193, #BRSFS-043
+                          743222.2413, 7102737.7095, #BRSFS-044
+                          743312.4205, 7102804.9654, #BRSFS-045
+                          743687.4531, 7103186.0029, #BRSFS-046
+                          743919.6198, 7103396.9581, #V2
+                          744102.8256, 7103252.0335, #V3
+                          743152.8156, 7102051.0835, #V4
+                          742705.3725, 7102405.0328), #V1
+                 ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+#
+pl <- st_sfc(st_polygon(list(coords))) 
+#
+# 3. Criação dos metadados  
+#
+dados <- data.frame(interessado = "Golar Power Latam Participações e Comércio Ltda",
+                    cnpj = "24.360.766/0001-45",
+                    protocolo = "SC04142/2018",
+                    nup = "04972.010861/2018-05",
+                    ref = 4416075,
+                    onerosa = TRUE,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = 8319,
+                    logradouro = "08-00",
+                    aval = NA,
+                    dataaval = NA)
+#
+# 4. Junção dos metadados com a geometria 
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+spl_df <- st_sf(dados, geom = pl, crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "golar.geojson", delete_dsn = TRUE)
+```

@@ -1,0 +1,144 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "Trapiche Canto da Praia -- Itapema/SC"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, dpi = 600)
+library(RPostgreSQL)
+library(rpostgis)
+library(sf)
+library(leaflet)
+library(textreadr)
+library(stringr)
+```
+
+## Conectar ao Banco de Dados Espacial
+
+```{r, echo=FALSE}
+conn <- dbConnect("PostgreSQL",
+                  host = "localhost", 
+                  dbname = "spugeo",
+                  user = "postgres", 
+                  password = "campeao1")
+```
+
+```{r, echo=TRUE, eval=FALSE}
+conn <- dbConnect("PostgreSQL",
+                  host = "localhost", 
+                  dbname = "spugeo",
+                  user = "postgres", 
+                  password = "*********")
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+# Obs.: O levantamento está errado. (07/10/2019)
+#
+#                       E             N
+agua <- matrix(c(737608.3223, 7009282.2889, #P0
+                 737615.0991, 7009914.1227, #P1
+                 737616.8811, 7009905.6948, #P2
+                 737606.4962, 7009882.1146, #P3
+                 737598.0143, 7009885.5813, #P4
+                 737591.2596, 7009857.7405, #P5
+                 737559.7335, 7009883.1057, #P6
+                 737557.0685, 7009897.8706, #P7
+                 737560.1249, 7009898.5343, #P8
+                 737608.3223, 7009282.2889),#P0
+                 ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+pl <- st_sfc(st_multipolygon(
+  list(list(agua))))
+#
+# 3. Criação dos metadados  
+#
+dados <- data.frame(interessado = "Lindiomir José Galisa",
+                    cpf = "726.903.309-97",
+                    nup = "04972.008374/2013-60",
+                    protocolo = "SC03549/2018",
+                    ref = 8353729,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = 8163,
+                    logradouro = "Rua 109",
+                    aval = NA,
+                    dataaval = NA,
+                    refaval = NA)
+#
+#
+# 4. Junção dos metadados com a geometria 
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:2
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(dados,
+                geom = pl, crs = 29192) %>%
+  st_transform(31982)
+```
+
+
+```{r}
+#
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df,
+         dsn = conn,
+         layer = c("espacoaquatico", "cessao"),
+         append = TRUE)
+```
+
+## Verificar
+
+
+
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, out.width="90%"}
+m <- spl_df %>% 
+  st_transform(4326) %>% 
+  leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
+  addPolygons() %>%
+  # Base Groups
+  addTiles(group = "OSM (default)") %>%
+  addProviderTiles(providers$Esri.WorldImagery, group = "Esri") %>%
+  addProviderTiles(providers$Stamen.TonerLite, group = "Toner Lite") %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012"),
+              group = "SIG-SC") %>%
+  addScaleBar(position = 'bottomleft', options = list(imperial = FALSE)) %>%
+  addGraticule(interval = .05, style = list(weight = .2)) %>%
+  addMiniMap(position = "topleft", zoomLevelOffset = -3) %>%
+  # Layers control
+  addLayersControl(
+    baseGroups = c("SIG-SC", "OSM (default)", "Esri", "Toner Lite"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+mapview::mapshot(m, file = "./map.png", remove_controls = NULL)
+knitr::include_graphics("map.png")
+```
+
+
+## Desconectar do BDE
+
+```{r}
+dbDisconnect(conn)
+```
+

@@ -1,0 +1,78 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "Catarina Yatchs"
+author: "Luiz Fernando Palin Droubi"
+date: "8 de agosto de 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(sf)
+library(leaflet)
+
+```
+
+```{r}
+# Trapiche
+#                        E          N
+coords <- matrix(c(726642.221, 7027517.652, #T1
+                   726655.578, 7027510.827, #T2
+                   726610.075, 7027421.779, #T3
+                   726548.891, 7027342.681, #T4
+                   726537.026, 7027351.859, #T5
+                   726597.354, 7027429.850, #T6
+                   726642.221, 7027517.652),#T1 
+                 byrow = TRUE, ncol = 2)
+# Berço
+#                        E          N
+berco  <- matrix(c(726633.316, 7027522.203, #T9
+                   726642.221, 7027517.652, #T1
+                   726597.354, 7027429.850, #T6
+                   726537.026, 7027351.859, #T5
+                   726529.116, 7027357.977, #T7
+                   726588.874, 7027435.231, #T8
+                   726633.316, 7027522.203),#T9
+                 byrow = TRUE, ncol = 2)
+```
+
+```{r}
+pl <- st_sfc(st_multipolygon(
+  list(list(coords), 
+       list(berco))
+  )
+  )
+```
+
+```{r}
+#
+# 3. Criação dos atributos  
+#
+attr <- data.frame(interessado = "Catarina Yachts Estaleiro Naval Ltda.",
+                   cnpj = "07.280.785/0001-42",
+                   protocolo = "3454599",
+                   nup = "04972.000232/2009-78",
+                   ref = 3460057,
+                   onerosa = TRUE,
+                   concedida = FALSE,
+                   area = st_area(pl),
+                   municipio = 8221,
+                   logradouro = "201-00",
+                   aval = NA,
+                   dataaval = NA,
+                   refaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = pl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+## Exportar
+
+```{r}
+st_write(spl_df, "catarina_yachts.geojson", delete_dsn = TRUE)
+```
+

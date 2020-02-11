@@ -1,0 +1,74 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "TGSC -- Terminal de Granéis de Santa Catarina"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sp)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+#                       E             N
+coords <- matrix(c(736432.6982, 7097096.0447, #V1
+                   736479.7450, 7097045.9668, #V2
+                   736414.9205, 7096985.0659, #V3
+                   736476.6383, 7096918.6973, #V4
+                   736547.6937, 7096648.0740, #V5
+                   736516.7931, 7096639.6319, #V6
+                   736459.6503, 7096847.8328, #V7
+                   736169.3772, 7096720.4453, #V8
+                   736128.8113, 7096812.5524, #V9
+                   736432.6982, 7097096.0447),#V1
+                 ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_polygon(list(coords))
+spl <- st_sfc(pl, crs = 29192)
+#
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(interessado = "TGSC - Terminal de Granéis de Santa Catarina",
+                    cnpj = "08.504.106/0001-34",
+                    nup = "04972.206372/2015-04",
+                    protocolo = "1025412",
+                    ref = 3817298,
+                    concedida = TRUE,
+                    area = st_area(spl),
+                    municipio = 8319,
+                    logradouro = "07-00",
+                    aval = 268343.96,
+                    dataaval = as.Date("16/01/2017", format = "%d/%m/%Y"),
+                    refaval = 3088819)
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = spl) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "tgsc.geojson", delete_dsn = TRUE)
+```

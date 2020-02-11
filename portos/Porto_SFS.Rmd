@@ -1,0 +1,65 @@
+---
+title: "Porto de SFS"
+subtitle: "Poligonal atualizada em 05/07/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+#
+# 1 Criação da poligonal do porto
+#
+# 1.1 Leitura da poligonal em KML
+# Obs.: Da poliganal abaixo são extraídos pontos dos vértices. 
+# É necessário confeccionar manualmente o polígono.
+#  
+pts <- st_read("sfs/poligonal.kml", "Vértices") 
+#
+# 1.2 Extração das coordenadas
+#
+coords <- st_coordinates(pts)
+#
+# 1.3 Adicionar a primeira coordenada ao final da matriz de coordenadas.
+coords <- rbind(coords[, -3], coords[1, -3])
+#
+# 1.4 Criar o polígono
+#
+pl <- st_polygon(list(coords))
+#
+# 1.5 Criar feição
+#
+pl <- st_sfc(pl, crs = 4326)
+#
+# 2. Criação dos atributos  
+#
+attr <- data.frame(descricao = "Área do Porto Organizado de São Francisco do Sul",
+                   area = st_area(pl),
+                   municipio = 8319,
+                   portaria = 500,
+                   data = as.Date("05/07/2019", format = "%d/%m/%Y"),
+                   fonte = "http://infraestrutura.gov.br/images/arquivos-poligonais-das-areas-dos-portos-organizados/sao-francisco-do-sul.zip",
+                   data_acesso = as.Date("25/07/2019", format = "%d/%m/%Y")
+                   )
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = pl)
+```
+
+## Exportar
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "sfs.geojson", delete_dsn = TRUE)
+```

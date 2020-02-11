@@ -1,0 +1,196 @@
+---
+title: "Cessão de Espaço Aquático"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+subtitle: Capri Iate Clube.
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = "100%")
+library(RPostgreSQL)
+library(textreadr)
+library(stringr)
+library(sf)
+library(leaflet)
+library(mapview)
+library(mapedit)
+library(leafpm)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(knitr)
+library(kableExtra)
+library(pdftools)
+```
+
+```{r, echo = FALSE}
+# Conectar ao BDG
+#
+conn <- dbConnect("PostgreSQL",
+                  host = "localhost", 
+                  dbname = "spugeo",
+                  user = "postgres", 
+                  password = "campeao1")
+```
+
+```{r, eval = FALSE}
+# Conectar ao BDG
+#
+conn <- dbConnect("PostgreSQL",
+                  host = "localhost", 
+                  dbname = "spugeo",
+                  user = "postgres", 
+                  password = "*********")
+```
+
+```{r}
+# 1. Geometria
+# 
+# Ler o arquivo pdf no R
+#
+pdf_file <- "MEMORIAL_DESCRITIVO_CAPRI_IATE_CLUBE_rev00.pdf"
+memorial <- pdf_text(pdf_file)
+#
+# Juntar os textos das três páginas
+#
+memorial <- paste(memorial[1], memorial[2], memorial[3], sep = "")
+# Para visualizar quais vértices serão extraídos
+# str_view_all(memorial, "V\\d{1}")
+# 
+# O vértices de 1 a 9 não seriam extraídos.
+# A solução é acrescentar o à esquerda neste vértices, assim cada vértice
+# ficará com dois dígitos além do "V".
+#
+memorial <- str_replace_all(memorial, "[ ]V1[ ]", " V01 ")
+memorial <- str_replace(memorial, "[ ]V2[ ]", " V02 ")
+memorial <- str_replace(memorial, "[ ]V3[ ]", " V03 ")
+memorial <- str_replace(memorial, "[ ]V4[ ]", " V04 ")
+memorial <- str_replace(memorial, "[ ]V5[ ]", " V05 ")
+memorial <- str_replace(memorial, "[ ]V6[ ]", " V06 ")
+memorial <- str_replace(memorial, "[ ]V7[ ]", " V07 ")
+memorial <- str_replace(memorial, "[ ]V8[ ]", " V08 ")
+memorial <- str_replace(memorial, "[ ]V9[ ]", " V09 ")
+#
+# Agora pode-se notar que todos os vértices serão extraídos, como desejado.
+#
+# str_view_all(memorial, "V\\d{2}")
+#
+vertices <- str_extract_all(memorial, "V\\d{2}")
+#
+# Para extração das coordenadas E e N.
+#
+E <- str_extract_all(memorial, "\\s\\d{6},\\d{4}")
+N <- str_extract_all(memorial, "N:\\s\\d{7},\\d{3,4}")
+#
+# Retirar apenas a parte numérica, deixando fora as letras E e N e os espaços
+#
+E <- str_replace(E[[1]], " ", "\n")
+N <- str_replace(N[[1]], " ", "\n")
+E <- as.numeric(sub(",", ".", sapply(E, str_replace, "\\n", "")))
+N <- as.numeric(sub(",", ".", sapply(N, str_replace, "N:\\n", "")))
+#
+# Juntar as coordenadas e os nomes dos vértices em um único objeto.
+#
+coords <- cbind(E, N)
+rownames(coords) <- vertices[[1]]
+```
+
+```{r}
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_polygon(list(coords))
+spl <- st_sfc(pl, crs = 31982)
+#
+# 3. Criação dos atributos  
+#
+attr <- data.frame(interessado = "Capri Iate Clube",
+                    cnpj = "83.744.029/0001-05",
+                    cpf = NA,
+                    protocolo = NA,
+                    nup = "04972.010744.2018-33",
+                    ref = 8888081,
+                    onerosa = TRUE,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = 8319,
+                    logradouro = NA,
+                    aval = NA,
+                    dataaval = NA,
+                    refaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = spl, 
+                crs = 31982) #%>%
+ # st_transform(crs = 31982) # Transforma para SIRGAS2000, caso necessário.
+```
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+# st_write(spl_df,
+#          dsn = conn,
+#          layer = c("espacoaquatico", "cessao"),
+#          append = TRUE)
+```
+
+## DADOS
+
+```{r}
+kable(st_drop_geometry(spl_df), booktabs = TRUE) %>%
+  kable_styling(font_size = 7)
+```
+
+```{r}
+LLTM_DEMARCADA <- st_read(dsn = conn, 
+                          query = "SELECT * FROM demarcacao.linhas
+                          WHERE linha = 'LLTM' AND current_status = 'demarcada';")%>%
+  st_transform(4326)
+LPM_DEMARCADA <- st_read(dsn = conn, 
+                         query = "SELECT * FROM demarcacao.linhas
+                         WHERE linha = 'LPM' AND current_status = 'demarcada';") %>%
+  st_transform(4326)
+```
+
+## IMAGEM
+
+```{r}
+spl_df <- st_transform(spl_df, 4326)
+ext <- extent(spl_df)
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  #addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addPolylines(data = LPM_DEMARCADA, color = "red", dashArray = "20 10") %>%
+  addPolylines(data = LLTM_DEMARCADA, dashArray = "20 10") %>%
+  addHomeButton(ext = ext, layer.name = "Huisman") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("SPU.jpg", src = "local", position = "topright", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapshot(m, file = "./map.png", remove_controls = NULL)
+include_graphics("map.png")
+```
+
+# DESCONECTAR DO BDE
+
+```{r}
+dbDisconnect(conn = conn)
+```
+

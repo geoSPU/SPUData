@@ -1,0 +1,109 @@
+---
+title: "Cessão de Espaço Aquático"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE)
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+# Memorial descritivo da área do espelho d'àgua e área terrestre:
+#                             E             N
+terrestre <- matrix(data = c(741661.79,	6944367.83, #PTM-01
+                             741611.96,	6944331.74, #PTM-02
+                             741542.00, 6944402.00, #PAM-01
+                             741582.48,	6944441.79, #PTM-04
+                             741661.79,	6944367.83),#PTM-01
+                 ncol = 2, byrow = TRUE)
+aquatica <- matrix(data = c(741592.57, 6944350.59, #PTM-03
+                            741578.79, 6944364.76, #PAM-02
+                            741527.69, 6944342.42, #PAM-03
+                            741576.98, 6944294.25, #PAM-04
+                            741592.57, 6944350.59),#PTM-03
+                 ncol = 2, byrow = TRUE)
+# Atotal <- matrix(data = c(741661.79, 6944367.83, #PTM-01
+#                           741611.96, 6944331.74, #PTM-02
+#                           741592.57, 6944350.59, #PTM-03
+#                           741576.98, 6944294.25, #PAM-04
+#                           741527.69, 6944342.42, #PAM-03
+#                           741578.79, 6944364.76, #PAM-02
+#                           741542.00, 6944402.00, #PAM-01
+#                           741582.48, 6944441.79, #PTM-04
+#                           741661.79, 6944367.83),#PTM-01
+#             ncol = 2, byrow = TRUE)
+#
+# Memorial descritivo da área do trapiche: 
+#
+#                                 E         N
+trapiche <- matrix(data = c(741578.32, 6944350.15, #PES-01
+                            741560.24, 6944343.58, #PES-02
+                            741562.87, 6944340.57, #PES-03
+                            741576.90, 6944346.04, #PES-04
+                            741572.88, 6944329.95, #PES-05
+                            741575.77, 6944326.96, #PES-06
+                            741584.17, 6944360.83, #PES-07
+                            741579.35, 6944361.55, #PES-08
+                            741578.32, 6944350.15),#PES-01
+                 ncol = 2, byrow = TRUE)
+#
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_sfc(st_multipolygon(
+  list(list(terrestre), 
+       list(aquatica)
+       )
+  )
+  )
+#
+# 3. Criação dos atributos  
+#
+attr <- data.frame(interessado = "Departamento de Transportes e Terminais – DETER",
+                   cnpj = "04.340.793/0001-49",
+                   protocolo = "4426175",
+                   nup = "04972.005552/2017-24",
+                   ref = 8799437,
+                   onerosa = TRUE,
+                   concedida = FALSE,
+                   area = st_area(pl),
+                   municipio = 8105,
+                   logradouro = "201-00",
+                   aval = 95582.67,
+                   dataaval = as.Date("03-07-2019", format = "%d/%m/%Y"),
+                   refaval = 8790875)
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = pl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "deter.geojson", delete_dsn = TRUE)
+```
+

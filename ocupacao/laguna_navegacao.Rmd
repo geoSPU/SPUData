@@ -1,0 +1,64 @@
+---
+title: "Laguna Navegação"
+subtitle: "Inscrições de Ocupação"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+#
+# 1 Criação da poligonal do porto
+#
+# 1.1 Leitura da poligonal em KML
+# Obs.: Da poliganal abaixo são extraídos pontos dos vértices. 
+# É necessário confeccionar manualmente o polígono.
+#  
+io_1 <- st_read("laguna_navegacao/8185_0000028-35.kml")
+io_2 <- st_read("laguna_navegacao/8185_0000035-64.kml")
+io_3 <- st_read("laguna_navegacao/8185_0000607-97.kml")
+#
+#
+# 2. Criação dos atributos  
+#
+attr_io_1 <- data.frame(
+  interessado = "Laguna Navegação",
+  area = st_area(io_1),
+  rip = "8185 0000028-35"
+  )
+#
+attr_io_2 <- data.frame(
+  interessado = "Laguna Navegação",
+  area = st_area(io_2),
+  rip = "8185 0000035-64"
+  )
+#
+attr_io_3 <- data.frame(
+  interessado = "Laguna Navegação",
+  area = st_area(io_3),
+  rip = "8185 0000607-97"
+  )
+# 3.
+io_1 <- st_sf(attr_io_1, geom = st_geometry(io_1))
+io_2 <- st_sf(attr_io_2, geom = st_geometry(io_2))
+io_3 <- st_sf(attr_io_3, geom = st_geometry(io_3))
+# 4. Combinar polígonos
+#
+spl_df <- rbind(io_1, io_2, io_3)
+```
+
+## Exportar
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "laguna_navegacao.geojson", delete_dsn = TRUE)
+```

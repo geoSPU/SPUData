@@ -1,0 +1,138 @@
+---
+title: "Cessão de Espaço Aquático"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, dpi = 600)
+library(sf)
+library(leaflet)
+library(textreadr)
+library(stringr)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+# 1.1 Memorial descritivo:
+#
+memorial <- read_docx("./itapoa/memorial.docx")
+#
+# Píer
+#
+pier <- memorial[6]
+vertices <- unique(str_extract_all(pier, "V\\d{2}")[[1]])
+E <- str_extract_all(pier, "E=\\d{3}[.]\\d{3}[,]\\d{4}")
+N <- str_extract_all(pier, "N=\\d[.]\\d{3}[.]\\d{3}[,]\\d{4}")
+E <- str_replace_all(E[[1]], "[.]", "")
+N <- str_replace_all(N[[1]], "[.]", "")
+E <- as.numeric(sub(",", ".", sapply(E, str_replace, "E=", "")))
+N <- as.numeric(sub(",", ".", sapply(N, str_replace, "N=", "")))
+coords_pier <- cbind(E, N)
+rownames(coords_pier) <- vertices
+#
+# Área aquática entre as pontes de acesso:
+# 
+area_aquatica <- memorial[10]
+vertices <- unique(str_extract_all(area_aquatica, "V\\d{2}")[[1]])
+E <- str_extract_all(area_aquatica, "E=\\d{3}[.]\\d{3}[,]\\d{4}")
+N <- str_extract_all(area_aquatica, "N=\\d[.]\\d{3}[.]\\d{3}[,]\\d{4}")
+E <- str_replace_all(E[[1]], "[.]", "")
+N <- str_replace_all(N[[1]], "[.]", "")
+E <- as.numeric(sub(",", ".", sapply(E, str_replace, "E=", "")))
+N <- as.numeric(sub(",", ".", sapply(N, str_replace, "N=", "")))
+coords_area_aquatica <- cbind(E, N)
+rownames(coords_area_aquatica) <- vertices
+#
+# Berco de atracacao:
+#
+berco <- memorial[14]
+vertices <- unique(str_extract_all(berco, "V\\d{2}")[[1]])
+E <- str_extract_all(berco, "E=\\d{3}[.]\\d{3}[,]\\d{4}")
+N <- str_extract_all(berco, "N=\\d[.]\\d{3}[.]\\d{3}[,]\\d{4}")
+E <- str_replace_all(E[[1]], "[.]", "")
+N <- str_replace_all(N[[1]], "[.]", "")
+E <- as.numeric(sub(",", ".", sapply(E, str_replace, "E=", "")))
+N <- as.numeric(sub(",", ".", sapply(N, str_replace, "N=", "")))
+coords_berco <- cbind(E, N)
+rownames(coords_berco) <- vertices
+#
+# Área da ponte de serviço:
+#
+ponte <- memorial[22]
+vertices <- unique(str_extract_all(ponte, "P\\d{2}")[[1]])
+E <- str_extract_all(ponte, "E=\\d{3}[.]\\d{3}[,]\\d{4}")
+N <- str_extract_all(ponte, "N=\\d[.]\\d{3}[.]\\d{3}[,]\\d{4}")
+E <- str_replace_all(E[[1]], "[.]", "")
+N <- str_replace_all(N[[1]], "[.]", "")
+E <- as.numeric(sub(",", ".", sapply(E, str_replace, "E=", "")))
+N <- as.numeric(sub(",", ".", sapply(N, str_replace, "N=", "")))
+coords_ponte <- cbind(E, N)
+rownames(coords_ponte) <- vertices
+#
+coords_pier <- rbind(coords_pier, coords_pier[1,])
+coords_area_aquatica <- rbind(coords_area_aquatica, coords_area_aquatica[1,])
+coords_berco <- rbind(coords_berco, coords_berco[1,])
+coords_ponte <- rbind(coords_ponte, coords_ponte[1,])
+#
+#
+# 2. Criação da feição  
+#
+#
+pl <- st_sfc(st_multipolygon(
+  list(list(coords_pier), 
+       list(coords_area_aquatica),
+       list(coords_berco),
+       list(coords_ponte)
+       )
+  )
+)
+#
+# 3. Criação dos atributos  
+#
+attr <- data.frame(interessado = "Itapoá Terminais Portuários S/A",
+                   cnpj = "01.317.277/0001-05",
+                   protocolo = "SC01812/2019",
+                   nup = "04972.004921/2016-81",
+                   ref = 8756747,
+                   onerosa = TRUE,
+                   concedida = FALSE,
+                   area = st_area(pl),
+                   municipio = 9985,
+                   logradouro = "201-00",
+                   aval = NA,
+                   dataaval = NA,
+                   refaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geom = pl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+
+```{r}
+#
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "itapoa.geojson", delete_dsn = TRUE)
+```

@@ -1,0 +1,145 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "World Port"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RPostgreSQL)
+library(rpostgis)
+library(sf)
+library(tibble)
+```
+
+## Conectar ao Banco de Dados Espacial
+
+Para conectar...
+
+```{r}
+conn <- dbConnect("PostgreSQL",
+                  host = "localhost", 
+                  dbname = "spugeo",
+                  port = 5432,
+                  user = "postgres", 
+                  password = "campeao1")
+```
+
+## Verificar que o Banco de Dados é Espacial
+
+```{r}
+pgPostGIS(conn)
+```
+
+
+## Listar objetos constantes do BDE
+
+```{r}
+# Objetos Vetoriais
+pgListGeom(conn)
+#Objetos Raster
+pgListRast(conn)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#                          
+#                       X           Y
+imovel <- matrix(c(746461.878, 7102877.862, #P-00
+                   746453.532, 7103090.450, #01
+                   746424.036, 7103162.070, #02
+                   746434.979, 7103356.924, #03
+                   745937.660, 7103110.062, #04
+                   745711.962, 7103077.746, #05
+                   744966.392, 7103031.551, #06
+                   744577.753, 7103235.915, #07
+                   744432.641, 7103219.844, #08
+                   743932.936, 7102809.234, #09
+                   743803.710, 7102702.974, #10
+                   743955.000, 7102736.155, #11
+                   743970.765, 7102689.783, #12
+                   744003.663, 7102480.642, #13
+                   744167.055, 7102443.774, #14
+                   744174.369, 7102344.042, #15
+                   744210.547, 7102274.822, #16
+                   744398.962, 7102409.710, #17
+                   744544.660, 7102244.871, #18
+                   746461.878, 7102877.862),#P-00
+                 ncol = 2, byrow = TRUE)
+marinha <- matrix(c(746434.979, 7103356.924, #03
+                    745937.660, 7103110.062, #04
+                    745711.962, 7103077.746, #05
+                    744966.392, 7103031.551, #06
+                    744577.753, 7103235.915, #07
+                    744432.641, 7103219.844, #08
+                    743953.855, 7102826.425, #Tm1
+                    743932.902, 7102851.920, #Tm2
+                    744419.265, 7103251.565, #08A
+                    744584.167, 7103269.827, #07A
+                    744973.573, 7103065.059, #06A
+                    745708.597, 7103110.601, #05A
+                    745927.732, 7103141.978, #04A
+                    745937.660, 7103110.062, #03A Esta coordenada está errada
+                    746434.979, 7103356.924),#03
+                  ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+pl <- st_sfc(st_multipolygon(
+  list(list(imovel), 
+       list(marinha))))
+#
+# 3. Digitação dos metadados
+#
+World_Port <- tibble(interessado = "Worldport Desenvolvimento Portuário S.A",
+                     cnpj = "20.023.299/0001-07",
+                     nup = "04972.005996/2017-60",
+                     onerosa = T,
+                     protocolo = "6525842",
+                     ref = 6340695,
+                     concedida = FALSE,
+                     area = st_area(pl),
+                     municipio = 8319,
+                     logradouro = NA,
+                     aval = NA,
+                     dataaval = NA,
+                     refaval = NA)
+#
+# 5.Unir metadados e feição em um único objeto espacial
+#
+# Atentar para a definição do crs apropriado
+# 
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+World_Port <- st_sf(World_Port, 
+                    geom = pl, 
+                    crs = 31982) 
+```
+
+## 4. Escrever a nova entrada no BDE
+
+```{r}
+st_write(World_Port, dsn = conn, 
+         layer = c("espacoaquatico", "cessao"), 
+         append = TRUE)
+# dbAsDate(conn, 
+#          name = c(schema="espacoaquatico", table = "cessao"), 
+#          date = "dataaval", tz = NULL, 
+#          display = TRUE, exec = TRUE)
+```
+
+## Desconectar do BDE
+
+```{r}
+dbDisconnect(conn)
+```
+

@@ -1,0 +1,88 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "TGB -- Terminal Graneleiro da Babitonga S.A."
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sf)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#                          
+#                     X            Y
+berco <- matrix(c(732467.398, 7092712.069, #V7
+                  732437.718, 7092739.441, #V8
+                  731988.236, 7092252.066, #V9
+                  732017.916, 7092224.694, #V10
+                  732467.398, 7092712.069),#V7
+                ncol = 2, byrow = TRUE)
+
+#                     X           Y
+pier <- matrix(c(732480.630, 7092699.866, #V6
+                 732467.398, 7092712.069, #V7
+                 732017.916, 7092224.694, #V10
+                 732031.148, 7092212.490, #V11
+                 732480.630, 7092699.866),#V6 
+               ncol = 2, byrow = TRUE)
+
+#                     X           Y
+ponte <- matrix(c(732654.079, 7091706.016, #V1
+                  732644.727, 7091713.560, #V2
+                  732635.023, 7091718.274, #V3
+                  732249.952, 7092449.740, #V4
+                  732257.975, 7092458.439, #V5
+                  732654.079, 7091706.016),#V1
+               ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+pl <- st_sfc(st_multipolygon(
+  list(list(berco), 
+       list(pier), 
+       list(ponte))))
+#
+# 3. Criação dos atributos  
+#
+attr <- data.frame(interessado = "TGB - Terminal Graneleiro da Babitonga S.A.",
+                    cnpj = "16.920.552/0001-58",
+                    nup = "04972.003703/2016-29",
+                    protocolo = "1852685",
+                    ref = 5789942,
+                    concedida = TRUE,
+                    area = st_area(pl),
+                    municipio = 8319,
+                    logradouro = "07-00",
+                    aval = 57358.28,
+                    dataaval = as.Date("01/03/2018", format = "%d/%m/%Y"),
+                    refaval = 5622667)
+#
+# 4. Junção dos atributos com a geometria 
+#
+# Atentar para a definição do crs apropriado
+# 
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69(96) 22S = 5532
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geom = pl, 
+                crs = 29192) %>%
+  st_transform(crs = 4326)
+```
+
+## Exportar
+
+```{r}
+st_write(spl_df, "tgb.geojson", delete_dsn = TRUE)
+```

@@ -1,0 +1,100 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "TGSC -- Terminal de Granéis de Santa Catarina"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sf)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+# Cais 
+#                       E             N
+cais <- matrix(c(729981.061, 7023924.300, # 0=PP
+                 730199.145, 7023936.597, # 1
+                 730197.375, 7023917.819, # 2
+                 730187.647, 7023917.126, # 3
+                 730160.871, 7023912.730, # 4
+                 730159.398, 7023913.273, # 5
+                 730128.532, 7023907.574, # 6
+                 730102.199, 7023904.861, # 7 
+                 730102.199, 7023906.077, # 8 
+                 730068.576, 7023906.684, # 9 
+                 729995.636, 7023910.249, # 10 
+                 729982.410, 7023909.076, # 11 
+                 729981.061, 7023924.300),# 0=PP
+               ncol = 2, byrow = TRUE)
+# Atracação
+atrac <- matrix(c(729980.847, 7023924.102, # A
+                  729978.412, 7023954.189, # D
+                  730201.983, 7023966.714, # E
+                  730199.145, 7023936.597, # F
+                  729980.847, 7023924.102), # A
+                ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_sfc(st_multipolygon(
+  list(list(cais), 
+       list(atrac)
+       )
+  )
+)
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(interessado = "Trocadeiro Portos e Logística Ltda.",
+                    cnpj = "04.529.874/0001-91",
+                    nup = "04972.002071/2006-12",
+                    protocolo = "2081255",
+                    ref = 2081279,
+                    concedida = TRUE,
+                    area = st_area(pl),
+                    municipio = 8161,
+                    logradouro = "27-00",
+                    aval = 85565.73,
+                    dataaval = as.Date("22/08/2019", format = "%d/%m/%Y"),
+                    refaval = 3645421)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geom = pl, 
+                crs = 29192) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+
+```
+
+## Exportar
+
+```{r}
+st_write(spl_df, "trocadeiro.geojson", delete_dsn = TRUE)
+```
+
+

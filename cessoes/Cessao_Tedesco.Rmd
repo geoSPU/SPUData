@@ -1,0 +1,100 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "Tedesco"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sf)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+#                       E             N
+area_1 <- matrix(c(737920.465,	7010763.412, #1
+                   737928.101,	7010752.891, #26
+                   737875.277,	7010714.55,  #25
+                   737790.042,	7010646.717, #24
+                   737742.454,	7010607.51,  #23
+                   737735.474,	7010618.483, #4
+                   737781.694,	7010656.683, #3
+                   737867.641,	7010725.071, #2
+                   737920.465,	7010763.412),#1
+                 ncol = 2, byrow = TRUE)
+area_3 <- matrix(c(737721.749,	7010610.178, #5
+                   737728.696,	7010599.258, #22
+                   737654.697,	7010554.221, #21
+                   737609.832,	7010515.948, #20
+                   737563.904,	7010481.713, #19
+                   737513.832,	7010449.176, #18
+                   737462.448,	7010415.65,  #17
+                   737412.162,	7010386.783, #16
+                   737364.286,	7010374.613, #15
+                   737304.534,	7010392.667, #14
+                   737308.366,	7010405.089, #13
+                   737364.461,	7010387.784, #12
+                   737408.883,	7010399.363, #11
+                   737455.881,	7010426.87,  #10
+                   737506.726,	7010460.062, #9
+                   737556.82,	  7010492.614, #8
+                   737602.058,	7010526.367, #7
+                   737647.053,	7010564.788, #6
+                   737721.749,	7010610.178),#5
+                 ncol = 2, byrow = TRUE)
+                 
+#
+# 2. Criação da feição  
+#
+pl <- st_sfc(st_multipolygon(
+  list(list(area_1), 
+       list(area_3)))) 
+#
+# 3. Criação dos atributos
+#
+attr <- data.frame(interessado = "Tedesco Turismo LTDA",
+                    cnpj = "04.270.858/0001-27",
+                    nup = "04972.000093/2005-59",
+                    onerosa = TRUE,
+                    protocolo = NA,
+                    ref = 0217913,
+                    concedida = TRUE,
+                    area = st_area(pl),
+                    municipio = 8039,
+                    logradouro = NA,
+                    aval = 8430957,
+                    dataaval = as.Date("20/02/2014", format = "%d/%m/%Y"),
+                    refaval = 0271977
+                   )
+#
+# 4. Junção dos atributos com a geometria 
+#
+# Atentar para a definição do crs apropriado
+# 
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69(96) 22S = 5532
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+# Obs.: para inserção no BDE, é necessário, se for o caso, 
+# converter ao sistema SIRGAS2000 (31982)
+#
+spl_df <- st_sf(attr,
+                geom = pl, 
+                crs = 29192) %>%
+  st_transform(crs = 4326)
+```
+
+## Exportar
+
+```{r}
+st_write(spl_df, "tedesco.geojson", delete_dsn = TRUE)
+```

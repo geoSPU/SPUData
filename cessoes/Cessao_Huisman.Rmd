@@ -1,0 +1,74 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "Huisman Ltda."
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sf)
+library(leaflet)
+library(textreadr)
+library(stringr)
+```
+
+```{r}
+# 1. Geometria
+# 
+memorial <- read_rtf("8637607.rtf")
+vertices <- str_extract_all(memorial[10], "V\\d{2}")
+E <- str_extract_all(memorial[10], "E: \\d{6},\\d{4}")
+N <- str_extract_all(memorial[10], "N: \\d{7},\\d{4}")
+E <- as.numeric(sub(",", ".", sapply(E, str_replace, "E: ", "")))
+N <- as.numeric(sub(",", ".", sapply(N, str_replace, "N: ", "")))
+coords <- cbind(E, N)
+rownames(coords) <- vertices[[1]]
+```
+
+```{r}
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_polygon(list(coords))
+spl <- st_sfc(pl, crs = 31982)
+#
+# 3. Criação dos atributos  
+#
+attr <- data.frame(interessado = "Huisman Ltda.",
+                    cnpj = "14.107.187/0001-31",
+                    cpf = NA,
+                    protocolo = "SC02844/2017",
+                    nup = "04972.008578/2017-24",
+                    ref = 5131364,
+                    onerosa = TRUE,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = 8221,
+                    logradouro = "00-00",
+                    aval = NA,
+                    dataaval = as.Date("30/07/2019", format = "%d/%m/%Y"),
+                    refaval = 000000)
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = spl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "huismann.geojson", delete_dsn = TRUE)
+```
