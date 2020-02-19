@@ -1,0 +1,682 @@
+---
+title: "Certidão de Disponibilidade"
+subtitle: "Worldport Desenvolvimento Portuário S.A"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "70%",
+                      warning = FALSE, message = FALSE, device = "CairoPNG",
+                      dpi = 1200)
+library(RPostgreSQL)
+library(rpostgis)
+library(sp)
+library(sf)
+library(leaflet)
+library(leafem)
+library(raster)
+library(knitr)
+library(kableExtra)
+```
+
+
+```{r}
+# 1. Conectar ao BDG
+#
+conn <- dbConnect("PostgreSQL",
+                  host = "localhost", 
+                  dbname = "spugeo",
+                  port = 5432,
+                  user = "postgres", 
+                  password = "campeao1")
+```
+
+
+```{r}
+# 2. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#                          
+#                       X           Y
+terreno <- matrix(c(744496.468, 7102202.276,  # V01
+                    744585.303, 7102238.696,  # V02 
+                    744751.807, 7102300.389,  # V03 
+                    744875.452, 7102346.203,  # V04 
+                    744918.287, 7102359.705,  # V05 
+                    745170.700, 7102439.336,  # V06 
+                    745261.917, 7102467.938,  # V07 
+                    745351.806, 7102496.749,  # V08 
+                    745551.806, 7102560.239,  # V09 
+                    745751.806, 7102624.129,  # V10 
+                    746089.693, 7102732.068,  # V11 
+                    746413.683, 7102835.567,  # V12 
+                    746396.855, 7102869.525,  # V13 
+                    746405.337, 7103048.154,  # V14 
+                    746375.841, 7103119.774,  # V15 
+                    746386.783, 7103314.628,  # V16 
+                    745889.465, 7103067.767,  # V17 
+                    745663.767, 7103035.450,  # V18 
+                    744918.198, 7102989.255,  # V19 
+                    744529.561, 7103193.619,  # V20 
+                    744384.448, 7103177.548,  # V21 
+                    743884.744, 7102766.939,  # V22 
+                    743755.519, 7102660.679,  # V23 
+                    743906.836, 7102693.860,  # V24 
+                    743922.573, 7102647.488,  # V25 
+                    743955.471, 7102438.347,  # V26 
+                    744118.863, 7102401.480,  # V27 
+                    744126.177, 7102301.748,  # V28 
+                    744162.354, 7102232.528,  # V29 
+                    744350.770, 7102367.416,  # V30 
+                    744496.468, 7102202.276),  # V01
+                  ncol = 2, byrow = TRUE)
+terminal <- matrix(c(744685.459, 7102275.806,  #V31 
+                     744875.452, 7102346.203,  #V32 
+                     746299.548, 7102801.613,  #V33 
+                     746322.108, 7102823.911,  #V34 
+                     746298.037, 7102892.003,  #V35 
+                     746314.170, 7103006.799,  #V36 
+                     746348.571, 7103112.674,  #V37 
+                     746324.425, 7103145.908,  #V38 
+                     746206.811, 7103145.908,  #V39 
+                     746188.692, 7103131.236,  #V40 
+                     746157.358, 7102983.816,  #V41 
+                     746074.922, 7102926.095,  #V42 
+                     746046.775, 7102834.028,  #V43 
+                     746000.728, 7102814.483,  #V44 
+                     745873.476, 7102868.498,  #V45 
+                     745846.158, 7102939.664,  #V46 
+                     745862.440, 7103032.006,  #V47 
+                     745837.941, 7103057.375,  #V48 
+                     745349.203, 7102988.687,  #V49 
+                     744999.362, 7102982.580,  #V50 
+                     744969.153, 7102988.111,  #V51 
+                     744920.469, 7102994.511,  #V52 
+                     744896.254, 7103010.687,  #V53 
+                     744888.483, 7102999.053,  #V54 
+                     744563.712, 7103173.195,  #V55 
+                     744356.190, 7103151.065,  #V56 
+                     743919.717, 7102791.264,  #V57 
+                     743917.254, 7102763.955,  #V58 
+                     743994.677, 7102677.967,  #V59 
+                     743994.677, 7102487.692,  #V60 
+                     744014.601, 7102465.949,  #V61 
+                     744119.495, 7102456.772,  #V62 
+                     744152.306, 7102417.669,  #V63 
+                     744174.806, 7102413.904,  #V64 
+                     744262.889, 7102466.830,  #V65 
+                     744273.852, 7102496.152,  #V66 
+                     744246.405, 7102580.626,  #V67 
+                     744250.029, 7102626.678,  #V68 
+                     744267.403, 7102660.775,  #V69 
+                     744310.908, 7102690.120,  #V70 
+                     744367.045, 7102695.032,  #V71 
+                     744467.801, 7102675.447,  #V72 
+                     744487.160, 7102658.319,  #V73 
+                     744504.776, 7102604.104,  #V74 
+                     744534.152, 7102592.828,  #V75 
+                     744577.552, 7102617.885,  #V76 
+                     744608.255, 7102613.022,  #V77  
+                     744690.256, 7102521.951,  #V78 
+                     744690.256, 7102473.996,  #V79 
+                     744660.088, 7102448.682,  #V80 
+                     744652.582, 7102417.416,  #V81 
+                     744674.364, 7102366.101,  #V82 
+                     744352.951, 7102369.831,  #V83 
+                     744497.336, 7102205.536,  #V84 
+                     744621.773, 7102255.576,  #V85 
+                     744609.459, 7102355.873,  #V86 
+                     744570.820, 7102420.179,  #V87 
+                     744576.090, 7102463.101,  #V88 
+                     744604.890, 7102491.901,  #V89 
+                     744568.120, 7102528.671,  #V90 
+                     744534.450, 7102495.000,  #V91 
+                     744403.753, 7102485.861,  #V92 
+                     745934.824, 7103015.249,  #V93 
+                     745991.198, 7103001.165,  #V94 
+                     746031.854, 7102973.822,  #V95 
+                     746001.317, 7102939.329,  #V96 
+                     745967.862, 7102960.315,  #V97 
+                     745939.646, 7102966.059,  #V98
+                     744685.459, 7102275.806), #V31 
+                  ncol = 2, byrow = TRUE)
+
+agua <- matrix(c(743849.682, 7103182.740, #V99  1 
+                 743857.774, 7103175.108, #V100 2
+                 743845.208, 7103161.786, #V101 3
+                 744088.286, 7102930.838, #V102 4
+                 744065.283, 7102911.876, #V103 5
+                 743818.261, 7103149.318, #V104 6
+                 744075.339, 7103519.980, #V112 14
+                 744106.804, 7103553.232, #V105 7
+                 744128.591, 7103532.613, #V106 8
+                 744120.187, 7103523.733, #V107 9
+                 744890.681, 7103002.344, #V108 10
+                 744793.321, 7103050.798, #V109 11
+                 744110.857, 7103513.875, #V110 12
+                 744097.123, 7103499.363, #V111 13
+                 744080.437, 7103515.150, #     15
+                 743849.682, 7103182.740),#V99  1
+               ncol = 2, byrow = TRUE)
+
+duto_liquidos <- matrix(c(744495.480, 7103252.894, #V113
+                          744499.791, 7103249.969, #V114
+                          744383.706, 7103154.276, #V115
+                          744374.697, 7103153.329, #V116
+                          744495.480, 7103252.894),#V113
+                        ncol = 2, byrow = TRUE)
+
+duto_gas <- matrix(c(744843.066, 7103602.824, #V117
+                     745069.754, 7103049.049, #V118
+                     745734.863, 7103049.049, #V119
+                     746201.287, 7103204.784, #V120
+                     746226.748, 7103145.908, #V121
+                     746221.301, 7103145.908, #V122
+                     746198.518, 7103198.589, #V123
+                     745735.676, 7103044.049, #V124
+                     745066.398, 7103044.490, #V125
+                     744839.295, 7103598.838, #V126
+                     744843.066, 7103602.824),#V117
+                   ncol = 2, byrow = TRUE)
+
+cais_conteineres <- matrix(c(743289.194, 7102692.076,  #V127 
+                             743839.041, 7103273.168,  #V128 
+                             743889.887, 7103225.057,  #V129 
+                             743340.042, 7102643.962,  #V130 
+                             743289.194, 7102692.076),  #V127
+                      ncol = 2, byrow = TRUE)
+
+
+berco_conteineres <- matrix(c(743289.194, 7102692.076,  #V127 
+                              743839.041, 7103273.168,  #V128 
+                              743791.645, 7103318.015,  #V132 
+                              743241.798, 7102736.923,  #V131 
+                              743289.194, 7102692.076), #V127
+                            ncol = 2, byrow = TRUE)
+
+pier <- matrix(c( 743865.864, 7103275.327, #V133 
+                  743854.243, 7103286.324, #V135
+                  744075.339, 7103519.980, #V112
+                  744106.804, 7103553.232, #V105
+                  744331.851, 7103791.072, #V138
+                  744343.473, 7103780.075, #V137
+                  744118.420, 7103542.239, #V136 
+                  744086.959, 7103508.985, #V134 
+                  743865.864, 7103275.327), #V133
+                ncol = 2, byrow = TRUE)
+
+berco_graos <- matrix(c(743854.243, 7103286.324, #V135
+                        744331.851, 7103791.072, #V138
+                        744290.085, 7103830.593, #V140
+                        743812.477, 7103325.844, #V139
+                        743854.243, 7103286.324),#V135
+                      ncol = 2, byrow = TRUE)
+
+cais_liquidos <- matrix(c(744364.077, 7103804.760, #V141 
+                          744421.261, 7103865.194, #V142 
+                          744424.167, 7103862.445, #V143 
+                          744479.151, 7103920.554, #V144 
+                          744476.246, 7103923.303, #V145 
+                          744533.430, 7103983.737, #V146 
+                          744524.714, 7103991.984, #V147 
+                          744467.530, 7103931.551, #V148 
+                          744464.624, 7103934.300, #V149 
+                          744409.637, 7103876.191, #V150 
+                          744412.545, 7103873.442, #V151 
+                          744355.361, 7103813.008, #V152 
+                          744364.077, 7103804.760), #V141
+               ncol = 2, byrow = TRUE)
+               
+berco_liquidos <- matrix(c(744524.714, 7103991.984, #V147 
+                           744467.530, 7103931.551, #V148 
+                           744464.624, 7103934.300, #V149 
+                           744409.637, 7103876.191, #V150 
+                           744412.545, 7103873.442, #V151 
+                           744355.361, 7103813.008, #V152 
+                           744327.032, 7103839.813, #V153 
+                           744496.385, 7104018.789, #V154 
+                           744524.714, 7103991.984),#V147 
+                         ncol = 2, byrow = TRUE)
+
+cais_gas <- matrix(c(744749.343, 7103481.223, #V155 
+                     744783.708, 7103517.541, #V156 
+                     744793.069, 7103549.986, #V157 
+                     744889.292, 7103651.676, #V158 
+                     744921.170, 7103662.814, #V159 
+                     744955.536, 7103699.132, #V160 
+                     744948.272, 7103706.005, #V161 
+                     744913.907, 7103669.687, #V162 
+                     744874.765, 7103665.423, #V163 
+                     744778.542, 7103563.731, #V164 
+                     744776.445, 7103524.414, #V165 
+                     744742.079, 7103488.096, #V166 
+                     744749.343, 7103481.223),#V155
+                   ncol = 2, byrow = TRUE)
+                   
+                         
+berco_gas <- matrix(c(744948.272, 7103706.005, #V161 
+                      744913.907, 7103669.687, #V162 
+                      744874.765, 7103665.423, #V163 
+                      744778.542, 7103563.731, #V164 
+                      744776.445, 7103524.414, #V165 
+                      744742.079, 7103488.096, #V166 
+                      744666.878, 7103559.254, #V167 
+                      744873.070, 7103777.164, #V168 
+                      744948.272, 7103706.005),#V161
+                    ncol = 2, byrow = T)
+
+cais_fert <- matrix(c(744269.991, 7103446.563, #V169 
+                      744474.122, 7103662.293, #V170 
+                      744455.962, 7103679.476, #V171 
+                      744251.832, 7103463.745, #V172 
+                      744269.991, 7103446.563),#V169
+                    ncol = 2, byrow = T)
+                    
+berco_fert <- matrix(c(744455.962, 7103679.476, #V171 
+                       744251.832, 7103463.745, #V172 
+                       744222.323, 7103491.667, #V173 
+                       744426.454, 7103707.398, #V174 
+                       744455.962, 7103679.476),#V171
+                      ncol = 2, byrow = T)
+cais_veic <- matrix(c(743571.589, 7102859.573, #V175 
+                      743832.767, 7103135.592, #V176 
+                      743818.261, 7103149.318, #V104 
+                      743557.084, 7102873.299, #V177 
+                      743571.589, 7102859.573),#V175
+                    ncol = 2, byrow = T)
+
+berco_veic <- matrix(c(743571.589, 7102859.573, #V175 
+                       743832.767, 7103135.592, #V176 
+                       743858.434, 7103110.703, #V179 
+                       743597.557, 7102835.002, #V178 
+                       743571.589, 7102859.573),#V175
+                     ncol = 2, byrow = T)
+
+cais_carga <- matrix(c(743817.982, 7102843.376, #V180 
+                       743852.347, 7102879.694, #V181 
+                       743845.084, 7102886.567, #V182 
+                       743962.513, 7103010.660, #V183 
+                       743948.816, 7103023.826, #V184 
+                       743797.192, 7102863.598, #V185 
+                       743817.982, 7102843.376), #V180
+                     ncol = 2, byrow = T)
+
+berco_carga <- matrix(c(743948.816, 7103023.826, #V184 
+                        743797.192, 7102863.598, #V185 
+                        743787.205, 7102873.049, #V186 
+                        743938.903, 7103033.355, #V187 
+                        743948.816, 7103023.826), #V184
+                      ncol = 2, byrow = TRUE)
+
+canal <- matrix(c(744326.276, 7105065.1790, #V190  
+                  744519.171, 7104939.9120, #V191  
+                  742957.496, 7102957.4420, #V192  
+                  743355.622, 7103148.2050, #V193  
+                  744339.877, 7104130.5550, #V194  
+                  744566.991, 7104140.0650, #V195  
+                  744496.385, 7104018.7890, #V154  
+                  744327.032, 7103839.8130, #V153  
+                  744290.085, 7103830.5930, #V140  
+                  743812.477, 7103325.8440, #V139  
+                  743791.645, 7103318.0150, #V132  
+                  743241.798, 7102736.9230, #V131  
+                  743149.142, 7102639.0020, #V196  
+                  744736.028, 7104471.3630, #V197  
+                  744873.070, 7103777.1640, #V168  
+                  744666.878, 7103559.2540, #V167  
+                  744474.122, 7103662.2930, #V170  
+                  744426.454, 7103707.3980, #V174  
+                  744179.195, 7103532.4760, #V198  
+                  744599.291, 7103976.4440, #V199  
+                  743125.293, 7102518.1540, #V200  
+                  743160.136, 7102530.0790, #V201  
+                  743540.212, 7102774.4250, #V202  
+                  743621.281, 7102697.7100, #V203  
+                  743196.276, 7102424.4790, #V204  
+                  742996.240, 7102356.0200, #V205  
+                  742854.408, 7103423.4050, #V206
+                  744326.276, 7105065.1790),#V190
+                ncol = 2, byrow = TRUE)
+
+quebra_mar <- matrix(c(744905.028, 7104378.745,  #V207
+                       745133.833, 7104162.242,  #V208
+                       745196.371, 7104016.969,  #V209
+                       745196.371, 7103503.067,  #V210
+                       744996.371, 7104016.969,  #V211
+                       744905.028, 7104378.745), #V207
+                     ncol = 2, byrow = TRUE)
+ 
+```
+
+```{r}
+# 3. Criação dos polígonos
+#
+pl_terreno <- st_sfc(st_polygon(list(terreno)))
+pl_terminal <- st_sfc(st_polygon(list(terminal)))
+pl_agua <- st_sfc(st_polygon(list(agua)))
+pl_duto_liquidos <- st_sfc(st_polygon(list(duto_liquidos)))
+pl_duto_gas <- st_sfc(st_polygon(list(duto_gas)))
+pl_cais_conteineres <- st_sfc(st_polygon(list(cais_conteineres)))
+pl_berco_conteineres <- st_sfc(st_polygon(list(berco_conteineres)))
+pl_pier <- st_sfc(st_polygon(list(pier)))
+pl_berco_graos <- st_sfc(st_polygon(list(berco_graos)))
+pl_cais_liquidos <- st_sfc(st_polygon(list(cais_liquidos)))
+pl_berco_liquidos <- st_sfc(st_polygon(list(berco_liquidos)))
+pl_cais_gas <- st_sfc(st_polygon(list(cais_gas)))
+pl_berco_gas <- st_sfc(st_polygon(list(berco_gas)))
+pl_cais_fert <- st_sfc(st_polygon(list(cais_fert)))
+pl_berco_fert <- st_sfc(st_polygon(list(berco_fert)))
+pl_cais_veic <- st_sfc(st_polygon(list(cais_veic)))
+pl_berco_veic <- st_sfc(st_polygon(list(berco_veic)))
+pl_cais_carga <- st_sfc(st_polygon(list(cais_carga)))
+pl_berco_carga <- st_sfc(st_polygon(list(berco_carga)))
+pl_canal <- st_sfc(st_polygon(list(canal)))
+pl_quebra_mar <- st_sfc(st_polygon(list(quebra_mar)))                         
+```
+
+## Áreas
+
+```{r}
+# Terreno
+area_terreno <- st_area(pl_terreno)
+
+# Acessos
+area_agua <- st_area(pl_agua)
+
+# Pier
+area_pier <- st_area(pl_pier)
+
+# Berço Grãos
+area_berco_graos <- st_area(pl_berco_graos)
+
+# Cais Conteineres
+area_cais_conteineres <- st_area(pl_cais_conteineres)
+
+# Berço Conteineres
+area_berco_conteineres <- st_area(pl_berco_conteineres)
+
+# Cais Líquidos
+area_cais_liquidos <- st_area(pl_cais_liquidos)
+
+# Berço Líquidos
+area_berco_liquidos <- st_area(pl_berco_liquidos)
+
+# Duto Líquidos
+area_duto_liquidos <- st_area(pl_duto_liquidos)
+
+# Cais Gas
+area_cais_gas <- st_area(pl_cais_gas)
+
+# Berço Gas
+area_berco_gas <- st_area(pl_berco_gas)
+
+# Duto Gas
+area_duto_gas <- st_area(pl_duto_gas)
+
+# Cais Fertilizantes
+area_cais_fert <- st_area(pl_cais_fert)
+
+# Berço Fertilizantes
+area_berco_fert <- st_area(pl_berco_fert)
+
+# Cais Veículos
+area_cais_veic <- st_area(pl_cais_veic)
+
+# Berço Veículos
+area_berco_veic <- st_area(pl_berco_veic)
+
+# Cais Carga
+area_cais_carga <- st_area(pl_cais_carga)
+
+# Quabra mar
+area_quebra_mar <- st_area(pl_quebra_mar)
+```
+
+```{r, echo = TRUE}
+# Terreno
+area_terreno
+
+# Acessos
+area_agua
+
+# Pier
+area_pier
+
+# Berço Grãos
+area_berco_graos
+
+# Cais Conteineres
+area_cais_conteineres
+
+# Berço Conteineres
+area_berco_conteineres
+
+# Cais Líquidos
+area_cais_liquidos
+
+# Berço Líquidos
+area_berco_liquidos
+
+# Duto Líquidos
+area_duto_liquidos
+
+# Cais Gas
+area_cais_gas
+
+# Berço Gas
+area_berco_gas
+
+# Duto Gas
+area_duto_gas
+
+# Cais Fertilizantes
+area_cais_fert
+
+# Berço Fertilizantes
+area_berco_fert
+
+# Cais Veículos
+area_cais_veic
+
+# Berço Veículos
+area_berco_veic
+
+# Cais Carga
+area_cais_carga
+
+# Quabra mar
+area_quebra_mar
+```
+
+```{r}
+# Criação dos polígonos espaciais
+#
+spl_terreno <- pl_terreno %>% st_set_crs(31982) 
+spl_terminal <- pl_terminal %>% st_set_crs(31982) 
+spl_agua <- pl_agua %>% st_set_crs(31982) 
+spl_duto_liquidos <- pl_duto_liquidos %>% st_set_crs(31982)
+spl_duto_gas <- pl_duto_gas %>% st_set_crs(31982)
+spl_cais_conteineres <- pl_cais_conteineres %>% st_set_crs(31982)
+spl_berco_conteineres <- pl_berco_conteineres %>% st_set_crs(31982)
+spl_pier <- pl_pier %>% st_set_crs(31982)
+spl_berco_graos <- pl_berco_graos %>% st_set_crs(31982)
+spl_cais_liquidos <- pl_cais_liquidos %>% st_set_crs(31982)
+spl_berco_liquidos <- pl_berco_liquidos %>% st_set_crs(31982)
+spl_cais_gas <- pl_cais_gas %>% st_set_crs(31982)
+spl_berco_gas<- pl_berco_gas %>% st_set_crs(31982)
+spl_cais_fert <- pl_cais_fert %>% st_set_crs(31982)
+spl_berco_fert <- pl_berco_fert %>% st_set_crs(31982)
+spl_cais_veic <- pl_cais_veic %>% st_set_crs(31982)
+spl_berco_veic <- pl_berco_veic %>% st_set_crs(31982)
+spl_cais_carga <- pl_cais_carga %>% st_set_crs(31982)
+spl_berco_carga <- pl_berco_carga %>% st_set_crs(31982)
+spl_canal <- pl_canal %>% st_set_crs(31982)
+spl_quebra_mar <- pl_quebra_mar %>% st_set_crs(31982)
+```
+
+
+```{r}
+# 4. Unir feições em um único objeto espacial
+#
+spl <- st_sfc(rbind(spl_terreno, spl_agua, spl_duto_liquidos, spl_duto_gas,
+                  spl_cais_conteineres, spl_berco_conteineres, spl_pier, spl_berco_graos,
+                  spl_cais_liquidos, spl_berco_liquidos, spl_cais_gas, spl_berco_gas,
+                  spl_cais_fert, spl_berco_fert, spl_cais_carga, spl_berco_carga,
+                  spl_cais_veic, spl_berco_veic, spl_quebra_mar), crs = 31982)
+
+# 5. Digitação dos metadados
+#
+World_Port <- data.frame(interessado = "Worldport Desenvolvimento Portuário S.A",
+                         #cnpj = "20.023.299/0001-07",
+                         nup = "04905.001276/2019-91",
+                         protocolo = "6525842",
+                         ref = 6340695,
+                         concedida = FALSE,
+                         area = sum(st_area(spl)),
+                         municipio = 8319)
+#
+# Atentar para a definição do crs apropriado
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(World_Port,
+                geometry = st_combine(spl)) #%>%
+ # st_transform(crs = 31982) # Transforma para SIRGAS2000, caso necessário.
+```
+
+## DADOS
+
+```{r}
+kable(st_drop_geometry(spl_df), caption = "Dados da Certidão de Disponibilidade",
+      booktabs = TRUE) %>%
+  kable_styling(font_size = 7, latex_options = "HOLD_position")
+```
+
+
+```{r}
+# 6. Escrever a nova entrada no BDE
+# 
+spl_df %>%
+  st_transform(crs = 4326) %>%
+  st_write("WorldPort.geojson", delete_dsn = TRUE)
+```
+
+```{r}
+# Verificar todas as tabelas no schema espacoaquatico
+tudo <- st_read(conn,
+                  query = "SELECT * FROM pg_tables
+                  WHERE schemaname = 'espacoaquatico';")
+# Portos no município de SFS e Itapoá
+portos <- st_read(conn,
+                  query = "SELECT * FROM espacoaquatico.portos
+                  WHERE municipio = 8319 OR municipio = 9985;") %>%
+    st_transform(crs = 4326)
+# Cessões no município de SFS e Itapoá
+cessao <- st_read(conn,
+                  query = "SELECT * FROM espacoaquatico.cessao
+                  WHERE municipio = 8319 OR municipio = 9985;") %>%
+    st_transform(crs = 4326)
+# Certidões no município de SFS e Itapoá
+certdisp <- st_read(conn,
+                  query = "SELECT * FROM espacoaquatico.certdisp
+                  WHERE municipio = 8319 OR municipio = 9985;") %>%
+    st_transform(crs = 4326)
+```
+
+## Interseções
+
+```{r}
+spl_berco_conteineres %>% 
+  st_transform(crs = 4326) %>% 
+  leaflet() %>% addTiles() %>% 
+  addPolygons() %>% 
+  addPolygons(data = portos, color = "yellow")
+spl_pier %>% 
+  st_transform(crs = 4326) %>% 
+  leaflet() %>% addTiles() %>% 
+  addPolygons() %>% 
+  addPolygons(data = portos, color = "yellow")
+spl_berco_graos %>% 
+  st_transform(crs = 4326) %>% 
+  leaflet() %>% addTiles() %>% 
+  addPolygons() %>% 
+  addPolygons(data = portos, color = "yellow")
+spl_cais_liquidos %>% 
+  st_transform(crs = 4326) %>% 
+  leaflet() %>% addTiles() %>% 
+  addPolygons() %>% 
+  addPolygons(data = portos, color = "yellow")
+spl_berco_liquidos %>% 
+  st_transform(crs = 4326) %>% 
+  leaflet() %>% addTiles() %>% 
+  addPolygons() %>% 
+  addPolygons(data = portos, color = "yellow")
+```
+
+## IMAGEM
+
+```{r}
+ext <- extent(st_transform(spl_df, 4326))
+centroide <- st_coordinates(st_centroid(st_transform(spl_df, 4326)))
+m <- portos %>%
+  leaflet() %>%
+  # Base Groups
+  addTiles(group = "OSM (default)") %>%
+  addProviderTiles(providers$OpenSeaMap, group = "OpenSea") %>%
+  addProviderTiles(providers$Esri.OceanBasemap, group = "Esri Ocean") %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms",
+              layers = list("OrtoRGB-Landsat-2012"),
+              group = "SIG-SC") %>%
+  addPolygons(group = "Portos", color = "orange", stroke = TRUE, weight = 1) %>%
+  addPolygons(data = certdisp, color = "blue", fillColor = "red",
+              stroke = TRUE, weight = 1,
+              group = "Certidões de Disponibilidade") %>%
+  addPolygons(data = cessao, color = "red", fillColor = "red",
+              stroke = TRUE, weight = 1,
+              group = "Cessões") %>%
+  addScaleBar(position = 'bottomleft', options = list(imperial = FALSE)) %>%
+  addGraticule(interval = .05, style = list(weight = .2)) %>%
+  addMiniMap(position = "topleft", zoomLevelOffset = -3, toggleDisplay = TRUE)  %>%
+  # Layers control
+  addLayersControl(
+    baseGroups = c("OSM (default)", "OpenSea", "Esri Ocean", "SIG-SC"),
+    overlayGroups = c("Cessões", "Certidões de Disponibilidade", "Portos"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>%
+  hideGroup("Cessões") %>%
+  addHomeButton(ext = ext, layer.name = "WorlPort") %>%
+  addMouseCoordinates() %>%
+  addLogo("SPU.jpg", src = "local", position = "bottomright",
+                  offset.x = 15, offset.y = 15,
+                  width = 75, height = 75)
+m
+# mapview::mapshot(m, file = "./map.png", remove_controls = NULL)
+# knitr::include_graphics("map.png")
+```
+
+```{r}
+m1 <- m %>%
+  setView(lng = centroide[1], lat = centroide[2], zoom = 14)
+mapview::mapshot(m1, file = "./map1.png", remove_controls = NULL)
+knitr::include_graphics("map1.png")
+```
+
+```{r}
+m2 <- m %>%
+  setView(lng = -48.55273, lat = -26.16732, zoom = 15)
+mapview::mapshot(m2, file = "./map2.png", remove_controls = NULL)
+knitr::include_graphics("map2.png")
+```
+
+```{r, results = "hide"}
+# 7. Desconectar do BDG
+dbDisconnect(conn)
+```
+
