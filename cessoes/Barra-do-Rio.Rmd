@@ -1,0 +1,72 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "Barra do Rio Terminais Portuários S/A"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+#                             E             N
+coords <- matrix(data = c(731080.6051, 7024438.2870, #V-1
+                          731072.4312, 7024460.4758, #V-E
+                          731068.5081, 7024471.1282, #V-D
+                          731216.0449, 7024526.4393, #V-C
+                          731291.0178, 7024554.5452, #V-B
+                          731517.9759, 7024543.5342, #V-A
+                          731516.2799, 7024508.5754, #V-6
+                          731296.5383, 7024519.2362, #V-7
+                          731080.6051, 7024438.2870),#V-1
+                 ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+#
+pl <- st_sfc(st_polygon(list(coords))) 
+#
+# 3. Criação dos metadados  
+#
+dados <- data.frame(interessado = "Barra do Rio Terminais Portuários S/A",
+                    cnpj = "06.989.608/0001-77",
+                    protocolo = "0264060",
+                    nup = "04972.006998/2011-81",
+                    ref = 1012618,
+                    onerosa = TRUE,
+                    concedida = TRUE,
+                    area = st_area(pl),
+                    municipio = 8161,
+                    logradouro = "53-00",
+                    aval = 15379.82,
+                    dataaval = 21/02/2014)
+#
+# 4. Junção dos metadados com a geometria 
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+spl_df <- st_sf(dados, geom = pl, crs = 21982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "golar.geojson", delete_dsn = TRUE)
+```
