@@ -1,0 +1,169 @@
+---
+title: "Certidão de Disponibilidade"
+subtitle: |
+  | Santa Bárbara Construtora e Incorporadora LTDA
+  | 04972.001930/2019-62
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: 
+  beamer_presentation:  
+    theme: "metropolis"
+    slide_level: 2
+    keep_tex: true
+header-includes:
+  - \usepackage{tikz}
+  - \usepackage{booktabs}
+  - \usepackage{pdfpages}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(sf)
+library(leaflet)
+library(leafem)
+```
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+#                              E          N      
+coords <- matrix(data = c(722908.06, 7103680.38, #V1
+                          723762.43, 7102216.18, #V2
+                          724393.46, 7100911.36, #V3
+                          724500.42, 7100414.24, #V4
+                          724392.57, 7099910.09, #V5
+                          724173.74, 7099625.15, #V6
+                          723863.60, 7099630.48, #V7
+                          723743.44, 7099579.56, #V8
+                          723587.70, 7099456.82, #V9
+                          723587.58, 7098864.46, #V10
+                          723689.02, 7098357.22, #V11
+                          723900.29, 7097730.83, #V12
+                          723426.51, 7097571.03, #V13
+                          723205.01, 7098227.77, #V14
+                          723087.57, 7098815.01, #V15
+                          723087.75, 7099699.44, #V16
+                          723486.62, 7100013.77, #V17
+                          723766.15, 7100132.23, #V18
+                          723928.18, 7100129.45, #V19
+                          723989.04, 7100413.94, #V20
+                          723917.25, 7100747.61, #V21
+                          723312.31, 7101998.50, #V22
+                          722476.43, 7103428.00, #V23
+                          722908.06, 7103680.38  #V1
+                          ),
+                 ncol = 2, byrow = TRUE)
+#
+# 2. Criação do polígono
+#
+#
+pl <- st_sfc(st_polygon(list(coords)))
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(
+  interessado = "SANTA BARBARA CONSTRUTORA E INCORPORADORA LTDA",
+  nup = "04972.001930/2019-62",
+  protocolo = "SC00879/2019",
+  ref =  4381271,
+  concedida = FALSE,
+  area = st_area(pl),
+  municipio = 8179
+)
+#
+# 4. Criação da feição
+#
+# Atentar para a definição do crs apropriado
+#
+# Exemplos:
+#
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <-  st_sf(attr, geometry = pl, crs = 31982)
+```
+
+
+```{r, results='hide'}
+portos <- st_read("../portos.geojson")
+cessoes <- st_read("../cessoes.geojson")
+certdisp <- st_read("../certdisp.geojson")
+
+LPM_DEMARCADA <- st_read("../linhas/LPM_DEMARCADA.geojson")
+LPM_HOMOLOGADA <- st_read("../linhas/LPM_HOMOLOGADA.geojson")
+LPM_PRESUMIDA <- st_read("../linhas/LPM_PRESUMIDA.geojson")
+
+LLTM_DEMARCADA <- st_read("../linhas/LLTM_DEMARCADA.geojson")
+LLTM_HOMOLOGADA <- st_read("../linhas/LLTM_HOMOLOGADA.geojson")
+LLTM_PRESUMIDA <- st_read("../linhas/LLTM_PRESUMIDA.geojson")
+```
+
+
+```{r}
+ext <- raster::extent(st_transform(spl_df, crs = 4326))
+ext@ymin <- -26.226
+m <- spl_df %>%   
+  st_transform(4326) %>%
+  leaflet() %>%
+  # Base Groups
+  addTiles(group = "OSM (default)") %>%
+  addProviderTiles(providers$OpenSeaMap, group = "OpenSea") %>%
+  addProviderTiles(providers$Esri.OceanBasemap, group = "Esri Ocean") %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+            layers = list("OrtoRGB-Landsat-2012"),
+            group = "SIG-SC") %>%
+  addPolygons() %>%
+  addPolygons(data = portos[4, ], color = "orange", fillColor = "orange", 
+             group = "Portos") %>%
+  addPolygons(data = certdisp, color = "red", fillColor = "red", 
+              group = "Certidões de Disponibilidade", dashArray = "20 20") %>%
+  addPolygons(data = cessoes, color = "red", fillColor = "red", 
+              group = "Cessões") %>%
+  ## Linhas de Preamar (LPM)
+  addPolylines(data = LPM_DEMARCADA, color = "red", weight = 2,
+               dashArray = "20 10") %>%
+  addPolylines(data = LPM_HOMOLOGADA, color = "red", weight = 2) %>%
+  addPolylines(data = LPM_PRESUMIDA, color = "red", weight = 2, 
+               dashArray = "20 10", opacity = .30, label = "PRESUMIDA") %>%
+  ## Linhas Limite de Terrenos de Marinha (LLTM)
+  addPolylines(data = LLTM_DEMARCADA, color = "blue", weight = 2, 
+               dashArray = "20 10") %>%
+  addPolylines(data = LLTM_HOMOLOGADA, color = "blue", weight = 2) %>%
+  addPolylines(data = LLTM_PRESUMIDA, color = "blue", weight = 2, 
+               dashArray = "20 10", opacity = .30) %>%
+  addScaleBar(position = 'bottomleft', options = list(imperial = FALSE)) %>%
+  # Layers control
+  addLayersControl(
+    baseGroups = c("SIG-SC", "OSM (default)", "OpenSea", "Esri Ocean"),
+    overlayGroups = c("Cessões", "Certidões de Disponibilidade", "Portos"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>%
+  fitBounds(ext[1], ext[3], ext[2], ext[4]) %>%
+  addHomeButton(ext = ext, layer.name = "Sta Bárbara") %>%
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+          offset.x = 5, offset.y = 25, alpha = .5)
+mapview::mapshot(m, file = "./map.png", remove_controls = NULL)
+```
+
+## {.plain}
+
+\begin{tikzpicture}[remember picture,overlay]
+        \node[at=(current page.center)] {
+            \includegraphics[width=\paperwidth, height=\paperheight]{map}
+        };
+\end{tikzpicture}
+
+```{r}
+# 6. Escrita em disco
+#
+#st_write(spl_df, "sta_barbara.geojson")
+WorldPort <- st_read("WorldPort.geojson")
+DSP <- st_read("DSP.geojson")
+certdisp <- rbind(DSP, WorldPort, spl_df)
+geo_write(certdisp, "../certdisp.geojson")
+```
+
