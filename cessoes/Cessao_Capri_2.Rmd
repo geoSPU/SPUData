@@ -1,0 +1,144 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: |
+  Prefeitura Municipal de São Francisco do Sul
+  Capri
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(sf)
+library(leaflet)
+library(leafem)
+library(raster)
+```
+
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+#                             X             Y     PONTOS
+coords <- matrix(data = c(743426.000052, 7101618, # P1
+                          743330.000052, 7101748, # P2
+                          743181.000052, 7101635, # P3
+                          743061.000052, 7101744, # P4
+                          743065.000052, 7101789, # P5
+                          743376.000052, 7102109, # P6
+                          743461.000052, 7102276, # P7
+                          743826.000053, 7102750, # P8
+                          744101.000053, 7103009, # P9
+                          744362.000054, 7103133, # P10
+                          744528.000054, 7103125, # P11
+                          744972.000055, 7102994, # P12
+                          745292.000055, 7102997, # P13
+                          745536.000056, 7103033, # P14
+                          745870.000056, 7103142, # P15
+                          746016.000056, 7103203, # P16
+                          746099.000057, 7103239, # P17
+                          746161.000057, 7103319, # P18
+                          746217.000057, 7103338, # P19
+                          746373.000057, 7103440, # P20
+                          746433.000057, 7103364, # P21
+                          746403.000057, 7103339, # P22
+                          746392.000057, 7103312, # P23
+                          746387.000057, 7103287, # P24
+                          746383.000057, 7103217, # P25
+                          746379.000057, 7103117, # P26
+                          746385.000057, 7103079, # P27
+                          746412.000057, 7103024, # P28
+                          746399.000057, 7102878, # P29
+                          746410.000057, 7102833, # P30
+                          746389.000057, 7102815, # P31
+                          746276.000057, 7102780, # P32
+                          746090.000057, 7102723, # P33
+                          746050.000056, 7102853, # P34
+                          745897.000056, 7103052, # P35
+                          745622.000056, 7103022, # P36
+                          745552.000056, 7103004, # P37
+                          745384.000055, 7102964, # P38
+                          745118.000055, 7102954, # P39
+                          745175.000055, 7102439, # P40
+                          744952.000055, 7102363, # P41
+                          744720.000054, 7102281, # P42
+                          744581.000054, 7102234, # P43
+                          744092.000053, 7102023, # P44
+                          743713.000053, 7101813, # P45
+                          743426.000052, 7101618), # P1
+                   ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_sfc(st_polygon(list(coords)))
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(interessado = "Prefeitura Municipal de São Francisco do Sul",
+                    nup = "xxxxx.xxxxx/xxxx-xx",
+                    protocolo = NA,
+                    ref = NA,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = NA,
+                    logradouro = NA,
+                    aval = NA,
+                    dataaval = NA,
+                    refaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = pl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+```{r}
+#st_write(spl_df, "prainha-sfs.geojson")
+```
+
+
+## IMAGEM
+
+```{r}
+spl_df <- st_transform(spl_df, 4326)
+ext <- extent(spl_df)
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addHomeButton(ext = ext, layer.name = "Capri") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./map.png", remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("map.png")
+```

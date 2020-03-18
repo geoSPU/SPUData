@@ -4,17 +4,15 @@ subtitle: |
   Prefeitura Municipal de São Francisco do Sul
   Prainha
 author: "Luiz Fernando Palin Droubi"
-date: "`r format(Sys.Date(), '%d/%m/%Y')`"
-output:
-  pdf_document: default
-  html_document: default
-subtitle: Capri Iate Clube.
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: binb::metropolis
 ---
 
-```{r}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 library(sf)
 library(leaflet)
-library(mapview)
 library(leafem)
 library(raster)
 ```
@@ -98,6 +96,11 @@ spl_df <- st_sf(attr,
   st_transform(crs = 4326) # Transforma para WGS84.
 ```
 
+```{r}
+#st_write(spl_df, "prainha-sfs.geojson")
+```
+
+
 ## IMAGEM
 
 ```{r}
@@ -108,21 +111,14 @@ m <- spl_df %>%
   #addTiles() %>%
   addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
               layers = list("OrtoRGB-Landsat-2012")) %>%
-  #addProviderTiles(providers$Esri.WorldImagery) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
   addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
-  addHomeButton(ext = ext, layer.name = "Huisman") %>%
+  addHomeButton(ext = ext, layer.name = "Prainha") %>%
   fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
   addMouseCoordinates() %>%
-  addLogo("SPU.jpg", src = "local", position = "topright", 
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
                   offset.x = 15, offset.y = 15, 
                   width = 75, height = 75)
-mapshot(m, file = "./map.png", remove_controls = NULL)
+mapview::mapshot(m, file = "./map.png", remove_controls = NULL, remove_url = FALSE)
 knitr::include_graphics("map.png")
 ```
-
-# DESCONECTAR DO BDE
-
-```{r}
-dbDisconnect(conn = conn)
-```
-
