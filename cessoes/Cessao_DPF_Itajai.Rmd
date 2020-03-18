@@ -1,0 +1,99 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: "ICMBio"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+dpf_2016 <- matrix(data = c(733220.62, 7021361.94, #V6
+                            733218.56, 7021371.11, #P1
+                            733208.45, 7021369.50, #P2
+                            733201.14, 7021390.14, #P3
+                            733215.90, 7021400.16, #P4
+                            733248.59, 7021421.83, #P5
+                            733256.48, 7021385.33, #P6
+                            733286.86, 7021375.60, #P7
+                            733300.82, 7021364.94, #P8
+                            733312.78, 7021355.72, #P9
+                            733342.36, 7021326.29, #P10
+                            733349.32, 7021311.72, #P11
+                            733360.34, 7021299.30, #P12
+                            733327.52, 7021272.71, #P13
+                            733296.04, 7021247.07, #P14
+                            733284.19, 7021235.49, #V8
+                            733225.81, 7021333.12, #V7
+                            733220.62, 7021361.94),#V6
+                   ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_sfc(st_polygon(list(dpf_2016)))
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(interessado = "Município de Itajaí",
+                    nup = "08490.009622/2013-63",
+                    protocolo = "2081255",
+                    ref = 2081279,
+                    concedida = TRUE,
+                    area = st_area(pl),
+                    municipio = 8161,
+                    logradouro = "27-00",
+                    aval = 85565.73,
+                    dataaval = as.Date("22/08/2019", format = "%d/%m/%Y"),
+                    refaval = 3645421)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = pl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+```{r}
+spl_df %>%
+  leaflet() %>%
+  addTiles() %>% 
+  addPolygons() %>%
+  addPolygons(data = porto_itajai)
+```
+
+
+## Exportar
+
+```{r}
+st_write(spl_df, "municipio_itajai_praca.geojson", delete_dsn = TRUE)
+```
+
+

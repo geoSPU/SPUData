@@ -1,0 +1,128 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: |
+  Prefeitura Municipal de São Francisco do Sul
+  Prainha
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+subtitle: Capri Iate Clube.
+---
+
+```{r}
+library(sf)
+library(leaflet)
+library(mapview)
+library(leafem)
+library(raster)
+```
+
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+
+# X               Y     PONTOS
+coords<- matrix(data = c(749645.000063, 7095959, # P1
+                         749658.000063, 7095995, # P2
+                         749674.000063, 7095995, # P3
+                         749681.000063, 7096018, # P4
+                         749691.000063, 7096077, # P5
+                         749713.000063, 7096089, # P6
+                         749724.000063, 7096083, # P7
+                         749743.000063, 7096114, # P8
+                         749782.000063, 7096140, # P9
+                         749809.000063, 7096134, # P10
+                         749819.000063, 7096115, # P11
+                         749877.000063, 7096095, # P12
+                         749885.000063, 7096087, # P13
+                         749890.000063, 7096055, # P14
+                         749872.000063, 7096015, # P15
+                         749865.000063, 7096008, # P16
+                         749829.000063, 7096002, # P17
+                         749813.000063, 7095991, # P18
+                         749775.000063, 7095945, # P19
+                         749765.000063, 7095941, # P20
+                         749757.000063, 7095941, # P21
+                         749722.000063, 7095952, # P22
+                         749715.000063, 7095951, # P23
+                         749711.000063, 7095945, # P24
+                         749645.000063, 7095959),# P1
+                   ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_sfc(st_polygon(list(coords)))
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(interessado = "Prefeitura Municipal de São Francisco do Sul",
+                    nup = "xxxxx.xxxxx/xxxx-xx",
+                    protocolo = NA,
+                    ref = NA,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = NA,
+                    logradouro = NA,
+                    aval = NA,
+                    dataaval = NA,
+                    refaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = pl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+## IMAGEM
+
+```{r}
+spl_df <- st_transform(spl_df, 4326)
+ext <- extent(spl_df)
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  #addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addHomeButton(ext = ext, layer.name = "Huisman") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("SPU.jpg", src = "local", position = "topright", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapshot(m, file = "./map.png", remove_controls = NULL)
+knitr::include_graphics("map.png")
+```
+
+# DESCONECTAR DO BDE
+
+```{r}
+dbDisconnect(conn = conn)
+```
+
