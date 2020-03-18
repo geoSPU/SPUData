@@ -1,0 +1,109 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: |
+  Prefeitura Municipal de São Francisco do Sul
+  Capri
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(sf)
+library(leaflet)
+library(leafem)
+library(raster)
+```
+
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+
+
+#                             X             Y     PONTOS
+coords <- matrix(data = c(744065.63329, 6943293.80534, #VT-01
+                          744095.32545, 6943264.49491, #VT-02
+                          744121.28331, 6943225.17962, #VT-03
+                          744090.66781, 6943221.84325, #VT-04
+                          744054.64031, 6943221.84675, #VT-05
+                          744030.51531, 6943259.96475, #VT-06
+                          744015.06331, 6943280.37775, #VT-07
+                          744027.11860, 6943288.67729, #VT-08
+                          744041.12047, 6943276.25299, #VT-09
+                          744065.63329, 6943293.80534),#VT-01
+                   ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_sfc(st_polygon(list(coords)))
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(interessado = "Prefeitura Municipal de Florianópolis",
+                    nup = "04972.004665/2017-11",
+                    protocolo = 4061423,
+                    ref = 4061426,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = NA,
+                    logradouro = NA,
+                    aval = NA,
+                    dataaval = NA,
+                    refaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = pl, 
+                crs = 29192) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+```{r}
+st_write(spl_df, "anel-viario_fln.geojson")
+```
+
+
+## IMAGEM
+
+```{r}
+ext <- extent(spl_df)
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addHomeButton(ext = ext, layer.name = "Anel Viário") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./map.png", remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("map.png")
+```

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "anel-viario_fln",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "interessado": "Prefeitura Municipal de Florianópolis", "nup": "04972.004665\/2017-11", "protocolo": 4061423.0, "ref": 4061426.0, "concedida": false, "area": 4194.0197264887393, "municipio": null, "logradouro": null, "aval": null, "dataaval": null, "refaval": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.527428888118635, -27.612777827968848 ], [ -48.527122310558362, -27.613036829137268 ], [ -48.526851514062905, -27.613386741214285 ], [ -48.52716082565513, -27.613422360732496 ], [ -48.527525611894021, -27.613428833011277 ], [ -48.527777605857118, -27.613089387468417 ], [ -48.527938195776166, -27.612908063993462 ], [ -48.527817815723978, -27.612831031636741 ], [ -48.52767352726881, -27.612940563714869 ], [ -48.527428888118635, -27.612777827968848 ] ] ] } }
+]
+}
