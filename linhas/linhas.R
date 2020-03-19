@@ -1,10 +1,10 @@
 library(sf)
 
-lltm_demarcada_ilha <- st_read("linhas/LLTM_DEMARCADA_IlhaDeSantaCatarina.geojson")
-lltm_homologada_ilha <- st_read("linhas/LLTM_HOMOLOGADA_IlhaDeSantaCatarina.geojson")
+lltm_demarcada_ilha <- st_read("linhas/LLTM_DEMARCADA_ILHASC.geojson")
+lltm_homologada_ilha <- st_read("linhas/LLTM_HOMOLOGADA_ILHASC.geojson")
 
-lpm_demarcada_ilha <- st_read("linhas/LPM_DEMARCADA_IlhaDeSantaCatarina.geojson")
-lpm_homologada_ilha <- st_read("linhas/LPM_HOMOLOGADA_IlhaDeSantaCatarina.geojson")
+lpm_demarcada_ilha <- st_read("linhas/LPM_DEMARCADA_ILHASC.geojson")
+lpm_homologada_ilha <- st_read("linhas/LPM_HOMOLOGADA_ILHASC.geojson")
 
 #LLTM
 lltm_demarcada_ilha$FID <- c(0,1)
@@ -81,8 +81,8 @@ lpm_homologada_ilha$icon <- NULL
 lpm_homologada_ilha <- lpm_homologada_ilha[, c(2, 3, 4, 5, 1)]
 lpm_homologada_ilha <- st_zm(lpm_homologada_ilha)
 
-st_write(lltm_demarcada_ilha, "linhas/LLTM_DEMARCADA_IlhaDeSantaCatarina.geojson", delete_dsn = TRUE)
-st_write(lltm_homologada_ilha, "linhas/LLTM_HOMOLOGADA_IlhaDeSantaCatarina.geojson", delete_dsn = TRUE)
+st_write(lltm_demarcada_ilha, "linhas/LLTM_DEMARCADA_ILHASC.geojson", delete_dsn = TRUE)
+st_write(lltm_homologada_ilha, "linhas/LLTM_HOMOLOGADA_ILHASC.geojson", delete_dsn = TRUE)
 
-st_write(lpm_demarcada_ilha, "linhas/LPM_DEMARCADA_IlhaDeSantaCatarina.geojson", delete_dsn = TRUE)
-st_write(lpm_homologada_ilha, "linhas/LPM_HOMOLOGADA_IlhaDeSantaCatarina.geojson", delete_dsn = TRUE)
+st_write(lpm_demarcada_ilha, "linhas/LPM_DEMARCADA_ILHASC.geojson", delete_dsn = TRUE)
+st_write(lpm_homologada_ilha, "linhas/LPM_HOMOLOGADA_ILHASC.geojson", delete_dsn = TRUE)
