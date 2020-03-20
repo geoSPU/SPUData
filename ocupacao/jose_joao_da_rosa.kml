@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>io.kml</name>
+	<Style id="ÁREA EM ESTUDO">
+		<LineStyle id="lÁREA EM ESTUDOLineStyle">
+			<color>ffff00ff</color>
+		</LineStyle>
+		<PolyStyle id="pÁREA EM ESTUDOPolyStyle">
+			<color>7fff00ff</color>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>AB9E</name>
+		<styleUrl>#ÁREA EM ESTUDO</styleUrl>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-48.62445447323987,-27.79249559296781,0 -48.62446385085292,-27.79253034103607,0 -48.62442238198186,-27.79253903784038,0 -48.624429416897,-27.79258112767941,0 -48.62445876283493,-27.7926264822796,0 -48.62431529717622,-27.7926571196432,0 -48.62417457678949,-27.79265652254843,0 -48.62414226715658,-27.79266295509456,0 -48.62411311018574,-27.79267749081914,0 -48.62404726189286,-27.79272537027179,0 -48.62404977143105,-27.7927573732581,0 -48.62401628032423,-27.79276423344356,0 -48.62391948145712,-27.79260143167058,0 -48.62445447323987,-27.79249559296781,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
