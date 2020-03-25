@@ -1,0 +1,154 @@
+---
+title: "Cessão de Espaço Aquático"
+author: "Luiz Fernando Palin Droubi"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+subtitle: Capri Iate Clube.
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = "100%")
+library(textreadr)
+library(stringr)
+library(sf)
+library(leaflet)
+library(mapview)
+library(mapedit)
+library(leafpm)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(knitr)
+library(kableExtra)
+library(pdftools)
+```
+
+```{r}
+# 1. Geometria
+# 
+# Ler o arquivo pdf no R
+#
+pdf_file <- "Memorial_Praia_Saudade.pdf"
+pdf_file_1 <- "Memorial_descritivo_Praia_Riso.pdf"
+pdf_file_2 <- "Memorial_descritivo_Praia_Meio.pdf"
+memorial <- pdf_text(pdf_file)
+memorial_1 <- pdf_text(pdf_file_1)
+memorial_2 <- pdf_text(pdf_file_2)
+#
+# Juntar os textos das três páginas
+#
+memorial <- paste(memorial[1], memorial[2], memorial[3], sep = "")
+memorial_1 <- paste(memorial_1[1], memorial_1[2], sep = "")
+memorial_2 <- paste(memorial_2[1], memorial_2[2], sep = "")
+# Para visualizar quais vértices serão extraídos
+#
+# str_view_all(memorial, "VT-\\d{2}")
+#
+vertices <- str_extract_all(memorial, "VT-\\d{2}")
+vertices_1 <- str_extract_all(memorial_1, "VT-\\d{2}")
+vertices_2 <- str_extract_all(memorial_2, "VT-\\d{2}")
+#
+# Para extração das coordenadas E e N.
+#
+E <- str_extract_all(memorial, "E=\\d{6}.\\d{4}")
+N <- str_extract_all(memorial, "N=\\d{7}.\\d{3,4}")
+E_1 <- str_extract_all(memorial_1, "E=\\d{6}.\\d{4}")
+N_1 <- str_extract_all(memorial_1, "N=\\d{7}.\\d{3,4}")
+E_2 <- str_extract_all(memorial_2, "E=\\d{6}.\\d{4}")
+N_2 <- str_extract_all(memorial_2, "N=\\d{7}.\\d{3,4}")
+#
+# Retirar apenas a parte numérica, deixando fora as letras E e N e os espaços
+#
+E <- as.numeric(str_replace(E[[1]], "E=", ""))
+N <- as.numeric(str_replace(N[[1]], "N=", ""))
+E_1 <- as.numeric(str_replace(E_1[[1]], "E=", ""))
+N_1 <- as.numeric(str_replace(N_1[[1]], "N=", ""))
+E_2 <- as.numeric(str_replace(E_2[[1]], "E=", ""))
+N_2 <- as.numeric(str_replace(N_2[[1]], "N=", ""))
+#
+# Juntar as coordenadas e os nomes dos vértices em um único objeto.
+#
+coords <- cbind(E, N)
+rownames(coords) <- vertices[[1]]
+
+coords_1 <- cbind(E_1, N_1)
+rownames(coords_1) <- vertices_1[[1]]
+
+coords_2 <- cbind(E_2, N_2)
+rownames(coords_2) <- vertices_2[[1]]
+```
+
+```{r}
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_polygon(list(coords))
+pl_1 <- st_polygon(list(coords_1))
+pl_2 <- st_polygon(list(coords_2))
+mpl <- st_multipolygon(list(pl, pl_1, pl_2))
+spl <- st_sfc(mpl, crs = 31982)
+#
+# 3. Criação dos atributos  
+#
+attr <- data.frame(interessado = "Prefeitura Municipal de Florianópolis",
+                    cnpj = "82.892.282/0001-43",
+                    cpf = NA,
+                    protocolo = 6845246,
+                    nup = "04972.010746/2018-22",
+                    ref = 6845338,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = 8105)
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = spl, 
+                crs = 31982) #%>%
+ # st_transform(crs = 31982) # Transforma para SIRGAS2000, caso necessário.
+```
+
+## DADOS
+
+```{r}
+kable(t(st_drop_geometry(spl_df)), booktabs = TRUE) %>%
+  kable_styling(font_size = 7)
+```
+
+## IMAGEM
+
+```{r}
+spl_df <- st_transform(spl_df, 4326)
+ext <- extent(spl_df)
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  #addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addHomeButton(ext = ext, layer.name = "Praia da Saudade") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("SPU.jpg", src = "local", position = "topright", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapshot(m, file = "./map.png", remove_controls = NULL)
+include_graphics("map.png")
+```
+
+# Salvar 
+
+```{r}
+st_write(spl_df, "praia-da-saudade-riso-meio.geojson")
+```
+
