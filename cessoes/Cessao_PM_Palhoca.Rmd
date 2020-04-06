@@ -1,0 +1,176 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: |
+  Prefeitura Municipal da Palhoça  
+  10154.143536/2019-37
+author: "Luiz Fernando Palin Droubi"
+date: \today
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(units)
+#library(measurements)
+library(geosphere)
+```
+
+```{r, results='hide'}
+coords <- matrix(data = c(
+  733314.8343, 6925664.5164, # VT-01
+  733309.8336, 6925642.9108, # VT-02
+  733306.6148, 6925619.5272, # VT-03
+  733306.3085, 6925608.1096, # VT-04
+  733306.3775, 6925595.2041, # VT-05
+  733306.6345, 6925582.8906, # VT-06
+  733307.1473, 6925571.2114, # VT-07
+  733348.1286, 6925551.4944, # VT-08
+  733351.9514, 6925547.3030, # VT-09
+  733427.3666, 6925508.8163, # VT-10
+  733428.0364, 6925510.1773, # VT-11
+  733429.2674, 6925509.7568, # VT-12
+  733430.9938, 6925508.2240, # VT-13
+  733432.4604, 6925506.3071, # VT-14
+  733457.5095, 6925494.7292, # VT-15
+  733463.9436, 6925561.4700, # VT-16
+  733465.1922, 6925582.9527, # VT-17
+  733467.3729, 6925594.7859, # VT-18
+  733439.9858, 6925607.6677, # VT-19
+  733314.8343, 6925664.5164),# VT-01
+  ncol = 2, byrow = TRUE)
+ 
+pl <- st_sfc(st_polygon(list(coords)))
+# pl <- st_sfc(st_multipolygon(
+#   list(list(atual), 
+#        list(mangue)
+#        )
+#   )
+# )
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(interessado = "Prefeitura Municipal de Palhoça",
+                    cnpj = " 82.892.316/0001-08",
+                    nup = "10154.143536/2019-37",
+                    protocolo = "SC04008/2019",
+                    ref = 5010861,
+                    concedida = FALSE,
+                    area = st_area(pl),
+                    municipio = 8185,
+                    logradouro = NA,
+                    aval = NA,
+                    dataaval = NA,
+                    refaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = pl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+## Polígono enviado
+
+```{r}
+ext <- extent(spl_df)
+m <- spl_df %>% 
+  leaflet() %>% 
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "red") %>%
+  addHomeButton(group = "PM Palhoça") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./PM_Palhoca.png", remove_url = FALSE)
+knitr::include_graphics("PM_Palhoca.png")
+```
+
+## Tabela de coordenadas
+
+```{r}
+df <- st_coordinates(spl_df)[, c(1, 2)]
+df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
+vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
+row.names(df_SIRGAS) <- c(vertices, vertices[1])
+# kable(df,
+#       format.args = list(nsmall = 2),
+#       col.names = c("E", "N"))
+#df_SIRGAS
+azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
+distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
+
+for (i in seq_len(dim(df)[1])) {
+  if (i != dim(df)[1]){
+    
+      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
+                                          st_point(df[i + 1, ]), crs = 4326))
+      
+      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
+                               st_point(df_SIRGAS[i + 1, ]))
+  }
+}
+
+azimutes <- set_units(azimutes, rad)
+azimutes_deg <- set_units(azimutes, degrees)
+course <- (as.vector(azimutes_deg) + 360) %% 360
+conv_merid <- -1.06277192089
+planar_course <- course - conv_merid
+
+df_SIRGAS <- cbind(df_SIRGAS, 
+                   AzReal = c(course, NA),
+                   AzPlano = c(planar_course, NA),
+                   Dist = c(distances, NA))
+df_SIRGAS <- as.data.frame(df_SIRGAS)
+
+# Para grau, minutos e segundos
+#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
+
+kable(df_SIRGAS, digits = 2,
+      format.args = list(nsmall = 2, decimal.mark = ",", big.mark = "."),
+      col.names =  c("E", "N", "Real", "Plano", "(m)"),
+      booktabs = TRUE) %>%
+  add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância")) %>% 
+  kable_styling(font_size = 6)
+```
+
+## Memorial
+
+Inicia-se este memorial pelo vértice `r rownames(df_SIRGAS)[1]`, com coordenadas
+N `r brf(df_SIRGAS[1, 2])` e E `r brf(df_SIRGAS[1, 1])`. Deste, segue com 
+azimute 
+
+
+## Exportar
+
+```{r, echo = TRUE, results='hide'}
+st_write(spl_df, "PMPalhoca.geojson", delete_dsn = TRUE)
+#st_write(SPLIT[1, ], "ICMBio_2.geojson", delete_dsn = TRUE)
+```
+
+
