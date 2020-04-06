@@ -1,24 +1,41 @@
 ---
 title: "Cessão de Espaço Aquático"
-subtitle: "ICMBio"
+subtitle: |
+  ICMBio  
+  04972.002071/2006-12
 author: "Luiz Fernando Palin Droubi"
-date: "`r format(Sys.Date(), '%d/%m/%Y')`"
-output: html_document
+date: \today
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%")
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
 library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(units)
+#library(measurements)
+library(geosphere)
 ```
 
-## Criar objeto
-
-```{r}
+```{r, results='hide'}
 # 1. Digitação da Geometria
 #  
 # Digitar Coordenadas dos vértices
 #
 # Área Atual
+#             
+
 #                       E                 N
 atual <- matrix(c(733181.06287287, 7021360.5524924,
                   733158.39741747, 7021477.9827199,
@@ -83,21 +100,118 @@ spl_df <- st_sf(attr,
                 geometry = pl, 
                 crs = 31982) %>%
   st_transform(crs = 4326) # Transforma para WGS84.
+
+porto <- st_read("../portos/itajai.geojson")
 ```
 
-```{r}
-spl_df %>%
-  leaflet() %>%
-  addTiles() %>% 
-  addPolygons() %>%
-  addPolygons(data = porto_itajai)
+```{r, results='hide'}
+TOTAL <- st_read("geoman.geojson")
+linha <- st_read("split_line.geojson")
+
+SPLIT <- st_split(TOTAL, linha)
+SPLIT <- st_cast(SPLIT)
 ```
+## Polígono enviado
+
+```{r}
+ext <- extent(spl_df)
+m <- spl_df %>% 
+  leaflet() %>% 
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "red") %>%
+  addPolygons(data = porto, color = "yellow") %>% 
+  addHomeButton(ext = ext, layer.name = "ICMBio") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./ICMBIO_enviado.png", 
+                 remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("ICMBIO_enviado.png")
+```
+
+
+## Polígono proposto
+
+```{r}
+ext <- extent(SPLIT[1, ])
+m <- SPLIT[1, ] %>% 
+  leaflet() %>% 
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "red") %>%
+  addPolygons(data = porto, color = "yellow") %>% 
+  addHomeButton(ext = ext, layer.name = "ICMBio") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./ICMBIO_proposto.png", 
+                 remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("ICMBIO_proposto.png")
+```
+
+## Tabela de coordenadas
+
+```{r}
+df <- st_coordinates(st_transform(SPLIT[1, ], crs = 4326))[, c(1, 2)]
+df_SIRGAS <- st_coordinates(st_transform(SPLIT[1, ], crs = 31982))[, c(1, 2)]
+row.names(df_SIRGAS) <- paste("VT", seq_len(dim(df_SIRGAS)[1]), sep = "")
+# kable(df,
+#       format.args = list(nsmall = 2),
+#       col.names = c("E", "N"))
+#df_SIRGAS
+azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
+distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
+
+for (i in seq_len(dim(df)[1])) {
+  if (i != dim(df)[1]){
+    
+      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
+                                          st_point(df[i + 1, ]), crs = 4326))
+      
+      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
+                               st_point(df_SIRGAS[i + 1, ]))
+  }
+}
+
+azimutes <- set_units(azimutes, rad)
+azimutes_deg <- set_units(azimutes, degrees)
+course <- (as.vector(azimutes_deg) + 360) %% 360
+conv_merid <- -1.06277192089
+planar_course <- course - conv_merid
+
+df_SIRGAS <- cbind(df_SIRGAS, 
+                   AzReal = c(course, NA),
+                   AzPlano = c(planar_course, NA),
+                   Dist = c(distances, NA))
+df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
+df_SIRGAS <- as.data.frame(df_SIRGAS)
+
+# Para grau, minutos e segundos
+#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
+
+kable(df_SIRGAS, digits = 2,
+      format.args = list(nsmall = 2, decimal.mark = ",", big.mark = "."),
+      col.names =  c("E", "N", "Real", "Plano", "(m)")) %>%
+  add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância"))
+```
+
+## Memorial
+
+Inicia-se este memorial pelo vértice `r rownames(df)[1]`, com coordenadas
+N `r brf(df_SIRGAS[1, 2])` e E `r brf(df_SIRGAS[1, 1])`. Deste, segue com 
+azimute 
 
 
 ## Exportar
 
-```{r}
-st_write(spl_df, "ICMBio.geojson", delete_dsn = TRUE)
+```{r, echo = TRUE, results='hide'}
+#st_write(spl_df, "ICMBio.geojson", delete_dsn = TRUE)
+#st_write(SPLIT[1, ], "ICMBio_2.geojson", delete_dsn = TRUE)
 ```
 
 
