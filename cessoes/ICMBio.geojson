@@ -1,8 +1,8 @@
 {
 "type": "FeatureCollection",
-"name": "ICMBio",
+"name": "ICMBio_2",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
-{ "type": "Feature", "properties": { "interessado": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)", "cnpj": "04.529.874\/0001-91", "nup": "04972.002071\/2006-12", "protocolo": "2081255", "ref": 2081279.0, "concedida": true, "area": 6058.5312615521252, "municipio": 8161.0, "logradouro": "27-00", "aval": 85565.73, "dataaval": "2019\/08\/22", "refaval": 3645421.0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.65199999993483, -26.910083334440749 ], [ -48.652249999934867, -26.909027778884976 ], [ -48.651833333268158, -26.908972223329094 ], [ -48.651333333268092, -26.909583334440235 ], [ -48.651777777712603, -26.909833334440439 ], [ -48.651722222157069, -26.909972223329081 ], [ -48.65199999993483, -26.910083334440749 ] ] ] } }
+{ "type": "Feature", "properties": { "shape": "Polygon", "name": "Unnamed Layer", "category": "default", "id": "e25765e3-2dfe-45e0-a33f-ac57bf01afac" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.651632, -26.910091 ], [ -48.651773, -26.910115 ], [ -48.651778, -26.910106 ], [ -48.65182, -26.9101 ], [ -48.652076, -26.910148 ], [ -48.652282, -26.909022 ], [ -48.65187, -26.908954 ], [ -48.651035027316574, -26.909730016518065 ], [ -48.651632, -26.910091 ] ] ] } }
 ]
 }
