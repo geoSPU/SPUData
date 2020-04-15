@@ -43,6 +43,14 @@ cessoes <- cessoes %>%
              area_uniao = areaUniao(., polUniao),
              .before = "inicio")
 
+cessoes <- cessoes %>%
+  add_column(destinacao = "cessao",
+             tipo = factor(c("terrestre", "terrestre", "aquatica", "terrestre", "mista",
+                      "mista", "aquatica", "aquatica", "mista", "terrestre",
+                      "aquatica", "aquatica", "aquatica", "aquatica", "mista",
+                      "terrestre", "terrestre")),
+             .before = "rip")
+
 st_write(cessoes, "cessoes.geojson", delete_dsn = TRUE)
 
 
@@ -55,6 +63,12 @@ ocupacoes <- ocupacoes[, c(5, 1, 3, 4, 2, 6)]
 ocupacoes <- ocupacoes %>% 
   add_column(area = st_area(.),
              .before = "area_total")
+
+ocupacoes <- ocupacoes %>%
+  add_column(destinacao = "ocupacao",
+             .before = "rip")
+
+st_write(ocupacoes, "ocupacoes.geojson", delete_dsn = TRUE)
 
 ###############################################################################
 
@@ -71,6 +85,10 @@ autobras <- autobras %>%
              area_uniao = areaUniao(., polUniao),
              .before = "cnpj")
 
+autobras <- autobras %>% 
+  add_column(destinacao = "autorizacao de obra",
+             .before = "interessado")
+
 st_write(autobras, "autobras.geojson", delete_dsn = TRUE)
 
 ###############################################################################
@@ -83,5 +101,9 @@ certdisp <- certdisp %>%
   add_column(area = st_area(.),
              area_uniao = 0,
              .before = "nup")
+
+certdisp <- certdisp %>% 
+  add_column(destinacao = "certidao de disponibilidade",
+             .before = "interessado")
 
 st_write(certdisp, "certdisp.geojson", delete_dsn = TRUE)
