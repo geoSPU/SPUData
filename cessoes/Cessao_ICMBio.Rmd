@@ -104,13 +104,7 @@ spl_df <- st_sf(attr,
 porto <- st_read("../portos/itajai.geojson")
 ```
 
-```{r, results='hide'}
-TOTAL <- st_read("geoman.geojson")
-linha <- st_read("split_line.geojson")
 
-SPLIT <- st_split(TOTAL, linha)
-SPLIT <- st_cast(SPLIT)
-```
 ## Polígono enviado
 
 ```{r}
@@ -131,19 +125,20 @@ mapview::mapshot(m, file = "./ICMBIO_enviado.png",
                  remove_controls = NULL, remove_url = FALSE)
 knitr::include_graphics("ICMBIO_enviado.png")
 ```
-
+```{r, results='hide'}
+spl_df <- st_read("ICMBio.geojson")
+```
 
 ## Polígono proposto
 
 ```{r}
-ext <- extent(SPLIT[1, ])
-m <- SPLIT[1, ] %>% 
+ext <- extent(spl_df)
+m <- spl_df %>% 
   leaflet() %>% 
   addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
               layers = list("OrtoRGB-Landsat-2012")) %>%
   addPolygons(stroke = TRUE, weight = 2, color = "red") %>%
   addPolygons(data = porto, color = "yellow") %>% 
-  addHomeButton(ext = ext, layer.name = "ICMBio") %>%
   fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
   addMouseCoordinates() %>%
   addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
@@ -157,8 +152,8 @@ knitr::include_graphics("ICMBIO_proposto.png")
 ## Tabela de coordenadas
 
 ```{r}
-df <- st_coordinates(st_transform(SPLIT[1, ], crs = 4326))[, c(1, 2)]
-df_SIRGAS <- st_coordinates(st_transform(SPLIT[1, ], crs = 31982))[, c(1, 2)]
+df <- st_coordinates(st_transform(spl_df, crs = 4326))[, c(1, 2)]
+df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
 row.names(df_SIRGAS) <- paste("VT", seq_len(dim(df_SIRGAS)[1]), sep = "")
 # kable(df,
 #       format.args = list(nsmall = 2),
