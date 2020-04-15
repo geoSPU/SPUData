@@ -11,6 +11,7 @@ output:
 header-includes:
  \usepackage[brazil]{babel}
  \usepackage{booktabs}
+ \usepackage{longtable}
 ---
 
 ```{r setup, include=FALSE}
@@ -70,6 +71,7 @@ attr <- data.frame(interessado = "Prefeitura Municipal de Palhoça",
                     ref = 5010861,
                     concedida = FALSE,
                     area = st_area(pl),
+                    perimetro = st_length(pl),
                     municipio = 8185,
                     logradouro = NA,
                     aval = NA,
@@ -90,34 +92,67 @@ spl_df <- st_sf(attr,
                 geometry = pl, 
                 crs = 31982) %>%
   st_transform(crs = 4326) # Transforma para WGS84.
+lltm <- st_read("../linhas/LLTM_HOMOLOGADA.geojson")
+Pol_Uniao <- st_zm(st_read("../Poligonos_LPM_Homologada.kml"))
 ```
 
-## Polígono enviado
+## Polígono Total do Imóvel
 
-```{r}
+```{r mapa-imovel}
 ext <- extent(spl_df)
 m <- spl_df %>% 
   leaflet() %>% 
   addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
               layers = list("OrtoRGB-Landsat-2012")) %>%
-  addPolygons(stroke = TRUE, weight = 2, color = "red") %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "blue") %>%
+  addPolylines(data = lltm, color = "red") %>% 
   addHomeButton(group = "PM Palhoça") %>%
   fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
   addMouseCoordinates() %>%
   addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
                   offset.x = 15, offset.y = 15, 
                   width = 75, height = 75)
-mapview::mapshot(m, file = "./PM_Palhoca.png", remove_url = FALSE)
-knitr::include_graphics("PM_Palhoca.png")
+name <- paste(st_geohash(spl_df, 10), ".png", sep = "")
+mapview::mapshot(m, file = name, remove_url = FALSE)
+knitr::include_graphics(name)
 ```
+
+
+## Polígono de terras da União
+
+```{r divisao}
+spl_df_Uniao <- st_intersection(spl_df, Pol_Uniao)
+spl_df_Uniao$area <- st_area(spl_df_Uniao)
+spl_df_Uniao$perimetro <- st_length(spl_df_Uniao)
+```
+
+```{r mapa-Uniao}
+ext <- extent(spl_df_Uniao)
+m <- spl_df_Uniao %>% 
+  leaflet() %>% 
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "blue") %>%
+  addPolylines(data = lltm, color = "red") %>% 
+  addHomeButton(group = "PM Palhoça") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+name <- paste("Uniao-", st_geohash(spl_df, 10), ".png", sep = "")
+mapview::mapshot(m, file = name, remove_url = FALSE)
+knitr::include_graphics(name)
+```
+
 
 ## Tabela de coordenadas
 
-```{r}
-df <- st_coordinates(spl_df)[, c(1, 2)]
-df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
+```{r tabela-coordenadas}
+df <- st_coordinates(spl_df_Uniao)[, c(1, 2)]
+df_SIRGAS <- st_coordinates(st_transform(spl_df_Uniao, crs = 31982))[, c(1, 2)]
 vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
-row.names(df_SIRGAS) <- c(vertices, vertices[1])
+row.names(df_SIRGAS) <- make.names(c(vertices, vertices[1]), unique = TRUE)
 # kable(df,
 #       format.args = list(nsmall = 2),
 #       col.names = c("E", "N"))
@@ -154,22 +189,43 @@ df_SIRGAS <- as.data.frame(df_SIRGAS)
 kable(df_SIRGAS, digits = 2,
       format.args = list(nsmall = 2, decimal.mark = ",", big.mark = "."),
       col.names =  c("E", "N", "Real", "Plano", "(m)"),
+      longtable = TRUE, 
       booktabs = TRUE) %>%
   add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância")) %>% 
-  kable_styling(font_size = 6)
+  kable_styling(font_size = 3)
+```
+
+## Metadados
+
+```{r metadados}
+kable(t(st_drop_geometry(spl_df_Uniao)), booktabs = TRUE)
 ```
 
 ## Memorial
 
-Inicia-se este memorial pelo vértice `r rownames(df_SIRGAS)[1]`, com coordenadas
-N `r brf(df_SIRGAS[1, 2])` e E `r brf(df_SIRGAS[1, 1])`. Deste, segue com 
-azimute 
 
+
+```{r memorial}
+writeLines("Inicia-se este memorial pelo vertice ", 
+           con = 'memorial.tex', sep = "")
+for (i in seq_len(nrow(df_SIRGAS))) {
+  cat("\\textbf{", rownames(df_SIRGAS)[i], "} com coordenadas \\textbf{N ", 
+  brf(df_SIRGAS[i, 2]), "} e \\textbf{E ", brf(df_SIRGAS[i, 1]), 
+  "}. Deste segue com azimute ", brf(df_SIRGAS[i, 4]), " graus e distancia ",
+  brf(df_SIRGAS[i, 5]), "m ate o vertice ", 
+  sep = "", file = 'memorial.tex', append = TRUE)
+}
+``` 
+
+```{r, results='asis'}
+readLines('memorial.md')
+```
 
 ## Exportar
 
 ```{r, echo = TRUE, results='hide'}
 st_write(spl_df, "PMPalhoca.geojson", delete_dsn = TRUE)
+st_write(spl_df, "PMPalhoca.kml", delete_dsn = TRUE)
 #st_write(SPLIT[1, ], "ICMBio_2.geojson", delete_dsn = TRUE)
 ```
 
