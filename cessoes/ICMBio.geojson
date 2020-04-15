@@ -3,17 +3,17 @@
     "type":"Feature",
     "properties": {
       "interessado": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)",
-      "cnpj": "04.529.874/0001-91",
-      "nup": "04972.002071/2006-12",
-      "protocolo": 2081255,
-      "ref": 2081279,
+      "cnpj": "08.829.974/0001-94",
+      "nup": "11452.000734/96-21",
+      "protocolo": 4378654,
+      "ref": "",
       "concedida": true,
       "area": "",
       "municipio": 8161,
-      "logradouro": "27-00",
-      "aval": 85565.73,
-      "dataaval": "2019/08/22",
-      "refaval": 3645421
+      "logradouro": "",
+      "aval": "",
+      "dataaval": "",
+      "refaval": ""
     },
     "geometry":{
       "type":"Polygon",
