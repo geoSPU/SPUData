@@ -86,7 +86,7 @@ autobras <- autobras %>%
              .before = "cnpj")
 
 autobras <- autobras %>% 
-  add_column(destinacao = "autorizacao de obra",
+  add_column(destinacao = "autorizacao",
              .before = "interessado")
 
 st_write(autobras, "autobras.geojson", delete_dsn = TRUE)
