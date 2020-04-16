@@ -1,0 +1,207 @@
+---
+title: "Infraestrutura"
+subtitle: |
+  Aeroporoto de Navegantes  
+  04972.205127/2015-71
+author: "Luiz Fernando Palin Droubi"
+date: \today
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(units)
+#library(measurements)
+library(geosphere)
+```
+
+```{r, results='hide'}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+# Área Atual
+#             
+
+#                       E                 N
+coords <- matrix(c(733011.451, 7024715.690, #V1
+                   733077.477, 7025055.984, #V2
+                   732823.696, 7025474.072, #V3
+                   731012.742, 7026060.962, #V4
+                   730656.546, 7026491.825, #V5
+                   730858.229, 7026657.788, #V6
+                   731328.560, 7026492.813, #V7
+                   731740.964, 7026996.959, #V8
+                   732588.996, 7026765.965, #V9
+                   732608.364, 7026786.930, #V10
+                   732907.440, 7026788.482, #V11
+                   732899.798, 7026748.332, #V12
+                   734048.671, 7026563.540, #V13
+                   733858.946, 7025647.657, #V14
+                   733991.278, 7025620.937, #V15
+                   733979.155, 7025562.173, #V16
+                   734222.266, 7025513.084, #V17
+                   734225.424, 7025508.305, #V18
+                   733011.451, 7024715.690),#V1
+                 ncol = 2, byrow = TRUE)
+
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+pl <- st_sfc(st_polygon(list(coords)))
+# pl <- st_sfc(st_multipolygon(
+#   list(list(atual), 
+#        list(mangue)
+#        )
+#   )
+# )
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(interessado = "Empresa Brasileira de Infraestrutura Aeroportuária (INFRAERO)",
+                   cnpj = "00.352.294/0001-10",
+                   nup = "04972.205127/2015-71",
+                   protocolo = "0697861",
+                   ref = 1285286,
+                   concedida = TRUE,
+                   perimetro = st_length(pl),
+                   area = st_area(pl),
+                   municipio = 8161,
+                   logradouro = NA,
+                   aval = NA,
+                   dataaval = NA,
+                   refaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = pl, 
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+## Polígono enviado
+
+```{r}
+ext <- extent(spl_df)
+m <- spl_df %>% 
+  leaflet() %>% 
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "red") %>%
+  addHomeButton(group = "Aeroporto Internacional de Navegantes") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+name <- paste(st_geohash(spl_df, 10), ".png", sep = "")
+mapview::mapshot(m, file = name, 
+                 remove_controls = TRUE, remove_url = FALSE)
+knitr::include_graphics(name)
+```
+
+## Tabela de coordenadas
+
+```{r}
+df <- st_coordinates(st_transform(spl_df, crs = 4326))[, c(1, 2)]
+
+df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
+vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
+row.names(df_SIRGAS) <- make.names(c(vertices, vertices[1]), unique = TRUE)
+
+azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
+distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
+
+for (i in seq_len(dim(df)[1])) {
+  if (i != dim(df)[1]){
+    
+      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
+                                          st_point(df[i + 1, ]), crs = 4326))
+      
+      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
+                               st_point(df_SIRGAS[i + 1, ]))
+  }
+}
+
+azimutes <- set_units(azimutes, rad)
+azimutes_deg <- set_units(azimutes, degrees)
+course <- (as.vector(azimutes_deg) + 360) %% 360
+conv_merid <- -1.06277192089
+planar_course <- course - conv_merid
+
+df_SIRGAS <- cbind(df_SIRGAS, 
+                   AzReal = c(course, NA),
+                   AzPlano = c(planar_course, NA),
+                   Dist = c(distances, NA))
+#df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
+df_SIRGAS <- as.data.frame(df_SIRGAS)
+
+# Para grau, minutos e segundos
+#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
+
+kable(df_SIRGAS, digits = 3,
+      format.args = list(nsmall = 2, decimal.mark = ",", big.mark = "."),
+      col.names =  c("E", "N", "Real", "Plano", "(m)"),
+      booktabs = TRUE) %>%
+  add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância")) %>%
+  kable_styling(font_size = 8)
+```
+
+## Memorial
+
+Inicia-se este memorial pelo vértice
+
+```{r, results='asis'}
+for (i in seq_len(nrow(df_SIRGAS))) {
+  cat("**", rownames(df_SIRGAS)[i], "** com coordenadas **N ", brf(df_SIRGAS[i, 2]), "** e 
+      **E ", brf(df_SIRGAS[i, 1]), "**. Deste segue com azimute ", 
+      brf(df_SIRGAS[i, 4]), "° e distância", brf(df_SIRGAS[i, 5]), "m até o 
+      vértice ", sep = "")
+}
+```
+
+## Metadados
+
+```{r}
+kable(t(st_drop_geometry(spl_df)), booktabs = TRUE)
+```
+
+
+## Exportar
+
+```{r, echo = TRUE, results='hide'}
+st_write(spl_df, "navegantes.geojson", delete_dsn = TRUE)
+#st_write(SPLIT[1, ], "ICMBio_2.geojson", delete_dsn = TRUE)
+```
+
+

@@ -60,7 +60,7 @@ dados <- data.frame(interessado = "Barra do Rio Terminais Portuários S/A",
 # WGS 84 = 4326
 # SAD 69 22S = 29192
 # SIRGAS 2000 22S = 31982
-spl_df <- st_sf(dados, geom = pl, crs = 21982) %>%
+spl_df <- st_sf(dados, geom = pl, crs = 29182) %>%
   st_transform(crs = 4326) # Transforma para WGS84.
 ```
 
@@ -68,5 +68,5 @@ spl_df <- st_sf(dados, geom = pl, crs = 21982) %>%
 ```{r}
 # 5. Escrever a nova entrada no BDE
 #
-st_write(spl_df, "golar.geojson", delete_dsn = TRUE)
+st_write(spl_df, "barra-do-rio.geojson", delete_dsn = TRUE)
 ```
