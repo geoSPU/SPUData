@@ -10,6 +10,7 @@ output:
     df_print: tibble
 header-includes:
  \usepackage[brazil]{babel}
+ \usepackage{booktabs}
 ---
 
 ```{r setup, include=FALSE}
@@ -116,7 +117,6 @@ m <- spl_df %>%
               layers = list("OrtoRGB-Landsat-2012")) %>%
   addPolygons(stroke = TRUE, weight = 2, color = "red") %>%
   addPolygons(data = porto, color = "yellow") %>% 
-  addHomeButton(ext = ext, layer.name = "ICMBio") %>%
   fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
   addMouseCoordinates() %>%
   addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
@@ -185,7 +185,7 @@ df_SIRGAS <- cbind(df_SIRGAS,
                    AzReal = c(course, NA),
                    AzPlano = c(planar_course, NA),
                    Dist = c(distances, NA))
-df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
+#df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
 df_SIRGAS <- as.data.frame(df_SIRGAS)
 
 # Para grau, minutos e segundos
@@ -193,22 +193,40 @@ df_SIRGAS <- as.data.frame(df_SIRGAS)
 
 kable(df_SIRGAS, digits = 2,
       format.args = list(nsmall = 2, decimal.mark = ",", big.mark = "."),
-      col.names =  c("E", "N", "Real", "Plano", "(m)")) %>%
+      col.names =  c("E", "N", "Real", "Plano", "(m)"),
+      booktabs = TRUE) %>%
   add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância"))
 ```
 
+## Metadados
+
+```{r}
+kable(t(st_drop_geometry(spl_df)), booktabs = TRUE)
+```
+
+
 ## Memorial
 
-Inicia-se este memorial pelo vértice `r rownames(df)[1]`, com coordenadas
-N `r brf(df_SIRGAS[1, 2])` e E `r brf(df_SIRGAS[1, 1])`. Deste, segue com 
-azimute 
+```{r memorial}
+writeLines("Inicia-se este memorial pelo vertice ", 
+           con = 'memorial.tex', sep = "")
+for (i in seq_len(nrow(df_SIRGAS))) {
+  cat("\\textbf{", rownames(df_SIRGAS)[i], "} com coordenadas \\textbf{N ", 
+  brf(df_SIRGAS[i, 2]), "} e \\textbf{E ", brf(df_SIRGAS[i, 1]), 
+  "}. Deste segue com azimute ", brf(df_SIRGAS[i, 4]), " graus e distancia ",
+  brf(df_SIRGAS[i, 5]), "m ate o vertice ", 
+  sep = "", file = 'memorial.tex', append = TRUE)
+}
+``` 
 
+```{r, results='asis'}
+readLines('memorial.tex')
+```
 
 ## Exportar
 
 ```{r, echo = TRUE, results='hide'}
 #st_write(spl_df, "ICMBio.geojson", delete_dsn = TRUE)
-#st_write(SPLIT[1, ], "ICMBio_2.geojson", delete_dsn = TRUE)
 ```
 
 

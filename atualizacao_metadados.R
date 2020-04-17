@@ -51,6 +51,9 @@ cessoes <- cessoes %>%
                       "terrestre", "terrestre")),
              .before = "rip")
 
+cessoes$inicio <- as.POSIXct(cessoes$inicio/1000, origin = "1970-01-01")
+cessoes$vigencia <- as.POSIXct(cessoes$vigencia/1000, origin = "1970-01-01")
+
 st_write(cessoes, "cessoes.geojson", delete_dsn = TRUE)
 
 
