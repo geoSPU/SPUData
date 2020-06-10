@@ -1,0 +1,138 @@
+---
+title: "Cessão Terrestre"
+subtitle: |
+  Prefeitura Municipal de São Francisco do Sul
+  10154.147283/2019-71  
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: binb::metropolis
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(sf)
+library(leaflet)
+library(leafem)
+library(raster)
+```
+
+
+## Criar objeto
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+
+
+#                             X             Y     PONTOS
+coords <- matrix(data = c(738374.67, 7096680.51, #VT-01
+                          738372.25, 7096677.03, #VT-02
+                          738372.34, 7096673.85, #VT-03
+                          738373.28, 7096670.79, #VT-04
+                          738375.05, 7096668.00, #VT-05
+                          738379.02, 7096664.94, #VT-06
+                          738362.81, 7096659.29, #VT-07
+                          738361.50, 7096663.06, #VT-08
+                          738363.84, 7096663.80, #VT-09
+                          738359.94, 7096675.32, #VT-10
+                          738374.67, 7096680.51),#VT-01
+                   ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl <- st_sfc(st_polygon(list(coords)), crs = 31982)
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(destinacao = "cessao",
+                   tipo = "terrestre",
+                   rip = NA,
+                   interessado = "Prefeitura Municipal de São Francisco do Sul.",
+                   area = st_area(spl),
+                   area_uniao = st_area(spl),
+                   inicio = NA,
+                   prazo = 20,
+                   vigencia = NA,
+                   cnpj = "83.102.269/0001-06",
+                   nup = "10154.147283/2019-71",
+                   protocolo = "SC04151/2019",
+                   ref = 5191687,
+                   concedida = FALSE,
+                   municipio = 8319,
+                   logradouro = NA,
+                   aval = NA,
+                   dataaval = NA,
+                   refaval = NA,
+                   onerosa = TRUE)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+```
+
+
+```{r}
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = spl) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+```{r}
+polUniao <- st_zm(st_read("../Poligonos_LPM_Homologada.kml"))
+lpm_demarcada <- st_read("../linhas/LPM_DEMARCADA.geojson")
+lpm_presumida <- st_read("../linhas/LPM_PRESUMIDA.geojson")
+lltm_demarcada <- st_read("../linhas/LLTM_DEMARCADA.geojson")
+lltm_presumida <- st_read("../linhas/LLTM_PRESUMIDA.geojson")
+```
+
+
+## IMAGEM
+
+```{r}
+ext <- extent(spl_df)
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2) %>%
+  addPolygons(data = polUniao, color = "yellow") %>%
+  addPolylines(data = lpm_demarcada, dashArray = "20 20", color = "blue") %>% 
+  addPolylines(data= lpm_presumida, dashArray = "20 20", color = "blue", 
+               opacity = .2) %>% 
+  addPolylines(data = lltm_demarcada, dashArray = "20 20", color = "red") %>% 
+  addPolylines(data = lltm_presumida, dashArray = "20 20", color = "red", 
+               opacity = .2) %>% 
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./mapa_frabrica_gelo_SFS.png", 
+                 remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("mapa_frabrica_gelo_SFS.png")
+```
+
+
+```{r}
+st_write(spl_df, "fabrica_gelo_SFS.geojson")
+```
