@@ -1,0 +1,159 @@
+---
+title: "Cessão Aquática"
+subtitle: |
+  Detroit Brasil Ltda.  
+  04972.000712/2004-24
+author: "Luiz Fernando Palin Droubi"
+date: \today
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+ \usepackage{longtable}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(units)
+#library(measurements)
+library(geosphere)
+```
+
+```{r, results='hide'}
+polUniao <- st_zm(st_read("../Poligonos_LPM_Homologada.kml"))
+#
+# 1. Digitação da Geometria
+#  
+# Digitar Coordenadas dos vértices
+#
+# Atracação
+#                  E             N
+b1 <- matrix(c(726479.85, 7027594.06, #V01
+               726498.08, 7027588.75, #V02
+               726445.33, 7027409.30, #V03
+               726432.87, 7027386.19, #V04
+               726365.10, 7027390.53, #V05
+               726365.04, 7027398.50, #V06
+               726344.02, 7027405.62, #V07
+               726362.56, 7027433.72, #V08
+               726393.31, 7027433.47, #V09
+               726395.79, 7027448.51, #V10
+               726402.22, 7027448.14, #V11
+               726436.45, 7027446.15, #V12
+               726444.09, 7027472.17, #V13
+               726479.85, 7027594.06),#V01
+             ncol = 2, byrow = TRUE)
+#
+#                  E             N
+b2 <- matrix(c(726431.18, 7027350.91, #V17
+               726430.11, 7027335.01, #V18
+               726352.81, 7027339.96, #V19
+               726353.35, 7027355.96, #V20
+               726431.18, 7027350.91),#V17
+             ncol = 2, byrow = TRUE)
+#
+# Estruturas Naúticas
+#                  E             N
+e1 <- matrix(c(726444.09, 7027472.17, #V13
+               726436.45, 7027446.15, #V12
+               726402.22, 7027448.14, #V11
+               726407.98, 7027465.34, #V16
+               726437.35, 7027463.29, #V15
+               726437.66, 7027466.66, #V14
+               726444.09, 7027472.17),#V13
+             ncol = 2, byrow = TRUE)
+#
+e2 <- matrix(c(726432.87, 7027386.19, #V04
+               726431.18, 7027350.91, #V17
+               726353.35, 7027355.96, #V20
+               726365.10, 7027390.53, #V05
+               726432.87, 7027386.19),#V04
+             ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl <- st_sfc(st_multipolygon(
+  list(list(b1), 
+       list(b2),
+       list(e1),
+       list(e2)
+       )
+  ), crs = 29192
+)
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(destinacao = "cessao",
+                   tipo = "terrestre",
+                   rip = NA,
+                   interessado = "Detroit Brasil Ltda.",
+                   area = st_area(spl),
+                   area_uniao = st_area(spl),
+                   inicio = NA,
+                   prazo = 20,
+                   vigencia = NA,
+                   cnpj = "04.988.669/0001-94",
+                   nup = "04972.000712/2004-24",
+                   protocolo = "5051229, fl. 01",
+                   ref = 5050567,
+                   concedida = FALSE,
+                   municipio = 8161,
+                   logradouro = NA,
+                   aval = NA,
+                   dataaval = NA,
+                   refaval = NA,
+                   onerosa = TRUE)
+#
+# 4. União dos atributos à geometria
+#
+#
+spl_df <- st_sf(attr,
+                geometry = spl) %>%
+  st_transform(4326)
+```
+
+## Polígono Total do Imóvel
+
+```{r mapa-imovel}
+ext <- extent(spl_df)
+m <- spl_df %>% 
+  leaflet() %>% 
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "blue") %>%
+  addPolygons(data = polUniao) %>%
+#  addPolylines(data = lltm_demarcada, color = "red") %>% 
+  addHomeButton(group = "PM Palhoça") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+name <- paste(st_geohash(spl_df, 10), ".png", sep = "")
+mapview::mapshot(m, file = name, remove_url = FALSE)
+knitr::include_graphics(name)
+```
+
+```{r}
+st_write(spl_df, "Detroit.kml")
+```
+

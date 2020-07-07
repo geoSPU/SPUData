@@ -1,0 +1,316 @@
+---
+title: "Cessão Terrestre"
+subtitle: |
+  CASAN  
+  04972.007320/2018-91
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(geosphere)
+library(units)
+install_symbolic_unit(name = "Reais", warn = TRUE, dimensionless = TRUE)
+#library(measurements)
+```
+
+```{r}
+# 1. Digitação da Geometria
+#  
+ee11 <- 
+  matrix(c(746879.598, 6949756.313, #V1
+           746872.232, 6949743.246, #V2
+           746892.741, 6949721.351, #V3
+           746903.184, 6949731.134, #V4
+           746879.598, 6949756.313),#V1
+         ncol = 2, byrow = TRUE)
+
+ee13 <- 
+  matrix(c(745636.175, 6951012.003, #V1
+           745627.803, 6951023.224, #V2
+           745615.455, 6951010.480, #V3
+           745622.549, 6951001.838, #V4
+           745636.175, 6951012.003),#V2
+         ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl1 <- 
+  st_sfc(st_polygon(
+    list(ee11)
+    ), 
+    crs = 31982)
+spl2 <- 
+  st_sfc(st_polygon(
+    list(ee13)
+    ), 
+    crs = 31982)
+#
+# 3. Criação dos metadados  
+#
+attr1 <- data.frame(
+  destinacao = "cessao",
+  tipo = "terrestre",
+  rip = NA,
+  interessado = "CASAN",
+  area = st_area(spl1),
+  area_uniao = st_area(spl1),
+  inicio = NA,
+  prazo = NA,
+  vigencia = NA,
+  cnpj = "81.599.359/0001-29",
+  nup = "04972.007320/2018-91",
+  protocolo = "8390460",
+  ref = NA,
+  concedida = FALSE,
+  municipio = 8105,
+  logradouro = "207-00",
+  aval = set_units(283.63, Reais/m^2)*st_area(spl1),
+  dataaval = as.Date("2020-06-25"),
+  refaval = NA,
+  onerosa = FALSE)
+
+attr2 <- data.frame(
+  destinacao = "cessao",
+  tipo = "terrestre",
+  rip = NA,
+  interessado = "CASAN",
+  area = st_area(spl2),
+  area_uniao = st_area(spl2),
+  inicio = NA,
+  prazo = NA,
+  vigencia = NA,
+  cnpj = "81.599.359/0001-29",
+  nup = "04972.007320/2018-91",
+  protocolo = "8390460",
+  ref = NA,
+  concedida = FALSE,
+  municipio = 8105,
+  logradouro = "225-00",
+  aval = set_units(330.91, Reais/m^2)*st_area(spl2),
+  dataaval = as.Date("2020-06-25"),
+  refaval = NA,
+  onerosa = FALSE)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl1_df <- st_sf(attr1,
+                geometry = spl1)  %>% 
+  st_transform(crs = 4326) # Transforma para WGS84.
+spl2_df <- st_sf(attr2,
+                geometry = spl2)  %>% 
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+```{r, results = "hide"}
+lpm_dem <- st_read("../linhas/LPM_DEMARCADA.geojson")
+lltm_dem <- st_read("../linhas/LLTM_DEMARCADA.geojson")
+```
+
+
+## IMAGEM EE-11
+
+```{r}
+ext <- extent(spl1_df)
+centroide <- st_coordinates(st_centroid(spl1_df))
+m <- spl1_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addPolylines(data = lpm_dem, color = "blue", dashArray = "20 20") %>% 
+  addPolylines(data = lltm_dem, color = "red", dashArray = "20 20") %>% 
+#  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  setView(lng = centroide[1], lat = centroide[2], zoom = 18) %>% 
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./mapa_ee11.png", 
+                 remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("mapa_ee11.png")
+```
+
+## IMAGEM EE-13
+
+```{r}
+ext <- extent(spl2_df)
+centroide <- st_coordinates(st_centroid(spl2_df))
+m <- spl2_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addPolylines(data = lpm_dem, color = "blue", dashArray = "20 20") %>% 
+  addPolylines(data = lltm_dem, color = "red", dashArray = "20 20") %>% 
+#  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  setView(lng = centroide[1], lat = centroide[2], zoom = 18) %>% 
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./mapa_ee13.png", 
+                 remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("mapa_ee13.png")
+```
+
+## Tabela de coordenadas EE-11
+
+```{r}
+df <- st_coordinates(spl1_df, crs = 4326)[, c(1, 2)]
+
+df_SIRGAS <- st_coordinates(st_transform(spl1_df, crs = 31982))[, c(1, 2)]
+vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
+row.names(df_SIRGAS) <- make.names(c(vertices, vertices[1]), unique = TRUE)
+
+azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
+distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
+
+for (i in seq_len(dim(df)[1])) {
+  if (i != dim(df)[1]){
+    
+      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
+                                          st_point(df[i + 1, ]), crs = 4326))
+      
+      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
+                               st_point(df_SIRGAS[i + 1, ]))
+  }
+}
+
+azimutes <- set_units(azimutes, rad)
+azimutes_deg <- set_units(azimutes, degrees)
+course <- (as.vector(azimutes_deg) + 360) %% 360
+conv_merid <- -1.06277192089
+planar_course <- course - conv_merid
+
+df_SIRGAS <- cbind(df_SIRGAS, 
+                   AzReal = c(course, NA),
+                   AzPlano = c(planar_course, NA),
+                   Dist = c(distances, NA))
+#df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
+df_SIRGAS <- as.data.frame(df_SIRGAS)
+
+# Para grau, minutos e segundos
+#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
+
+kable(df_SIRGAS, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."),
+      col.names =  c("E", "N", "Real", "Plano", "(m)"),
+      booktabs = TRUE) %>%
+  add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância")) %>%
+  kable_styling(font_size = 8)
+```
+
+## Tabela de coordenadas EE-13
+
+```{r}
+df <- st_coordinates(spl2_df, crs = 4326)[, c(1, 2)]
+
+df_SIRGAS <- st_coordinates(st_transform(spl2_df, crs = 31982))[, c(1, 2)]
+vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
+row.names(df_SIRGAS) <- make.names(c(vertices, vertices[1]), unique = TRUE)
+
+azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
+distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
+
+for (i in seq_len(dim(df)[1])) {
+  if (i != dim(df)[1]){
+    
+      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
+                                          st_point(df[i + 1, ]), crs = 4326))
+      
+      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
+                               st_point(df_SIRGAS[i + 1, ]))
+  }
+}
+
+azimutes <- set_units(azimutes, rad)
+azimutes_deg <- set_units(azimutes, degrees)
+course <- (as.vector(azimutes_deg) + 360) %% 360
+conv_merid <- -1.06277192089
+planar_course <- course - conv_merid
+
+df_SIRGAS <- cbind(df_SIRGAS, 
+                   AzReal = c(course, NA),
+                   AzPlano = c(planar_course, NA),
+                   Dist = c(distances, NA))
+#df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
+df_SIRGAS <- as.data.frame(df_SIRGAS)
+
+# Para grau, minutos e segundos
+#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
+
+kable(df_SIRGAS, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."),
+      col.names =  c("E", "N", "Real", "Plano", "(m)"),
+      booktabs = TRUE) %>%
+  add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância")) %>%
+  kable_styling(font_size = 8)
+```
+
+## Atributos EE-11
+
+```{r}
+kable(t(st_drop_geometry(spl1_df)), booktabs = TRUE, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."))%>%
+  kable_styling(font_size = 8)
+```
+
+## Atributos EE-13
+
+```{r}
+kable(t(st_drop_geometry(spl2_df)), booktabs = TRUE, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."))%>%
+  kable_styling(font_size = 8)
+```
+
+## Salvar no disco
+
+```{r, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
+st_write(spl1_df, "casan_ee11.geojson", 
+         delete_dsn = TRUE)
+```
+
+```{r, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
+st_write(spl2_df, "casan_ee13.geojson", 
+         delete_dsn = TRUE)
+```

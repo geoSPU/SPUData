@@ -19,3 +19,5 @@ sbfl$municipio <- 8105
 aeroportos <- rbind(sbnf, sbfl)
 
 st_write(aeroportos, "aeroportos.geojson", delete_dsn = TRUE)
+
+aeroportos <- st_read("aeroportos.geojson")
