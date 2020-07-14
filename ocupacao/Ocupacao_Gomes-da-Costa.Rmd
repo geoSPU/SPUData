@@ -1,0 +1,209 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: |
+  Gomes da Costa  
+  04972.008758/2018-97
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(geosphere)
+library(units)
+install_symbolic_unit(name = "Reais", warn = TRUE, dimensionless = TRUE)
+#library(measurements)
+```
+
+```{r}
+# 1. Digitação da Geometria
+#  
+principal <- 
+  matrix(c(729218.8, 7024616.2, #V1
+           729145.4, 7024616.2, #V2
+           729051.6, 7024627.7, #V3
+           729087.5, 7024908.0, #V4
+           729126.9, 7024908.0, #V5
+           729126.9, 7024902.8, #V6
+           729154.1, 7024890.5, #V7
+           729159.8, 7024970.0, #V8
+           729188.9, 7024938.2, #V9
+           729210.7, 7024911.4, #V10
+           729210.7, 7024896.4, #V11
+           729230.7, 7024896.4, #V12
+           729233.7, 7024884.7, #V13
+           729218.8, 7024616.2),#V1
+         byrow = TRUE, ncol =2)
+estacionamento <- 
+  matrix(c(729144.2, 7024928.1, #V20
+           729131.8, 7024918.7, #V21
+           729119.5, 7024919.6, #V22
+           729124.7, 7025001.8, #V23
+           729150.9, 7024986.4, #V24
+           729144.2, 7024928.1),#V20
+         byrow = TRUE, ncol =2)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl <- 
+  st_sfc(st_multipolygon(
+    list(
+      list(principal),
+      list(estacionamento)
+    )
+    ), 
+    crs = 31982) %>%
+  st_transform(4326)
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(
+  destinacao = "ocupacao",
+  rip = "8161 0000107-33",
+  interessado = "GDC Alimentos S/A",
+  area = st_area(spl),
+  area_uniao = st_area(spl),
+  nup = "04972.001838/2014-98",
+  concedida = TRUE)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = spl)
+```
+
+```{r, results = "hide"}
+lpm_dem <- st_read("../linhas/LPM_DEMARCADA.geojson")
+lltm_dem <- st_read("../linhas/LLTM_DEMARCADA.geojson")
+lpm_hom <- st_read("../linhas/LPM_HOMOLOGADA.geojson")
+lltm_hom <- st_read("../linhas/LLTM_HOMOLOGADA.geojson")
+```
+
+
+## IMAGEM
+
+```{r}
+ext <- extent(spl_df)
+centroide <- st_coordinates(st_centroid(spl_df))
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addPolylines(data = lpm_hom, color = "blue") %>% 
+  addPolylines(data = lltm_hom, color = "red") %>% 
+  addPolylines(data = lpm_dem, color = "blue", dashArray = "20 20") %>% 
+  addPolylines(data = lltm_dem, color = "red", dashArray = "20 20") %>% 
+#  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  setView(lng = centroide[1], lat = centroide[2], zoom = 16) %>% 
+  addMiniMap(position = "topright", tiles = "Esri.WorldGrayCanvas",
+             width = 100, height = 100) %>% 
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./mapa_gomes-da-costa.png", 
+                 remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("mapa_gomes-da-costa.png")
+```
+
+## Tabela de coordenadas
+
+```{r}
+df <- st_coordinates(spl_df, crs = 4326)[, c(1, 2)]
+
+df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
+vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
+row.names(df_SIRGAS) <- make.names(c(vertices, vertices[1]), unique = TRUE)
+
+azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
+distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
+
+for (i in seq_len(dim(df)[1])) {
+  if (i != dim(df)[1]){
+    
+      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
+                                          st_point(df[i + 1, ]), crs = 4326))
+      
+      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
+                               st_point(df_SIRGAS[i + 1, ]))
+  }
+}
+
+azimutes <- set_units(azimutes, rad)
+azimutes_deg <- set_units(azimutes, degrees)
+course <- (as.vector(azimutes_deg) + 360) %% 360
+conv_merid <- -1.06277192089
+planar_course <- course - conv_merid
+
+df_SIRGAS <- cbind(df_SIRGAS, 
+                   AzReal = c(course, NA),
+                   AzPlano = c(planar_course, NA),
+                   Dist = c(distances, NA))
+#df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
+df_SIRGAS <- as.data.frame(df_SIRGAS)
+
+# Para grau, minutos e segundos
+#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
+
+kable(df_SIRGAS, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."),
+      col.names =  c("E", "N", "Real", "Plano", "(m)"),
+      booktabs = TRUE) %>%
+  add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância")) %>%
+  kable_styling(font_size = 8)
+```
+
+
+## Atributos
+
+```{r}
+kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."))%>%
+  kable_styling(font_size = 8)
+```
+
+
+## Salvar no disco
+
+```{r, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
+st_write(spl_df, "gomes-da-costa.geojson", 
+         delete_dsn = TRUE)
+```

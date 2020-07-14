@@ -1,0 +1,90 @@
+---
+title: "Cessão Aquática"
+subtitle: |
+  Detroit Brasil Ltda.  
+  04972.000712/2004-24
+author: "Luiz Fernando Palin Droubi"
+date: \today
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+ \usepackage{longtable}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(units)
+#library(measurements)
+library(geosphere)
+```
+
+```{r, results='hide'}
+polUniao <- st_zm(st_read("../Poligonos_LPM_Homologada.kml"))
+spl <- st_read("8105002335000.geojson")
+#
+attr <- data.frame(destinacao = "cessao",
+                   tipo = "terrestre",
+                   rip = NA,
+                   interessado = "Detroit Brasil Ltda.",
+                   area = st_area(spl),
+                   area_uniao = st_area(spl),
+                   inicio = NA,
+                   prazo = 20,
+                   vigencia = NA,
+                   cnpj = "04.988.669/0001-94",
+                   nup = "04972.000712/2004-24",
+                   protocolo = "5051229, fl. 01",
+                   ref = 5050567,
+                   concedida = FALSE,
+                   municipio = 8161,
+                   logradouro = NA,
+                   aval = NA,
+                   dataaval = NA,
+                   refaval = NA,
+                   onerosa = TRUE)
+#
+# 4. União dos atributos à geometria
+#
+#
+spl_df <- st_sf(attr,
+                geometry = spl)
+```
+
+## Polígono Total do Imóvel
+
+```{r mapa-imovel}
+ext <- extent(spl_df)
+m <- spl_df %>% 
+  leaflet() %>% 
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "blue") %>%
+  addPolygons(data = polUniao) %>%
+  addPolylines(data = lltm_demarcada, color = "red") %>% 
+  addHomeButton(group = "PM Palhoça") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+name <- paste(st_geohash(spl_df, 10), ".png", sep = "")
+mapview::mapshot(m, file = name, remove_url = FALSE)
+knitr::include_graphics(name)
+```
+
+```{r}
+st_write(spl_df, "Palhoca.kml")
+```
+

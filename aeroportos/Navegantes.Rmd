@@ -8,6 +8,7 @@ date: \today
 output: 
   binb::metropolis:
     df_print: tibble
+fontsize: 10pt
 header-includes:
  \usepackage[brazil]{babel}
  \usepackage{booktabs}
@@ -225,7 +226,7 @@ kable(t(st_drop_geometry(spl_df)), booktabs = TRUE,
 ## Exportar
 
 ```{r, echo = TRUE, results='hide'}
-st_write(spl_df, "navegantes.geojson", delete_dsn = TRUE)
+#st_write(spl_df, "navegantes.geojson", delete_dsn = TRUE)
 ```
 
 

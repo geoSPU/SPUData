@@ -35,14 +35,20 @@ pl <- st_sfc(st_polygon(list(coords)))
 #
 # 3. Criação dos metadados  
 #
-attr <- data.frame(interessado = "DSP Empreendimentos Imobiliários EIRELI",
-                    nup = "04972.009273/2018-11",
-                    protocolo = "SC03017/2018",
-                    ref = 8385248,
-                    concedida = TRUE,
-                    area = st_area(pl),
-                    municipio = 9985
-                   )
+attr <- data.frame(
+  destinacao = "disponibilidade",
+  interessado = "DSP Empreendimentos Imobiliários EIRELI",
+  area = st_area(spl),
+  area_uniao = st_area(spl),
+  nup = "04972.009273/2018-11",
+  protocolo = "SC03017/2018",
+  ref = 8385248,
+  concedida = TRUE,
+  municipio = 9985,
+  inicio: as.Date("2020-07-07"),
+  prazo: 1,
+  vigencia: as.Date("2021-07-07")
+  )
 #
 # 4. Criação da feição
 #

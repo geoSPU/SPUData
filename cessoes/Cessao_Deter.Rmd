@@ -1,8 +1,12 @@
 ---
 title: "Cessão de Espaço Aquático"
+subtitle: |
+  Departamento de Transportes e Terminais – DETER
+  04.340.793/0001-49
 author: "Luiz Fernando Palin Droubi"
-date: "`r format(Sys.Date(), '%d/%m/%Y')`"
-output: html_document
+date: \today
+output: 
+  binb::metropolis
 ---
 
 ```{r setup, include=FALSE}
@@ -10,9 +14,9 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%",
                       warning = FALSE)
 library(sf)
 library(leaflet)
+library(leafem)
+library(raster)
 ```
-
-## Criar objeto
 
 ```{r}
 # 1. Digitação da Geometria
@@ -100,10 +104,49 @@ spl_df <- st_sf(attr,
   st_transform(crs = 4326) # Transforma para WGS84.
 ```
 
+## Mapa
+
+```{r}
+lpm_hom <- st_read("../linhas/LPM_HOMOLOGADA.geojson")
+lpm_dem <- st_read("../linhas/LPM_DEMARCADA.geojson")
+lpm_pre <- st_read("../linhas/LPM_PRESUMIDA.geojson")
+lltm_hom <- st_read("../linhas/LLTM_HOMOLOGADA.geojson")
+lltm_dem <- st_read("../linhas/LLTM_DEMARCADA.geojson")
+lltm_pre <- st_read("../linhas/LLTM_PRESUMIDA.geojson")
+ext <- extent(spl_df)
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addPolylines(data = lpm_hom, color = "blue") %>%
+  addPolylines(data = lpm_dem, dashArray = "20 20", color = "blue") %>% 
+  addPolylines(data = lpm_pre, dashArray = "20 20", color = "blue", opacity = .1) %>%
+  addPolylines(data = lltm_hom, color = "red") %>%
+  addPolylines(data = lltm_dem, dashArray = "20 20", color = "red") %>% 
+  addPolylines(data = lltm_pre, dashArray = "20 20", color = "red", opacity = .1) %>% 
+  addHomeButton(ext = ext, layer.name = "Deter") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = "./map.png", remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("map.png")
+```
+
 
 ```{r}
 # 5. Escrever a nova entrada no BDE
 #
-st_write(spl_df, "deter.geojson", delete_dsn = TRUE)
+#st_write(spl_df, "deter.geojson", delete_dsn = TRUE)
+```
+
+## Metadados
+
+```{r}
+knitr::kable(t(st_drop_geometry(spl_df)))
 ```
 

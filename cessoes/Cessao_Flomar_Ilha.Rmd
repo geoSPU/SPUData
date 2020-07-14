@@ -1,0 +1,213 @@
+---
+title: "Certidão de Disponibilidade"
+subtitle: |
+  Flomar Navegação Ltda.   
+  Florianópolis (ilha)  
+  04972.007710/2017-81
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: 
+  binb::metropolis:
+    df_print: tibble
+    keep_tex: yes
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+fontsize: 10pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(geosphere)
+library(units)
+install_symbolic_unit(name = "Reais", warn = TRUE, dimensionless = TRUE)
+#library(measurements)
+```
+
+```{r}
+# 1. Digitação da Geometria
+#  
+agua <- 
+  matrix(c(741131.00, 6946172.00, #P28
+           741030.00, 6946275.00, #P29
+           740837.00, 6946136.00, #P30
+           740936.00, 6946040.00, #P31
+           741131.00, 6946172.00),#P28
+         byrow = TRUE, ncol =2) 
+terra <- 
+  matrix(c(741101.00, 6946123.00, #P24 
+           741107.00, 6946117.00, #P25
+           741145.00, 6946141.00, #P27
+           741145.00, 6946164.00, #P26
+           741101.00, 6946123.00), #P24 
+         byrow = TRUE, ncol =2) 
+
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl <- 
+  st_sfc(st_multipolygon(
+    list(
+      list(terra),
+      list(agua)
+    )), 
+    crs = 31982) %>% 
+  st_transform(4326)
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(
+  destinacao = "cessao",
+  tipo = "mista",
+  rip = NA,
+  interessado = "Flomar Navegação Ltda.",
+  area = st_area(spl),
+  area_uniao = st_area(spl),
+  inicio = NA,
+  prazo = NA,
+  vigencia = NA,
+  cnpj = " 12.794.401/0001-40",
+  nup = "04972.007710/2017-81",
+  protocolo = "SC01731/2020",
+  ref = 8864040,
+  concedida = FALSE,
+  municipio = 8105,
+  logradouro = "01-01",
+  aval = set_units(3239.25, Reais/m^2)*st_area(spl),
+  dataaval = as.Date("2020-07-07"),
+  refaval = NA,
+  onerosa = TRUE)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = spl)
+```
+
+```{r, results = "hide"}
+lpm_dem <- st_read("../linhas/LPM_DEMARCADA.geojson")
+lltm_dem <- st_read("../linhas/LLTM_DEMARCADA.geojson")
+lpm_hom <- st_read("../linhas/LPM_HOMOLOGADA.geojson")
+lltm_hom <- st_read("../linhas/LLTM_HOMOLOGADA.geojson")
+```
+
+
+## IMAGEM
+
+```{r}
+ext <- extent(spl_df)
+centroide <- st_coordinates(st_centroid(spl_df))
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  addPolylines(data = lpm_hom, color = "blue") %>% 
+  addPolylines(data = lltm_hom, color = "red") %>% 
+  addPolylines(data = lpm_dem, color = "blue", dashArray = "20 20") %>% 
+  addPolylines(data = lltm_dem, color = "red", dashArray = "20 20") %>% 
+#  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  setView(lng = centroide[1], lat = centroide[2], zoom = 16) %>% 
+  addMiniMap(position = "topright", tiles = "Esri.WorldGrayCanvas",
+             width = 100, height = 100) %>% 
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+ mapview::mapshot(m, file = "./mapa_Flomar_BMNorte.png", 
+                  remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("mapa_Flomar_BMNorte.png")
+```
+
+## Tabela de coordenadas
+
+```{r tabela, mysize=TRUE, size='\\scriptsize'}
+df <- st_coordinates(spl_df, crs = 4326)[, c(1, 2)]
+
+df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
+vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
+row.names(df_SIRGAS) <- make.names(c(vertices, vertices[1]), unique = TRUE)
+
+azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
+distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
+
+for (i in seq_len(dim(df)[1])) {
+  if (i != dim(df)[1]){
+    
+      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
+                                          st_point(df[i + 1, ]), crs = 4326))
+      
+      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
+                               st_point(df_SIRGAS[i + 1, ]))
+  }
+}
+
+azimutes <- set_units(azimutes, rad)
+azimutes_deg <- set_units(azimutes, degrees)
+course <- (as.vector(azimutes_deg) + 360) %% 360
+conv_merid <- -1.06277192089
+planar_course <- course - conv_merid
+
+df_SIRGAS <- cbind(df_SIRGAS, 
+                   AzReal = c(course, NA),
+                   AzPlano = c(planar_course, NA),
+                   Dist = c(distances, NA))
+#df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
+df_SIRGAS <- as.data.frame(df_SIRGAS)
+
+# Para grau, minutos e segundos
+#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
+
+kable(df_SIRGAS[, 1:2], 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."),
+      col.names =  c("E", "N"),
+      booktabs = TRUE) %>%
+  add_header_above(c("Vértice", "Coordenadas" = 2)) 
+```
+
+
+## Atributos
+
+```{r attr, mysize=TRUE, size='\\scriptsize'}
+kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."))
+```
+
+
+## Salvar no disco
+
+```{r, echo=TRUE, mysize=TRUE, size='\\scriptsize'}
+st_write(spl_df, "Flomar-BMNorte.geojson", 
+         delete_dsn = TRUE)
+```
