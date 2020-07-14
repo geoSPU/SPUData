@@ -2,7 +2,7 @@
 title: "Entrega"
 subtitle: |
   Secretaria de Pesca e Aquicultura  
-  10154.129500/2020-84  
+  10154.123292/2019-76  
 author: "Luiz Fernando Palin Droubi"
 date: \today
 institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
@@ -39,11 +39,11 @@ install_symbolic_unit(name = "Reais", warn = TRUE, dimensionless = TRUE)
 # 1. Digitação da Geometria
 #  
 coords <- 
-  matrix(c(734683, 6898705, #V1
-           734637, 6898639, #V2
-           734595, 6898670, #V3
-           734643, 6898735, #V4
-           734683, 6898705),#V1
+  matrix(c(742040.606, 6989156.879, #V1
+           742716.578, 6988423.111, #V2
+           741642.968, 6987411.009, #V3
+           740965.400, 6988146.576, #V4
+           742040.606, 6989156.879),#V1
          ncol = 2, byrow = TRUE)
 #
 # 2. Criação da feição  
@@ -56,7 +56,10 @@ coords <-
 # SAD 69 22S = 29192
 # SIRGAS 2000 22S = 31982
 #
-spl <- st_sfc(st_polygon(list(coords)), crs = 29192)
+spl <- 
+  st_sfc(
+    st_polygon(list(coords)), 
+    crs = 29192)
 #
 # 3. Criação dos metadados  
 #
@@ -64,20 +67,20 @@ attr <- data.frame(
   destinacao = "entrega",
   tipo = "aquatica",
   rip = NA,
-  interessado = "Quirino Juvêncio Lopes Neto",
+  interessado = "Cavalo Marinho - Criação e beneficiamento de frutos do mar Ltda. EPP",
   area = st_area(spl),
   area_uniao = st_area(spl),
   inicio = NA,
   prazo = NA,
   vigencia = NA,
-  cnpj = "005371579-99",
-  nup = "10154.129500/2020-84",
-  protocolo = "Ofício 10388277 (7493304)",
-  ref = 7114861,
-  municipio = 8113,
-  logradouro = "02-00",
-  aval = set_units(601.15, Reais/m^2)*st_area(spl),
-  dataaval = as.Date("2020-06-15"))
+  cnpj = "06.345.926/0001-03",
+  nup = "10154.123292/2019-76",
+  protocolo = "Anexo Minuta_de_Oficio_15 (3854006)",
+  ref = 3853558,
+  municipio = 8265,
+  logradouro = "800003-00",
+  aval = format(set_units(1191.82, Reais/m^2)*st_area(spl), big.mark=".", decimal.mark = ","),
+  dataaval = as.Date("2020-07-14"))
 #
 # 4. União dos atributos à geometria
 #
@@ -127,76 +130,13 @@ m <- spl_df %>%
   addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
                   offset.x = 15, offset.y = 15, 
                   width = 75, height = 75)
- mapview::mapshot(m, file = "./mapa_enviado.png", 
+mapview::mapshot(m, file = "./mapa_enviado.png", 
                  remove_controls = NULL, remove_url = FALSE)
 knitr::include_graphics("mapa_enviado.png")
 ```
-## Tabela de coordenadas
-
-```{r}
-df <- st_coordinates(spl_df)[, c(1, 2)]
-
-df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
-vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
-row.names(df_SIRGAS) <- make.names(c(vertices, vertices[1]), unique = TRUE)
-
-azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
-distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
-
-for (i in seq_len(dim(df)[1])) {
-  if (i != dim(df)[1]){
-    
-      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
-                                          st_point(df[i + 1, ]), crs = 4326))
-      
-      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
-                               st_point(df_SIRGAS[i + 1, ]))
-  }
-}
-
-azimutes <- set_units(azimutes, rad)
-azimutes_deg <- set_units(azimutes, degrees)
-course <- (as.vector(azimutes_deg) + 360) %% 360
-conv_merid <- -1.06277192089
-planar_course <- course - conv_merid
-
-df_SIRGAS <- cbind(df_SIRGAS, 
-                   AzReal = c(course, NA),
-                   AzPlano = c(planar_course, NA),
-                   Dist = c(distances, NA))
-#df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
-df_SIRGAS <- as.data.frame(df_SIRGAS)
-
-# Para grau, minutos e segundos
-#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
-
-kable(df_SIRGAS, 
-      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."),
-      col.names =  c("E", "N", "Real", "Plano", "(m)"),
-      booktabs = TRUE) %>%
-  add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância")) %>%
-  kable_styling(font_size = 6)
-```
-
-## Memorial
-
-```{r}
-n <- nrow(df_SIRGAS) - 1
-```
 
 
-```{r, results='asis', mysize=TRUE, size='\\tiny'}
-cat(" Inicia-se este memorial pelo vértice ")
-for (i in seq_len(n)) {
-  cat("**", rownames(df_SIRGAS)[i], "** com coordenadas **N ", brf(df_SIRGAS[i, 2]), "** e 
-      **E ", brf(df_SIRGAS[i, 1]), "**. Deste segue com azimute ", 
-      brf(df_SIRGAS[i, 4]), "° e distância ", brf(df_SIRGAS[i, 5]), "m até o 
-      vértice ", sep = "")
-}
-cat("**", rownames(df_SIRGAS)[1], "**, origem desta descrição.", sep = "")
-```
-
-## Metadados
+## Atributos
 
 ```{r}
 kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, 
@@ -208,6 +148,6 @@ kable(t(st_drop_geometry(spl_df)), booktabs = TRUE,
 ## Salvar no disco
 
 ```{r, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
-st_write(spl_df, "MAPA_Garopaba.geojson", 
+st_write(spl_df, "MAPA_Porto_Belo.geojson", 
          delete_dsn = TRUE)
 ```
