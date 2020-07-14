@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "MAPA_Garopaba",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "destinacao": "entrega", "tipo": "aquatica", "rip": null, "interessado": "Quirino Juvêncio Lopes Neto", "area": "4.119 [m^2]", "area_uniao": "4.119 [m^2]", "inicio": null, "prazo": null, "vigencia": null, "cnpj": "005371579-99", "nup": "10154.129500\/2020-84", "protocolo": "Ofício 10388277 (7493304)", "ref": 7114861.0, "municipio": 8113.0, "logradouro": "02-00", "aval": "2.476.137 [Reais]", "dataaval": "2020\/06\/15" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.613653575283635, -28.016616977396879 ], [ -48.614107959515835, -28.017220379676093 ], [ -48.61454098642902, -28.016948191107453 ], [ -48.614066075203368, -28.016353456532187 ], [ -48.613653575283635, -28.016616977396879 ] ] ] } }
+]
+}

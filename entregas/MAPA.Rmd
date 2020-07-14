@@ -1,0 +1,213 @@
+---
+title: "Entrega"
+subtitle: |
+  Secretaria de Pesca e Aquicultura  
+  10154.129500/2020-84  
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(geosphere)
+library(units)
+install_symbolic_unit(name = "Reais", warn = TRUE, dimensionless = TRUE)
+#library(measurements)
+```
+
+```{r}
+# 1. Digitação da Geometria
+#  
+coords <- 
+  matrix(c(734683, 6898705, #V1
+           734637, 6898639, #V2
+           734595, 6898670, #V3
+           734643, 6898735, #V4
+           734683, 6898705),#V1
+         ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl <- st_sfc(st_polygon(list(coords)), crs = 29192)
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(
+  destinacao = "entrega",
+  tipo = "aquatica",
+  rip = NA,
+  interessado = "Quirino Juvêncio Lopes Neto",
+  area = format(st_area(spl), big.mark=".", decimal.mark = ","),
+  area_uniao = format(st_area(spl), big.mark=".", decimal.mark = ","),
+  inicio = NA,
+  prazo = NA,
+  vigencia = NA,
+  cnpj = "005371579-99",
+  nup = "10154.129500/2020-84",
+  protocolo = "Ofício 10388277 (7493304)",
+  ref = 7114861,
+  municipio = 8113,
+  logradouro = "02-00",
+  aval = format(set_units(601.15, Reais/m^2)*st_area(spl), big.mark=".", decimal.mark = ","),
+  dataaval = as.Date("2020-06-15"))
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = spl)  %>% 
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+```{r, results='hide'}
+polUniao <- st_zm(st_read("../Poligonos_LPM_Homologada.geojson"))
+lpm_demarcada <- st_read("../linhas/LPM_DEMARCADA.geojson")
+lpm_presumida <- st_read("../linhas/LPM_PRESUMIDA.geojson")
+lltm_demarcada <- st_read("../linhas/LLTM_DEMARCADA.geojson")
+lltm_presumida <- st_read("../linhas/LLTM_PRESUMIDA.geojson")
+```
+
+## IMAGEM DOS POLÍGONOS ENVIADOS
+
+```{r}
+ext <- extent(spl_df)
+centroide <- st_coordinates(st_centroid(spl_df))
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "white", fillColor = "red",
+              dashArray = "10 5") %>%
+  addPolygons(data = polUniao, color = "yellow") %>% 
+# addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolylines(data = lpm_demarcada, dashArray = "20 20", color = "blue") %>% 
+  addPolylines(data= lpm_presumida, dashArray = "20 20", color = "blue", 
+               opacity = .2) %>% 
+  addPolylines(data = lltm_demarcada, dashArray = "20 20", color = "red") %>% 
+  addPolylines(data = lltm_presumida, dashArray = "20 20", color = "red", 
+               opacity = .2) %>% 
+  setView(lng = centroide[1], lat = centroide[2], zoom = 15) %>% 
+  #  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+ mapview::mapshot(m, file = "./mapa_enviado.png", 
+                 remove_controls = NULL, remove_url = FALSE)
+knitr::include_graphics("mapa_enviado.png")
+```
+## Tabela de coordenadas
+
+```{r}
+df <- st_coordinates(spl_df)[, c(1, 2)]
+
+df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
+vertices <- paste("VT", seq_len(dim(df_SIRGAS)[1] - 1), sep = "")
+row.names(df_SIRGAS) <- make.names(c(vertices, vertices[1]), unique = TRUE)
+
+azimutes <- vector(mode = "numeric", length = dim(df)[1]-1)
+distances <- vector(mode = "numeric", length = dim(df)[1]-1) # Curso é o azimute de 0 a 360
+
+for (i in seq_len(dim(df)[1])) {
+  if (i != dim(df)[1]){
+    
+      azimutes[[i]] <- st_geod_azimuth(st_sfc(st_point(df[i, ]), 
+                                          st_point(df[i + 1, ]), crs = 4326))
+      
+      distances[[i]] <- st_distance(st_point(df_SIRGAS[i, ]),
+                               st_point(df_SIRGAS[i + 1, ]))
+  }
+}
+
+azimutes <- set_units(azimutes, rad)
+azimutes_deg <- set_units(azimutes, degrees)
+course <- (as.vector(azimutes_deg) + 360) %% 360
+conv_merid <- -1.06277192089
+planar_course <- course - conv_merid
+
+df_SIRGAS <- cbind(df_SIRGAS, 
+                   AzReal = c(course, NA),
+                   AzPlano = c(planar_course, NA),
+                   Dist = c(distances, NA))
+#df_SIRGAS <- df_SIRGAS[c(7, 8, 1, 2, 3, 4, 5, 6, 9), ]
+df_SIRGAS <- as.data.frame(df_SIRGAS)
+
+# Para grau, minutos e segundos
+#sp::dd2dms(as.vector(course[c(7, 8, 1, 2, 3, 4, 5, 6)]))
+
+kable(df_SIRGAS, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."),
+      col.names =  c("E", "N", "Real", "Plano", "(m)"),
+      booktabs = TRUE) %>%
+  add_header_above(c("Vértice", "Coordenadas" = 2, "Azimutes" = 2, "Distância")) %>%
+  kable_styling(font_size = 6)
+```
+
+## Memorial
+
+```{r}
+n <- nrow(df_SIRGAS) - 1
+```
+
+
+```{r, results='asis', mysize=TRUE, size='\\tiny'}
+cat(" Inicia-se este memorial pelo vértice ")
+for (i in seq_len(n)) {
+  cat("**", rownames(df_SIRGAS)[i], "** com coordenadas **N ", brf(df_SIRGAS[i, 2]), "** e 
+      **E ", brf(df_SIRGAS[i, 1]), "**. Deste segue com azimute ", 
+      brf(df_SIRGAS[i, 4]), "° e distância ", brf(df_SIRGAS[i, 5]), "m até o 
+      vértice ", sep = "")
+}
+cat("**", rownames(df_SIRGAS)[1], "**, origem desta descrição.", sep = "")
+```
+
+## Metadados
+
+```{r}
+kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."))%>%
+  kable_styling(font_size = 8)
+```
+
+
+## Salvar no disco
+
+```{r, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
+st_write(spl_df, "MAPA_Garopaba.geojson", 
+         delete_dsn = TRUE)
+```
