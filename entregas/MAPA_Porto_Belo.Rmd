@@ -77,9 +77,9 @@ attr <- data.frame(
   nup = "10154.123292/2019-76",
   protocolo = "Anexo Minuta_de_Oficio_15 (3854006)",
   ref = 3853558,
-  municipio = 8265,
-  logradouro = "800003-00",
-  aval = format(set_units(1191.82, Reais/m^2)*st_area(spl), big.mark=".", decimal.mark = ","),
+  municipio = 5537,
+  logradouro = "12-03",
+  aval = format(set_units(278.99, Reais/m^2)*st_area(spl), big.mark=".", decimal.mark = ","),
   dataaval = as.Date("2020-07-14"))
 #
 # 4. União dos atributos à geometria
@@ -139,9 +139,9 @@ knitr::include_graphics("mapa_enviado.png")
 ## Atributos
 
 ```{r}
-kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, 
+kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, col.names = c("Atributos"), 
       format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."))%>%
-  kable_styling(font_size = 8)
+  kable_styling(font_size = 6)
 ```
 
 
