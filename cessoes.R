@@ -2,20 +2,20 @@ library(sf)
 
 cessoes <- read_sf("cessoes.geojson")
 
-ifsc <- st_zm(st_read("cessoes/8105002225000 - IFSC.kml"))
+canteiro <- st_zm(st_read("cessoes/8105002065003-Canteiro de Obra das Pontes.kml"))
 
 attr <- data.frame(
   destinacao = "cessao",
   tipo = "terrestre",
-  rip = "8105 00222.500-0",
-  interessado = "Instituto Federal de Educação, Ciência e Tecnologia de Santa Catarina",
-  area = st_area(ifsc),
-  area_uniao = st_area(ifsc),
+  rip = "8105 00206.500-3",
+  interessado = "Governo do Estado de Santa Catarina",
+  area = st_area(canteiro),
+  area_uniao = st_area(canteiro),
   inicio = NA,
   prazo = NA,
   vigencia = NA,
-  cnpj = "11.402.887/0001-60",
-  nup = "04972.000705/2006-94",
+  cnpj = NA,
+  nup = "05022.000023/2001-79",
   protocolo = NA,
   ref = NA,
   concedida = TRUE,
@@ -26,8 +26,8 @@ attr <- data.frame(
   refaval = NA,
   onerosa = FALSE)
 
-ifsc <- st_sf(attr, geometry = st_geometry(ifsc))
+canteiro <- st_sf(attr, geometry = st_geometry(canteiro))
 
-cessoes <- rbind(cessoes, ifsc)
+cessoes <- rbind(cessoes, canteiro)
 
 st_write(cessoes, "cessoes.geojson", delete_dsn = TRUE)
