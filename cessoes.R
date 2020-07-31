@@ -2,22 +2,22 @@ library(sf)
 
 cessoes <- read_sf("cessoes.geojson")
 
-canteiro <- st_zm(st_read("cessoes/8105002065003-Canteiro de Obra das Pontes.kml"))
+policiaAmbiental <- st_zm(st_read("cessoes/8105001725000 - Polícia Ambiental.kml"))
 
 attr <- data.frame(
   destinacao = "cessao",
   tipo = "terrestre",
-  rip = "8105 00206.500-3",
-  interessado = "Governo do Estado de Santa Catarina",
-  area = st_area(canteiro),
-  area_uniao = st_area(canteiro),
-  inicio = NA,
+  rip = "8105 00172.500-0",
+  interessado = "Estado de Santa Catarina",
+  area = st_area(policiaAmbiental),
+  area_uniao = st_area(policiaAmbiental),
+  inicio = as.Date("2017-06-06"),
   prazo = NA,
   vigencia = NA,
-  cnpj = NA,
-  nup = "05022.000023/2001-79",
+  cnpj = "82.951.229/0001-76",
+  nup = "11452.002315/00-27",
   protocolo = NA,
-  ref = NA,
+  ref = 3932180,
   concedida = TRUE,
   municipio = 8105,
   logradouro = NA,
@@ -26,8 +26,8 @@ attr <- data.frame(
   refaval = NA,
   onerosa = FALSE)
 
-canteiro <- st_sf(attr, geometry = st_geometry(canteiro))
+policiaAmbiental <- st_sf(attr, geometry = st_geometry(policiaAmbiental))
 
-cessoes <- rbind(cessoes, canteiro)
+cessoes <- rbind(cessoes, policiaAmbiental)
 
 st_write(cessoes, "cessoes.geojson", delete_dsn = TRUE)
