@@ -2,20 +2,20 @@ library(sf)
 
 cessoes <- read_sf("cessoes.geojson")
 
-parqueCoqueiros <- st_zm(st_read("cessoes/8105001735005 - Parque de Coqueiros.kml"))
+ifsc <- st_zm(st_read("cessoes/8105002225000 - IFSC.kml"))
 
 attr <- data.frame(
   destinacao = "cessao",
   tipo = "terrestre",
-  rip = "8105 00173.500-5",
-  interessado = "Prefeitura Municipal de Florianopolis",
-  area = st_area(parqueCoqueiros),
-  area_uniao = st_area(parqueCoqueiros),
+  rip = "8105 00222.500-0",
+  interessado = "Instituto Federal de Educação, Ciência e Tecnologia de Santa Catarina",
+  area = st_area(ifsc),
+  area_uniao = st_area(ifsc),
   inicio = NA,
   prazo = NA,
   vigencia = NA,
-  cnpj = "82.892.282/0001-43",
-  nup = "11452.001000/0081",
+  cnpj = "11.402.887/0001-60",
+  nup = "04972.000705/2006-94",
   protocolo = NA,
   ref = NA,
   concedida = TRUE,
@@ -26,8 +26,8 @@ attr <- data.frame(
   refaval = NA,
   onerosa = FALSE)
 
-parqueCoqueiros <- st_sf(attr, geometry = st_geometry(parqueCoqueiros))
+ifsc <- st_sf(attr, geometry = st_geometry(ifsc))
 
-cessoes <- rbind(cessoes, parqueCoqueiros)
+cessoes <- rbind(cessoes, ifsc)
 
 st_write(cessoes, "cessoes.geojson", delete_dsn = TRUE)
