@@ -1,1 +1,17 @@
-{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"nome":"A"},"geometry":{"type":"Point","coordinates":[-48.525999784469604,-27.642201828270025]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-48.52592468261719,-27.64271743365739]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-48.52686882019043,-27.636755746492792]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-48.5271692276001,-27.636147441297386]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-48.52830648422241,-27.631803663731244]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-48.52824211120605,-27.632373972587178]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-48.52823138236999,-27.63057511330826]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-48.52892339229584,-27.623346109893443]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-48.5287544131279,-27.623963992089603]}}]}
+{
+"type": "FeatureCollection",
+"name": "ranchos_de_pesca",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "nome": "A", "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.525999784469604, -27.642201828270025 ] } },
+{ "type": "Feature", "properties": { "nome": null, "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.525924682617188, -27.642717433657388 ] } },
+{ "type": "Feature", "properties": { "nome": null, "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.52686882019043, -27.636755746492792 ] } },
+{ "type": "Feature", "properties": { "nome": null, "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.527169227600098, -27.636147441297386 ] } },
+{ "type": "Feature", "properties": { "nome": null, "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.528306484222412, -27.631803663731244 ] } },
+{ "type": "Feature", "properties": { "nome": null, "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.528242111206048, -27.632373972587178 ] } },
+{ "type": "Feature", "properties": { "nome": null, "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.528231382369988, -27.630575113308261 ] } },
+{ "type": "Feature", "properties": { "nome": null, "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.528923392295837, -27.623346109893443 ] } },
+{ "type": "Feature", "properties": { "nome": null, "nup": null }, "geometry": { "type": "Point", "coordinates": [ -48.528754413127899, -27.623963992089603 ] } },
+{ "type": "Feature", "properties": { "nome": "DEINFRA", "nup": "04972.000890\/2010-01" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.549167138228803, -27.60704220127209 ], [ -48.549052704175097, -27.606929020327641 ], [ -48.549722439124622, -27.60618407507161 ], [ -48.549868857787537, -27.60626656605681 ], [ -48.549167138228803, -27.60704220127209 ] ] ] } }
+]
+}
