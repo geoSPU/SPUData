@@ -1,0 +1,66 @@
+---
+title: "Porto de SFS"
+subtitle: "Poligonal atualizada em 05/07/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+#
+# 1 Criação da poligonal do porto
+#
+# 1.1 Leitura da poligonal em KML
+# Obs.: Da poliganal abaixo são extraídos pontos dos vértices. 
+# É necessário confeccionar manualmente o polígono.
+#  
+layers <- st_layers("sfs/poligonal.kml")
+pl1 <- st_sf(geom = st_zm(
+  st_geometry(
+    st_read("sfs/poligonal.kml", 
+            "Area do Porto Organizado de São Francisco do Sul - Anexo I")
+  )))
+pl2 <- st_sf(geom = st_zm(
+  st_geometry(
+    st_read("sfs/poligonal.kml", 
+            "Area do Porto Organizado de São Francisco do Sul - Anexo II")
+    )))
+#
+spl <- rbind(pl1, pl2)
+#
+# 2. Criação dos atributos  
+#
+attr <- data.frame(descricao = "Área do Porto Organizado de São Francisco do Sul",
+                   area = c(st_area(st_transform(pl1, 31982)),
+                            st_area(st_transform(pl2, 31982))),
+                   municipio = 8319,
+                   portaria = 500,
+                   anexo = as.character(as.roman(1:2)),
+                   data = as.Date("05/07/2019", format = "%d/%m/%Y"),
+                   fonte = "http://infraestrutura.gov.br/images/arquivos-poligonais-das-areas-dos-portos-organizados/sao-francisco-do-sul.zip",
+                   data_acesso = as.Date("25/07/2019", format = "%d/%m/%Y"),
+                   nup = NA,
+                   obs = c("Área Principal", "Área ocupada pela Companhia Integrada de Desenvolvimento Agrícola de Santa Catarina-CIDASC")
+                   )
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = st_geometry(spl))
+```
+
+## Exportar
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "sfs.geojson", delete_dsn = TRUE)
+```

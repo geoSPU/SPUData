@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Anexo_II.kml</name>
+	<Style id="sh_placemark_circle_highlight3">
+		<IconStyle>
+			<color>ffffffaa</color>
+			<scale>0.709091</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle_highlight.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>ffffffaa</color>
+			<scale>0.6</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>ffffffaa</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7fffffaa</color>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_placemark_circle3">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_placemark_circle3</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_placemark_circle_highlight3</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_placemark_circle3">
+		<IconStyle>
+			<color>ffffffaa</color>
+			<scale>0.6</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>ffffffaa</color>
+			<scale>0.6</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>ffffffaa</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7fffffaa</color>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>Anexo II</name>
+		<description>Memorial descritivo (SIRGAS2000) #Área (4.775,5545 m²) - Perímetro (296,0396 m.)#				
+Vértices	Latitude[UTM(m)]	Longitude[UTM(m)]	Zona(Fuso)	Hemisfério	Latitude(°)	Longitude(°)	
+BRLGN-0066	6.845.860,72000m	717.795,980000m	22	Sul	-28,4957486082672°	-48,7749213566113°	
+BRLGN-0067	6.845.870,02000m	717.801,690000m	22	Sul	-28,4956637693002°	-48,7748648176298°	
+BRLGN-0068	6.845.882,89000m	717.841,820000m	22	Sul	-28,4955409737533°	-48,7744575263663°	
+BRLGN-0069	6.845.910,39000m	717.853,410000m	22	Sul	-28,4952909907545°	-48,7743443986427°	
+BRLGN-0070	6.845.899,22000m	717.882,100000m	22	Sul	-28,4953869434220°	-48,7740493597363°	
+BRLGN-0071	6.845.898,66000m	717.883,670000m	22	Sul	-28,4953917319026°	-48,7740332240420°	
+BRLGN-0072	6.845.897,86000m	717.885,030000m	22	Sul	-28,4953987202608°	-48,7740191870001°	
+BRLGN-0073	6.845.895,92000m	717.886,150000m	22	Sul	-28,4954160313390°	-48,7740073845018°	
+BRLGN-0074	6.845.890,25000m	717.886,690000m	22	Sul	-28,4954670833022°	-48,7740007975417°	
+BRLGN-0075	6.845.887,21000m	717.887,490000m	22	Sul	-28,4954943696894°	-48,7739920539499°	
+BRLGN-0076	6.845.881,39000m	717.890,310000m	22	Sul	-28,4955463932380°	-48,7739621597910°	
+BRLGN-0077	6.845.878,90000m	717.892,270000m	22	Sul	-28,4955685246900°	-48,7739416767294°	
+BRLGN-0078	6.845.876,51000m	717.894,610000m	22	Sul	-28,4955896905925°	-48,7739173327957°	
+BRLGN-0079	6.845.873,95000m	717.898,050000m	22	Sul	-28,4956122058484°	-48,7738817256646°	
+BRLGN-0080	6.845.872,01000m	717.902,780000m	22	Sul	-28,4956289130201°	-48,7738330650210°	
+BRLGN-0081	6.845.871,20000m	717.905,860000m	22	Sul	-28,4956357038209°	-48,7738014648419°	
+BRLGN-0082	6.845.870,73000m	717.908,320000m	22	Sul	-28,4956395316003°	-48,7737762592426°	
+BRLGN-0083	6.845.837,51000m	717.885,220000m	22	Sul	-28,4959430336420°	-48,7740058202372°	
+BRLGN-0084	6.845.833,41000m	717.881,420000m	22	Sul	-28,4959806504690°	-48,7740438420485°	
+BRLGN-0085	6.845.831,38000m	717.877,810000m	22	Sul	-28,4959995645119°	-48,7740803159134°	
+BRLGN-0086	6.845.829,78000m	717.873,850000m	22	Sul	-28,4960146585727°	-48,7741204447201°	
+BRLGN-0087	6.845.828,65000m	717.868,770000m	22	Sul	-28,4960257006471°	-48,7741720977699°	
+BRLGN-0088	6.845.828,33000m	717.864,590000m	22	Sul	-28,4960292861288°	-48,7742147151513°	
+BRLGN-0089	6.845.829,29000m	717.858,970000m	22	Sul	-28,4960215670929°	-48,7742722773302°</description>
+		<styleUrl>#msn_placemark_circle3</styleUrl>
+		<gx:balloonVisibility>1</gx:balloonVisibility>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-48.7749213566113,-28.4957486082672,0 -48.77486481762979,-28.4956637693002,0 -48.7744575263663,-28.4955409737533,0 -48.7743443986427,-28.49529099075451,0 -48.7740493597363,-28.495386943422,0 -48.774033224042,-28.4953917319026,0 -48.7740191870001,-28.4953987202608,0 -48.77400738450181,-28.495416031339,0 -48.77400079754171,-28.4954670833022,0 -48.7739920539499,-28.4954943696894,0 -48.773962159791,-28.495546393238,0 -48.7739416767294,-28.49556852469,0 -48.77391733279571,-28.4955896905925,0 -48.7738817256646,-28.4956122058484,0 -48.773833065021,-28.4956289130201,0 -48.7738014648419,-28.4956357038209,0 -48.7737762592426,-28.4956395316003,0 -48.77400582023719,-28.495943033642,0 -48.7740438420485,-28.495980650469,0 -48.7740803159134,-28.4959995645119,0 -48.7741204447201,-28.49601465857271,0 -48.7741720977699,-28.4960257006471,0 -48.7742147151513,-28.4960292861288,0 -48.7742722773302,-28.4960215670929,0 -48.7749213566113,-28.4957486082672,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>

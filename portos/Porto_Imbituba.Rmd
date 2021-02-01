@@ -1,0 +1,63 @@
+---
+title: "Porto de SFS"
+subtitle: "Poligonal atualizada em 05/07/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+#
+# 1 Criação da poligonal do porto
+#
+#  
+# 1.1 Leitura das poligonais em KML
+#  
+anexo_i <- st_read("imbituba/poligonal_2019.kml", layer = "Anexo I") %>% 
+  st_zm()
+anexo_ii <- st_read("imbituba/poligonal_2019.kml", layer = "Anexo II") %>% 
+  st_zm()
+anexo_iii <- st_read("imbituba/poligonal_2019.kml", layer = "Anexo III") %>% 
+  st_zm()
+#
+# 1.2 Junção dos polígonos
+spl <- rbind(anexo_i, anexo_ii, anexo_iii)
+#
+# 2. Criação dos atributos  
+#
+attr <- data.frame(descricao = "Área do Porto Organizado de Imbituba",
+                   area = c(st_area(st_transform(anexo_i, 31982)),
+                            st_area(st_transform(anexo_ii, 31982)),
+                            st_area(st_transform(anexo_iii, 31982))),
+                   municipio = 8143,
+                   portaria = 557,
+                   anexo = as.character(as.roman(1:3)),
+                   data = as.Date("27/09/2019", format = "%d/%m/%Y"),
+                   fonte = "http://infraestrutura.gov.br/images/arquivos-poligonais-das-areas-dos-portos-organizados/imbituba.zip",
+                   data_acesso = as.Date("30/01/2020", format = "%d/%m/%Y"),
+                   nup = NA,
+                   obs = c("Área Principal", "Área de quarentena", "Área de despejos de restos de dragagem")
+                   )
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geometry= st_geometry(spl))
+```
+
+## Exportar
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "imbituba.geojson", delete_dsn = TRUE)
+```

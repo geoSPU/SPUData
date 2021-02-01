@@ -1,0 +1,60 @@
+---
+title: "Porto de Laguna"
+subtitle: "Poligonal atualizada em 05/07/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+library(RPostgreSQL)
+library(rpostgis)
+library(sf)
+library(leaflet)
+```
+
+## Criar objeto
+
+```{r}
+#
+# 1 Criação da poligonal do porto
+#
+# 1.1 Leitura das poligonais em KML
+#  
+anexo_i <- st_read("laguna/Anexo_I.kml") %>% st_zm()
+anexo_ii <- st_read("laguna/Anexo_II.kml") %>% st_zm()
+#
+# 1.2 Junção dos polígonos
+spl <- rbind(anexo_i, anexo_ii)
+#
+# 1.2 Junção dos polígonos
+#
+mpl <- st_sf(geometry = st_combine(rbind(anexo_i, anexo_ii)))
+#
+attr <- data.frame(descricao = "Área do Porto Organizado de Laguna",
+                   area = c(st_area(st_transform(anexo_i, 31982)),
+                            st_area(st_transform(anexo_ii, 31982))),
+                   municipio = 8185,
+                   portaria = 587,
+                   anexo = as.character(as.roman(1:2)),
+                   data = as.Date("05/12/2019", format = "%d/%m/%Y"),
+                   fonte = "http://infraestrutura.gov.br/images/arquivos-poligonais-das-areas-dos-portos-organizados/Laguna.zip",
+                   data_acesso = as.Date("30/01/2019", format = "%d/%m/%Y"),
+                   nup = NA,
+                   obs = c("Área Principal", "Imóvel Anexo")
+                   )
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geometry = st_geometry(spl))
+```
+
+## Exportar
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "laguna.geojson", delete_dsn = TRUE)
+```

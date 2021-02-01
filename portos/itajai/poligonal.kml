@@ -1,0 +1,1009 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Área do Porto Organizado de Itajaí.kmz</name>
+	<Style id="sh_placemark_circle_highlight">
+		<IconStyle>
+			<color>ff0000ff</color>
+			<scale>0.590909</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle_highlight.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>ff0000ff</color>
+			<scale>0.5</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>ff0000ff</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f0000ff</color>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_placemark_circle">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_placemark_circle</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_placemark_circle_highlight</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_placemark_circle">
+		<IconStyle>
+			<color>ff0000ff</color>
+			<scale>0.5</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>ff0000ff</color>
+			<scale>0.5</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>ff0000ff</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f0000ff</color>
+		</PolyStyle>
+	</Style>
+	<Folder>
+		<name>Área do Porto Organizado de Itajaí</name>
+		<open>1</open>
+		<description>PORTARIA Nº 499, DE 5 DE JULHO DE 2019</description>
+		<Folder>
+			<name>ANEXO - Área do Porto Organizado de Itajaí</name>
+			<Placemark>
+				<name>Área do Porto Organizado de Itajaí (Área = 76.878.013,20 m²)</name>
+				<description>Memorial descritivo (SIRGAS2000) #Área (76.878.013,200401300000 m²) - Perímetro (52.457,286182287900 m.)#				
+Vértices	Latitude[UTM(m)]	Longitude[UTM(m)]	Zona(Fuso)	Hemisfério	Latitude(°)	Longitude(°)	
+BRITJ-001	7.022.038,47393482m	731.921,972699664m	22	Sul	-26,9041779000000°	-48,6647957000000°	
+BRITJ-002	7.022.096,87424291m	732.088,075086038m	22	Sul	-26,9036234000000°	-48,6631352000000°	
+BRITJ-003	7.022.113,91192271m	732.111,486254544m	22	Sul	-26,9034658000000°	-48,6629028000000°	
+BRITJ-004	7.022.113,20940071m	732.111,711799457m	22	Sul	-26,9034721000000°	-48,6629004000000°	
+BRITJ-005	7.022.227,18018763m	732.464,701068421m	22	Sul	-26,9023851000000°	-48,6593698000000°	
+BRITJ-006	7.022.230,96184033m	732.498,173980586m	22	Sul	-26,9023454000000°	-48,6590337000000°	
+BRITJ-007	7.022.231,64731581m	732.501,267565554m	22	Sul	-26,9023387000000°	-48,6590027000000°	
+BRITJ-008	7.022.256,65154039m	732.518,844049205m	22	Sul	-26,9021102000000°	-48,6588305000000°	
+BRITJ-009	7.022.221,85515124m	732.584,171465777m	22	Sul	-26,9024132000000°	-48,6581667000000°	
+BRITJ-010	7.022.081,39517514m	732.761,475439097m	22	Sul	-26,9036507000000°	-48,6563565000000°	
+BRITJ-011	7.022.021,53926635m	732.837,289110386m	22	Sul	-26,9041780000000°	-48,6555825000000°	
+BRITJ-012	7.021.964,32028268m	732.908,360721872m	22	Sul	-26,9046823000000°	-48,6548567000000°	
+BRITJ-013	7.021.958,92433982m	732.913,011196808m	22	Sul	-26,9047302000000°	-48,6548089000000°	
+BRITJ-014	7.021.941,49072397m	732.925,995378340m	22	Sul	-26,9048853000000°	-48,6546750000000°	
+BRITJ-015	7.021.926,73337595m	732.935,133350905m	22	Sul	-26,9050169000000°	-48,6545803000000°	
+BRITJ-016	7.021.881,80422679m	732.960,318740951m	22	Sul	-26,9054180000000°	-48,6543185000000°	
+BRITJ-017	7.021.837,81354408m	732.977,332313466m	22	Sul	-26,9058120000000°	-48,6541391000000°	
+BRITJ-018	7.021.862,23621787m	733.034,611448847m	22	Sul	-26,9055821000000°	-48,6535673000000°	
+BRITJ-019	7.021.737,93310271m	733.136,527000297m	22	Sul	-26,9066864000000°	-48,6525186000000°	
+BRITJ-020	7.021.712,01770250m	733.105,367469231m	22	Sul	-26,9069254000000°	-48,6528273000000°	
+BRITJ-021	7.021.693,87803504m	733.034,480913876m	22	Sul	-26,9071009000000°	-48,6535372000000°	
+BRITJ-022	7.021.674,48001486m	733.041,604522630m	22	Sul	-26,9072747000000°	-48,6534619000000°	
+BRITJ-023	7.021.665,79053512m	733.012,245523610m	22	Sul	-26,9073580000000°	-48,6537557000000°	
+BRITJ-024	7.021.646,22898685m	733.017,428204615m	22	Sul	-26,9075336000000°	-48,6536999000000°	
+BRITJ-025	7.021.643,48989333m	733.013,899119121m	22	Sul	-26,9075589000000°	-48,6537349000000°	
+BRITJ-026	7.021.636,59881059m	732.983,798396634m	22	Sul	-26,9076261000000°	-48,6540365000000°	
+BRITJ-027	7.021.612,52163822m	732.985,011638514m	22	Sul	-26,9078431000000°	-48,6540198000000°	
+BRITJ-028	7.021.610,67137954m	732.958,651688243m	22	Sul	-26,9078642000000°	-48,6542847000000°	
+BRITJ-029	7.021.451,02986149m	732.986,419889580m	22	Sul	-26,9092997000000°	-48,6539755000000°	
+BRITJ-030	7.021.485,40243194m	733.196,299016911m	22	Sul	-26,9089545000000°	-48,6518700000000°	
+BRITJ-031	7.021.302,82665365m	733.366,065825825m	22	Sul	-26,9105731000000°	-48,6501276000000°	
+BRITJ-032	7.021.234,97590449m	733.284,210951747m	22	Sul	-26,9111989000000°	-48,6509386000000°	
+BRITJ-033	7.021.338,39496390m	733.221,794006002m	22	Sul	-26,9102764000000°	-48,6515860000000°	
+BRITJ-034	7.021.359,01308416m	733.217,625200619m	22	Sul	-26,9100911000000°	-48,6516318000000°	
+BRITJ-035	7.021.356,64716395m	733.203,549146971m	22	Sul	-26,9101148000000°	-48,6517730000000°	
+BRITJ-036	7.021.357,64298820m	733.203,050864781m	22	Sul	-26,9101059000000°	-48,6517782000000°	
+BRITJ-037	7.021.358,36351103m	733.198,870495572m	22	Sul	-26,9101001000000°	-48,6518204000000°	
+BRITJ-038	7.021.323,03560502m	733.013,621294430m	22	Sul	-26,9104498000000°	-48,6536779000000°	
+BRITJ-039	7.021.313,94272066m	733.010,799295425m	22	Sul	-26,9105323000000°	-48,6537046000000°	
+BRITJ-040	7.021.304,07552564m	733.013,865944914m	22	Sul	-26,9106208000000°	-48,6536719000000°	
+BRITJ-041	7.021.301,21144605m	733.015,283612484m	22	Sul	-26,9106464000000°	-48,6536571000000°	
+BRITJ-042	7.021.292,88296755m	733.016,073241983m	22	Sul	-26,9107214000000°	-48,6536476000000°	
+BRITJ-043	7.021.289,45465553m	733.013,246980657m	22	Sul	-26,9107528000000°	-48,6536754000000°	
+BRITJ-044	7.021.188,73102417m	733.024,834574222m	22	Sul	-26,9116595000000°	-48,6535400000000°	
+BRITJ-045	7.021.190,05774906m	733.039,964377583m	22	Sul	-26,9116450000000°	-48,6533880000000°	
+BRITJ-046	7.020.813,31209759m	733.102,467918901m	22	Sul	-26,9150332000000°	-48,6526887000000°	
+BRITJ-047	7.020.679,69281213m	733.440,885764764m	22	Sul	-26,9161819000000°	-48,6492582000000°	
+BRITJ-048	7.020.659,06982835m	734.026,165551636m	22	Sul	-26,9162697000000°	-48,6433646000000°	
+BRITJ-049	7.020.658,84230178m	734.025,883068467m	22	Sul	-26,9162718000000°	-48,6433674000000°	
+BRITJ-050	7.020.652,06298870m	734.056,562376135m	22	Sul	-26,9163278000000°	-48,6430574000000°	
+BRITJ-051	7.020.653,75292277m	734.060,459472029m	22	Sul	-26,9163119000000°	-48,6430185000000°	
+BRITJ-052	7.020.654,96119907m	734.064,029600729m	22	Sul	-26,9163004000000°	-48,6429828000000°	
+BRITJ-053	7.020.657,90453410m	734.065,505478299m	22	Sul	-26,9162736000000°	-48,6429685000000°	
+BRITJ-054	7.020.664,51738565m	734.077,672711357m	22	Sul	-26,9162119000000°	-48,6428473000000°	
+BRITJ-055	7.020.661,01277944m	734.084,901386283m	22	Sul	-26,9162423000000°	-48,6427739000000°	
+BRITJ-056	7.020.656,80932848m	734.091,560545416m	22	Sul	-26,9162791000000°	-48,6427061000000°	
+BRITJ-057	7.020.652,08568365m	734.096,391480569m	22	Sul	-26,9163209000000°	-48,6426566000000°	
+BRITJ-058	7.020.649,41975780m	734.099,064617848m	22	Sul	-26,9163445000000°	-48,6426292000000°	
+BRITJ-059	7.020.646,49343251m	734.101,434782316m	22	Sul	-26,9163705000000°	-48,6426048000000°	
+BRITJ-060	7.020.617,77109194m	734.113,360841595m	22	Sul	-26,9166276000000°	-48,6424794000000°	
+BRITJ-061	7.020.576,42805122m	734.131,540626483m	22	Sul	-26,9169975000000°	-48,6422887000000°	
+BRITJ-062	7.020.532,08535444m	734.151,264254109m	22	Sul	-26,9173942000000°	-48,6420819000000°	
+BRITJ-063	7.020.549,69076471m	734.186,829829502m	22	Sul	-26,9172294000000°	-48,6417273000000°	
+BRITJ-064	7.020.609,12309578m	734.194,913825308m	22	Sul	-26,9166919000000°	-48,6416571000000°	
+BRITJ-065	7.020.631,61885483m	734.198,274671634m	22	Sul	-26,9164884000000°	-48,6416275000000°	
+BRITJ-066	7.020.648,56862143m	734.200,627830509m	22	Sul	-26,9163351000000°	-48,6416070000000°	
+BRITJ-067	7.020.659,97847674m	734.202,241717992m	22	Sul	-26,9162319000000°	-48,6415929000000°	
+BRITJ-068	7.020.695,12115874m	734.206,861919510m	22	Sul	-26,9159141000000°	-48,6415530000000°	
+BRITJ-069	7.020.740,66806753m	734.212,928225921m	22	Sul	-26,9155022000000°	-48,6415005000000°	
+BRITJ-070	7.020.777,69383759m	734.217,623321402m	22	Sul	-26,9151674000000°	-48,6414602000000°	
+BRITJ-071	7.020.783,15673391m	734.218,331356583m	22	Sul	-26,9151180000000°	-48,6414541000000°	
+BRITJ-072	7.020.789,52700564m	734.219,125871658m	22	Sul	-26,9150604000000°	-48,6414473000000°	
+BRITJ-073	7.020.801,41206128m	734.220,818202053m	22	Sul	-26,9149529000000°	-48,6414325000000°	
+BRITJ-074	7.020.808,75527040m	734.221,750107781m	22	Sul	-26,9148865000000°	-48,6414245000000°	
+BRITJ-075	7.020.822,12760487m	734.223,937230922m	22	Sul	-26,9147655000000°	-48,6414050000000°	
+BRITJ-076	7.020.838,99252313m	734.237,975299342m	22	Sul	-26,9146110000000°	-48,6412669000000°	
+BRITJ-077	7.020.751,48157895m	734.831,356172760m	22	Sul	-26,9153005000000°	-48,6352793000000°	
+BRITJ-078	7.020.790,62434231m	735.729,792849591m	22	Sul	-26,9147956000000°	-48,6262458000000°	
+BRITJ-079	7.021.091,56271040m	738.343,661741392m	22	Sul	-26,9116360000000°	-48,6000006000000°	
+BRITJ-080	7.016.840,63147691m	738.263,105949625m	22	Sul	-26,9499963000000°	-48,5999992000000°	
+BRITJ-081	7.016.681,59834500m	748.196,480496764m	22	Sul	-26,9496933000000°	-48,4999849000000°	
+BRITJ-082	7.024.022,96360065m	748.347,678504556m	22	Sul	-26,8834467000000°	-48,4999236000000°	
+BRITJ-083	7.024.227,85323348m	738.403,497150435m	22	Sul	-26,8833340000000°	-48,5999969000000°	
+BRITJ-084	7.021.455,93065281m	738.350,821999595m	22	Sul	-26,9083479000000°	-48,5999981000000°	
+BRITJ-085	7.021.146,27946608m	735.686,429281099m	22	Sul	-26,9115946000000°	-48,6267493000000°	
+BRITJ-086	7.021.214,47335513m	734.791,364956798m	22	Sul	-26,9111306000000°	-48,6357688000000°	
+BRITJ-087	7.021.285,24115611m	734.305,037755043m	22	Sul	-26,9105741000000°	-48,6406758000000°	
+BRITJ-088	7.021.362,12274479m	734.090,034618707m	22	Sul	-26,9099167000000°	-48,6428537000000°	
+BRITJ-089	7.021.404,55303785m	733.991,446234204m	22	Sul	-26,9095505000000°	-48,6438537000000°	
+BRITJ-090	7.021.522,58673199m	733.981,400632302m	22	Sul	-26,9084874000000°	-48,6439769000000°	
+BRITJ-091	7.021.556,65645979m	733.922,784672352m	22	Sul	-26,9081899000000°	-48,6445731000000°	
+BRITJ-092	7.021.396,70324706m	733.902,813244586m	22	Sul	-26,9096362000000°	-48,6447441000000°	
+BRITJ-093	7.021.430,75035400m	733.859,690485545m	22	Sul	-26,9093363000000°	-48,6451844000000°	
+BRITJ-094	7.021.410,08075190m	733.838,018869784m	22	Sul	-26,9095264000000°	-48,6453986000000°	
+BRITJ-095	7.021.480,25090467m	733.722,375223937m	22	Sul	-26,9089128000000°	-48,6465754000000°	
+BRITJ-096	7.021.575,62326346m	733.615,308274783m	22	Sul	-26,9080704000000°	-48,6476706000000°	
+BRITJ-097	7.021.794,50060693m	733.469,112415772m	22	Sul	-26,9061204000000°	-48,6491826000000°	
+BRITJ-098	7.022.214,58142960m	733.161,648116726m	22	Sul	-26,9023823000000°	-48,6523548000000°	
+BRITJ-099	7.022.222,65801183m	733.075,224089362m	22	Sul	-26,9023239000000°	-48,6532259000000°	
+BRITJ-100	7.022.388,91401475m	732.802,362621837m	22	Sul	-26,9008697000000°	-48,6560024000000°	
+BRITJ-101	7.022.556,74826642m	732.667,909595280m	22	Sul	-26,8993781000000°	-48,6573865000000°	
+BRITJ-102	7.022.609,38645101m	732.647,803820589m	22	Sul	-26,8989066000000°	-48,6575986000000°	
+BRITJ-103	7.022.667,38166206m	732.599,978401997m	22	Sul	-26,8983914000000°	-48,6580906000000°	
+BRITJ-104	7.022.842,35249748m	731.662,572637680m	22	Sul	-26,8969691000000°	-48,6675549000000°	
+BRITJ-105	7.022.809,73904482m	731.620,536881463m	22	Sul	-26,8972703000000°	-48,6679718000000°	
+BRITJ-106	7.022.793,82341461m	731.546,388667099m	22	Sul	-26,8974262000000°	-48,6687149000000°	
+BRITJ-107	7.022.691,53231170m	731.461,457056479m	22	Sul	-26,8983631000000°	-48,6695505000000°	
+BRITJ-108	7.022.453,13399423m	731.174,993729493m	22	Sul	-26,9005613000000°	-48,6723887000000°	
+BRITJ-109	7.022.342,25418518m	731.239,919366417m	22	Sul	-26,9015508000000°	-48,6717149000000°	
+BRITJ-110	7.022.247,03113038m	731.312,993120080m	22	Sul	-26,9023977000000°	-48,6709620000000°	
+BRITJ-111	7.022.226,16214000m	731.351,924982641m	22	Sul	-26,9025795000000°	-48,6705664000000°	
+BRITJ-112	7.022.214,25282612m	731.453,901282758m	22	Sul	-26,9026700000000°	-48,6695381000000°	
+BRITJ-113	7.022.214,25097606m	731.475,069832148m	22	Sul	-26,9026665000000°	-48,6693251000000°	
+BRITJ-114	7.022.224,30537417m	731.525,006189887m	22	Sul	-26,9025675000000°	-48,6688245000000°	
+BRITJ-115	7.022.234,13341501m	731.549,913772261m	22	Sul	-26,9024747000000°	-48,6685757000000°	
+BRITJ-116	7.022.211,33235858m	731.788,033224850m	22	Sul	-26,9026408000000°	-48,6661755000000°</description>
+				<styleUrl>#msn_placemark_circle</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								-48.6647957,-26.9041779,0 -48.6631352,-26.9036234,0 -48.6629028,-26.9034658,0 -48.6629004,-26.9034721,0 -48.6593698,-26.9023851,0 -48.6590337,-26.9023454,0 -48.6590027,-26.9023387,0 -48.65883050000001,-26.9021102,0 -48.65816670000001,-26.9024132,0 -48.6563565,-26.9036507,0 -48.6555825,-26.90417800000001,0 -48.65485670000001,-26.90468230000001,0 -48.6548089,-26.9047302,0 -48.65467500000001,-26.9048853,0 -48.6545803,-26.9050169,0 -48.6543185,-26.905418,0 -48.65413910000001,-26.905812,0 -48.6535673,-26.9055821,0 -48.6525186,-26.9066864,0 -48.6528273,-26.9069254,0 -48.6535372,-26.9071009,0 -48.6534619,-26.9072747,0 -48.6537557,-26.907358,0 -48.6536999,-26.9075336,0 -48.6537349,-26.9075589,0 -48.6540365,-26.9076261,0 -48.6540198,-26.9078431,0 -48.65428470000001,-26.9078642,0 -48.6539755,-26.9092997,0 -48.65187,-26.9089545,0 -48.6501276,-26.9105731,0 -48.6509386,-26.9111989,0 -48.651586,-26.9102764,0 -48.6516318,-26.9100911,0 -48.651773,-26.9101148,0 -48.6517782,-26.91010590000001,0 -48.65182040000001,-26.9101001,0 -48.6536779,-26.9104498,0 -48.6537046,-26.9105323,0 -48.6536719,-26.9106208,0 -48.65365709999999,-26.9106464,0 -48.6536476,-26.9107214,0 -48.6536754,-26.9107528,0 -48.65354,-26.9116595,0 -48.653388,-26.911645,0 -48.65268870000001,-26.9150332,0 -48.6492582,-26.9161819,0 -48.6433646,-26.9162697,0 -48.6433674,-26.9162718,0 -48.6430574,-26.9163278,0 -48.6430185,-26.9163119,0 -48.6429828,-26.9163004,0 -48.64296850000001,-26.9162736,0 -48.6428473,-26.9162119,0 -48.6427739,-26.9162423,0 -48.6427061,-26.9162791,0 -48.6426566,-26.9163209,0 -48.6426292,-26.9163445,0 -48.6426048,-26.9163705,0 -48.6424794,-26.9166276,0 -48.6422887,-26.9169975,0 -48.6420819,-26.9173942,0 -48.6417273,-26.9172294,0 -48.6416571,-26.9166919,0 -48.64162750000001,-26.9164884,0 -48.64160699999999,-26.9163351,0 -48.6415929,-26.9162319,0 -48.641553,-26.9159141,0 -48.6415005,-26.9155022,0 -48.6414602,-26.91516740000001,0 -48.6414541,-26.915118,0 -48.6414473,-26.9150604,0 -48.64143249999999,-26.9149529,0 -48.64142450000001,-26.9148865,0 -48.641405,-26.91476550000001,0 -48.64126689999999,-26.914611,0 -48.6352793,-26.9153005,0 -48.6262458,-26.9147956,0 -48.6000006,-26.911636,0 -48.5999992,-26.9499963,0 -48.49998489999999,-26.9496933,0 -48.4999236,-26.8834467,0 -48.59999689999999,-26.883334,0 -48.59999809999999,-26.9083479,0 -48.6267493,-26.9115946,0 -48.6357688,-26.9111306,0 -48.6406758,-26.9105741,0 -48.6428537,-26.9099167,0 -48.64385369999999,-26.9095505,0 -48.6439769,-26.9084874,0 -48.6445731,-26.9081899,0 -48.6447441,-26.9096362,0 -48.6451844,-26.9093363,0 -48.64539860000001,-26.9095264,0 -48.6465754,-26.9089128,0 -48.6476706,-26.9080704,0 -48.6491826,-26.9061204,0 -48.65235479999999,-26.9023823,0 -48.65322590000001,-26.9023239,0 -48.6560024,-26.9008697,0 -48.6573865,-26.8993781,0 -48.65759860000001,-26.8989066,0 -48.65809060000001,-26.8983914,0 -48.6675549,-26.8969691,0 -48.6679718,-26.8972703,0 -48.6687149,-26.8974262,0 -48.6695505,-26.8983631,0 -48.6723887,-26.9005613,0 -48.6717149,-26.9015508,0 -48.670962,-26.90239770000001,0 -48.67056639999999,-26.9025795,0 -48.6695381,-26.90267,0 -48.66932510000001,-26.9026665,0 -48.6688245,-26.9025675,0 -48.6685757,-26.9024747,0 -48.6661755,-26.9026408,0 -48.6647957,-26.9041779,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Folder>
+				<name>Vértices</name>
+				<Placemark>
+					<name>BRITJ-001</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6647957,-26.9041779,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-002</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6631352,-26.9036234,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-003</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6629028,-26.9034658,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-004</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6629004,-26.9034721,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-005</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6593698,-26.9023851,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-006</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6590337,-26.9023454,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-007</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6590027,-26.9023387,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-008</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65883050000001,-26.9021102,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-009</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65816670000001,-26.9024132,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-010</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6563565,-26.9036507,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-011</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6555825,-26.90417800000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-012</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65485670000001,-26.90468230000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-013</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6548089,-26.9047302,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-014</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65467500000001,-26.9048853,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-015</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6545803,-26.9050169,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-016</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6543185,-26.905418,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-017</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65413910000001,-26.905812,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-018</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6535673,-26.9055821,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-019</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6525186,-26.9066864,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-020</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6528273,-26.9069254,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-021</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6535372,-26.9071009,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-022</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6534619,-26.9072747,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-023</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6537557,-26.907358,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-024</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6536999,-26.9075336,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-025</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6537349,-26.9075589,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-026</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6540365,-26.9076261,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-027</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6540198,-26.9078431,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-028</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65428470000001,-26.9078642,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-029</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6539755,-26.9092997,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-030</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65187,-26.9089545,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-031</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6501276,-26.9105731,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-032</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6509386,-26.9111989,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-033</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.651586,-26.9102764,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-034</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6516318,-26.9100911,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-035</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.651773,-26.9101148,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-036</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6517782,-26.91010590000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-037</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65182040000001,-26.9101001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-038</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6536779,-26.9104498,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-039</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6537046,-26.9105323,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-040</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6536719,-26.9106208,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-041</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65365709999999,-26.9106464,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-042</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6536476,-26.9107214,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-043</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6536754,-26.9107528,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-044</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65354,-26.9116595,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-045</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.653388,-26.911645,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-046</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65268870000001,-26.9150332,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-047</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6492582,-26.9161819,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-048</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6433646,-26.9162697,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-049</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6433674,-26.9162718,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-050</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6430574,-26.9163278,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-051</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6430185,-26.9163119,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-052</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6429828,-26.9163004,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-053</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64296850000001,-26.9162736,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-054</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6428473,-26.9162119,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-055</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6427739,-26.9162423,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-056</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6427061,-26.9162791,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-057</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6426566,-26.9163209,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-058</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6426292,-26.9163445,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-059</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6426048,-26.9163705,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-060</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6424794,-26.9166276,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-061</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6422887,-26.9169975,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-062</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6420819,-26.9173942,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-063</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6417273,-26.9172294,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-064</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6416571,-26.9166919,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-065</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64162750000001,-26.9164884,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-066</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64160699999999,-26.9163351,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-067</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6415929,-26.9162319,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-068</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.641553,-26.9159141,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-069</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6415005,-26.9155022,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-070</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6414602,-26.91516740000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-071</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6414541,-26.915118,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-072</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6414473,-26.9150604,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-073</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64143249999999,-26.9149529,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-074</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64142450000001,-26.9148865,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-075</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.641405,-26.91476550000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-076</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64126689999999,-26.914611,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-077</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6352793,-26.9153005,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-078</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6262458,-26.9147956,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-079</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6000006,-26.911636,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-080</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.5999992,-26.9499963,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-081</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.49998489999999,-26.9496933,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-082</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.4999236,-26.8834467,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-083</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.59999689999999,-26.883334,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-084</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.59999809999999,-26.9083479,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-085</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6267493,-26.9115946,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-086</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6357688,-26.9111306,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-087</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6406758,-26.9105741,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-088</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6428537,-26.9099167,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-089</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64385369999999,-26.9095505,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-090</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6439769,-26.9084874,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-091</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6445731,-26.9081899,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-092</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6447441,-26.9096362,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-093</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6451844,-26.9093363,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-094</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.64539860000001,-26.9095264,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-095</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6465754,-26.9089128,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-096</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6476706,-26.9080704,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-097</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6491826,-26.9061204,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-098</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65235479999999,-26.9023823,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-099</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65322590000001,-26.9023239,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-100</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6560024,-26.9008697,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-101</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6573865,-26.8993781,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-102</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65759860000001,-26.8989066,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-103</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.65809060000001,-26.8983914,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-104</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6675549,-26.8969691,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-105</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6679718,-26.8972703,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-106</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6687149,-26.8974262,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-107</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6695505,-26.8983631,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-108</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6723887,-26.9005613,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-109</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6717149,-26.9015508,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-110</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.670962,-26.90239770000001,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-111</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.67056639999999,-26.9025795,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-112</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6695381,-26.90267,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-113</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.66932510000001,-26.9026665,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-114</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6688245,-26.9025675,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-115</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6685757,-26.9024747,0</coordinates>
+					</Point>
+				</Placemark>
+				<Placemark>
+					<name>BRITJ-116</name>
+					<styleUrl>#msn_placemark_circle</styleUrl>
+					<Point>
+						<coordinates>-48.6661755,-26.9026408,0</coordinates>
+					</Point>
+				</Placemark>
+			</Folder>
+		</Folder>
+	</Folder>
+</Document>
+</kml>

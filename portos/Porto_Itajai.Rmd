@@ -1,0 +1,80 @@
+---
+title: "Porto de Itajaí"
+subtitle: "Poligonal atualizada em 05/07/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+library(sf)
+library(leaflet)
+library(units)
+library(dplyr)
+```
+
+## Criar objeto
+
+```{r}
+#
+# 1 Criação da poligonal do porto
+#
+# 1.1 Leitura da poligonal em KML
+# Obs.: Da poliganal abaixo são extraídos pontos dos vértices. 
+# É necessário confeccionar manualmente o polígono.
+#  
+spl <- st_zm(st_read("itajai/poligonal_2020.kml") %>% st_zm())
+#
+# 2. Criação dos atributos  
+#
+attr <- data.frame(descricao = "Área do Porto Organizado de Itajaí",
+                   area = st_area(st_transform(spl, 31982)),
+                   municipio = 8161,
+                   portaria = 28,
+                   anexo = as.character(as.roman(1:18)),
+                   data = as.Date("07/01/2020", format = "%d/%m/%Y"),
+                   fonte = "https://www.gov.br/infraestrutura/pt-br/centrais-de-conteudo/itajai-zip",
+                   data_acesso = as.Date("29/09/2020", format = "%d/%m/%Y"),
+                   nup = c(rep("04972.005577/2016-47", 2), "04972.005704/2016-16", rep("04972.005577/2016-47", 15)),
+                   obs = c("Área Primária e Expansão",
+                           "Centro Comercial Portuário",
+                           "Complexo Náutico",
+                           "ASSPI",
+                           "Imóvel em Navegantes",
+                           "Área em água",
+                           "Píer em frente à antiga Inspetoria do Porto",
+                           "Acesso à píer pesqueiro 1",
+                           "Acesso à píer pesqueiro 2",
+                           "Ferryboat (balsa)",
+                           "Terminal de Passageiros",
+                           "Praticagem",
+                           "Píer CCP 1",
+                           "Píer CCP 2",
+                           "Píer CCP 3",
+                           "Píer CCP 4",
+                           "Píer CCP 5",
+                           "Píer CCP 6")
+                   )
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geom = st_geometry(spl))
+```
+```{r}
+polUniao <- st_read("E:/GeoSPU/SPU-SC-NUDEM/Poligonos_LPM_Homologada.geojson")
+area_uniao <- spl_df$area
+area_uniao[1] <- area_uniao[1] - set_units(201787, m^2)
+area_uniao[4] <-  st_area(st_intersection(spl_df[4, ], polUniao))
+spl_df <- spl_df %>% mutate(area_uniao = area_uniao, .after = area)
+```
+
+
+## Exportar
+
+```{r}
+# 5. Escrever a nova entrada no BDE
+#
+st_write(spl_df, "itajai.geojson", delete_dsn = TRUE)
+```
