@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "10154-129472-2020-03",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "destinacao": "entrega", "tipo": "aquatica", "rip": null, "interessado": "BLV Aquacultura LTDA-ME", "area": 105000.78833317757, "area_uniao": 105000.78833317757, "nup": "10154.129472\/2020-03", "protocolo": "Ofício 10360764 (7491205)", "ref": 9238988.0, "municipio": 8265.0, "logradouro": null, "trecho": null, "aval": null, "dataaval": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.550275111787023, -27.141700503391913 ], [ -48.551483277595672, -27.14088168852096 ], [ -48.547236219591582, -27.135853187231305 ], [ -48.546028082255063, -27.136672003659644 ], [ -48.550275111787023, -27.141700503391913 ] ] ] } }
+]
+}

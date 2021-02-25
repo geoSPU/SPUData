@@ -1,0 +1,243 @@
+---
+title: "Entrega"
+subtitle: |
+  Aeronáutica  
+  xxxxx.xxxxx/xxxx-xx    
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: 
+  binb::metropolis:
+    df_print: tibble
+    keep_tex: yes
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
+                      warning = FALSE, message = FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+library(knitr)
+library(kableExtra)
+library(appraiseR)
+library(sf)
+library(leaflet)
+library(leafem)
+library(lwgeom)
+library(raster)
+library(geosphere)
+library(units)
+install_symbolic_unit(name = "Reais", warn = TRUE, dimensionless = TRUE)
+#library(measurements)
+```
+
+```{r}
+# 1. Digitação da Geometria
+#  
+coords <- 
+  matrix(c(742122.483, 6939697.871, #V1
+           742115.738, 6939106.614, #V2
+           742111.264, 6938663.682, #V3
+           742106.510, 6938311.891, #V4
+           742119.281, 6938027.899, #V5
+           742137.965, 6937681.521, #V6
+           742065.171, 6937699.105, #V7
+           742017.389, 6937704.305, #V8
+           741794.904, 6937885.773, #V9
+           741796.514, 6937887.582, #V10
+           741723.182, 6937948.478, #V11
+           741730.768, 6938008.467, #V12
+           741536.167, 6938053.241, #V13
+           741521.579, 6938054.784, #V14
+           741512.513, 6938055.609, #V15
+           741503.071, 6938056.291, #V16
+           741490.745, 6938056.870, #V17
+           741477.462, 6938055.713, #V18
+           741465.675, 6938053.016, #V19
+           741453.114, 6938048.092, #V20  
+           741440.287, 6938041.468, #V21
+           741429.998, 6938034.825, #V22
+           741419.808, 6938025.702, #V23
+           741411.656, 6938017.358, #V24
+           741401.430, 6938001.159, #V25
+           741347.496, 6937725.320, #V26
+           741131.994, 6936757.439, #V27
+           741226.198, 6936746.243, #V28
+           741207.295, 6936652.604, #V29
+           741110.919, 6936662.787, #V30
+           741021.373, 6936260.608, #V31
+           740953.702, 6935956.695, #V32
+           740847.444, 6935479.433, #V33
+           740601.194, 6935529.612, #V34
+           740567.560, 6935536.045, #V35
+           740517.102, 6935547.870, #V36
+           740435.194, 6935555.822, #V37
+           740354.385, 6935559.437, #V38
+           740217.732, 6935560.753, #V39
+           739998.633, 6935564.581, #V40 
+           739995.028, 6935557.823, #V41 
+           739967.010, 6935522.169, #V42 
+           739952.715, 6935528.646, #V43 
+           739925.619, 6935509.344, #V44 
+           739932.994, 6935494.280, #V45
+           739829.128, 6935374.572, #V46
+           739824.277, 6935353.201, #V47
+           739811.324, 6935328.311, #V48
+           739590.125, 6935052.603, #V49
+           739506.136, 6935236.123, #V50
+           739509.622, 6935267.249, #V51
+           739625.420, 6935449.210, #V52
+           739712.603, 6935651.090, #V53
+           739726.935, 6935734.084, #V54
+           739756.869, 6935774.353, #V55
+           739913.876, 6935822.505, #V56
+           739991.932, 6935922.210, #V57
+           739991.885, 6936021.880, #V58
+           739954.952, 6936133.878, #V59
+           739904.193, 6936238.150, #V60
+           739858.375, 6936295.068, #V61
+           739645.641, 6936474.348, #V62
+           739510.704, 6936550.244, #V63
+           739492.083, 6936594.554, #V64
+           739519.288, 6936671.645, #V65  
+           739554.579, 6936678.312, #V66
+           739588.368, 6936652.047, #V67
+           739678.626, 6936645.449, #V68
+           739911.704, 6936757.582, #V69
+           740149.847, 6936991.500, #V70
+           740381.759, 6937486.087, #V71
+           740366.068, 6937552.643, #V72
+           740480.111, 6937677.227, #V73
+           740603.637, 6937959.713, #V74
+           740599.061, 6938068.058, #V75
+           740753.890, 6938205.780, #V76
+           740768.617, 6938384.572, #V77
+           740822.287, 6938378.944, #V78
+           740863.303, 6938420.448, #V79
+           740816.465, 6938467.394, #V80
+           740954.043, 6938736.547, #V81
+           740942.203, 6938843.863, #V82
+           741188.515, 6939045.512, #V83
+           741320.412, 6939287.131, #V84
+           741298.328, 6939297.035, #V85 
+           741531.662, 6939325.280, #V86 
+           741585.926, 6939403.723, #V87 
+           741842.580, 6939552.858, #V88 
+           742014.157, 6939569.149, #V89 
+           742051.380, 6939688.623, #V90
+           742122.483, 6939697.871),#V1
+         ncol = 2, byrow = TRUE)
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl <- st_sfc(st_polygon(list(coords)), crs = 31982)
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(
+  destinacao = "entrega",
+  tipo = "terrestre",
+  rip = NA,
+  interessado = "Aeronáutica",
+  area = st_area(spl),
+  area_uniao = st_area(spl),
+  inicio = NA,
+  prazo = NA,
+  vigencia = NA,
+  cnpj = NA,
+  nup = NA,
+  protocolo = NA,
+  ref = NA,
+  municipio = 8105,
+  logradouro = NA,
+  aval = NA,
+  dataaval = NA)
+#
+# 4. União dos atributos à geometria
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+spl_df <- st_sf(attr,
+                geometry = spl)  %>% 
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+```{r, results='hide'}
+polUniao <- st_zm(st_read("E:/GeoSPU/SPU-SC-NUDEM/Poligonos_LPM_Homologada.geojson"))
+lpm_demarcada <- st_read("E:/GeoSPU/SPU-SC-NUDEM/linhas/LPM_DEMARCADA.geojson")
+lpm_presumida <- st_read("E:/GeoSPU/SPU-SC-NUDEM/linhas/LPM_PRESUMIDA.geojson")
+lltm_demarcada <- st_read("E:/GeoSPU/SPU-SC-NUDEM/linhas/LLTM_DEMARCADA.geojson")
+lltm_presumida <- st_read("E:/GeoSPU/SPU-SC-NUDEM/linhas/LLTM_PRESUMIDA.geojson")
+sbfl <- st_read("../aeroportos/SBFL.geojson")
+entregas <- st_read("../entregas.geojson")
+```
+
+## IMAGEM DOS POLÍGONOS ENVIADOS
+
+```{r}
+ext <- extent(spl_df)
+centroide <- st_coordinates(st_centroid(spl_df))
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+              layers = list("OrtoRGB-Landsat-2012")) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "white", fillColor = "red",
+              dashArray = "10 5", group = "Área solicitada") %>%
+  addPolygons(data = entregas, weight = 2, color = "white", fillColor = "blue",
+              group = "Áreas já entregues") %>% 
+  addPolygons(data = sbfl, color = "blue", fillColor = "blue") %>% 
+#  addPolygons(data = polUniao, color = "yellow", group = "Terras da União") %>% 
+#  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolylines(data = lpm_demarcada, dashArray = "20 20", color = "blue") %>% 
+#  addPolylines(data= lpm_presumida, dashArray = "20 20", color = "blue", 
+#               opacity = .2) %>% 
+  addPolylines(data = lltm_demarcada, dashArray = "20 20", color = "red") %>% 
+#  addPolylines(data = lltm_presumida, dashArray = "20 20", color = "red", 
+#               opacity = .2) %>% 
+#  setView(lng = centroide[1], lat = centroide[2], zoom = 15) %>% 
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+#  addLegend(colors = c("red", "blue", "yellow"), 
+#            labels = c("Área solicitada", "Áreas entregues", "Terras da União")) %>% 
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+  mapview::mapshot(m, file = "./BaseAreaFLN.png", 
+                  remove_controls = NULL)
+knitr::include_graphics("BaseAreaFLN.png")
+```
+
+## Atributos
+
+```{r atributos}
+kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, 
+      format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."))%>%
+  kable_styling(font_size = 8)
+```
+
+
+## Salvar no disco
+
+```{r salvar, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
+st_write(spl_df, "BaseAereaFLN.geojson", 
+         delete_dsn = TRUE)
+```

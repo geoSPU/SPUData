@@ -4,7 +4,7 @@ subtitle: |
   Secretaria de Pesca e Aquicultura  
   10154.129486/2020-19  
 author: "Luiz Fernando Palin Droubi"
-date: \today
+date: "`r as.Date('2020-10-15')`"
 institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
 output: 
   binb::metropolis:
@@ -133,9 +133,9 @@ m <- spl_df %>%
   addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
                   offset.x = 15, offset.y = 15, 
                   width = 75, height = 75)
- mapview::mapshot(m, file = paste("imagem_", nup, ".png", sep = ""),
+ mapview::mapshot(m, file = paste(nup, ".png", sep = ""),
                  remove_controls = NULL)
-knitr::include_graphics(paste("imagem_", nup, ".png", sep = ""))
+knitr::include_graphics(paste(nup, ".png", sep = ""))
 ```
 
 ## Tabela de coordenadas

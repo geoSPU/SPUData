@@ -4,7 +4,7 @@ subtitle: |
   Secretaria de Pesca e Aquicultura  
   10154.123292/2019-76  
 author: "Luiz Fernando Palin Droubi"
-date: \today
+date: "`r as.Date('2020-07-14')`"
 institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
 output: 
   binb::metropolis:
@@ -15,6 +15,7 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
+nup <- "10154-123292-2019-76"
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "100%", 
                       warning = FALSE, message = FALSE)
 knitr::knit_hooks$set(mysize = function(before, options, envir) {
@@ -70,16 +71,13 @@ attr <- data.frame(
   interessado = "Cavalo Marinho - Criação e beneficiamento de frutos do mar Ltda. EPP",
   area = st_area(spl),
   area_uniao = st_area(spl),
-  inicio = NA,
-  prazo = NA,
-  vigencia = NA,
-  cnpj = "06.345.926/0001-03",
   nup = "10154.123292/2019-76",
   protocolo = "Anexo Minuta_de_Oficio_15 (3854006)",
   ref = 3853558,
   municipio = 5537,
-  logradouro = "12-03",
-  aval = format(set_units(278.99, Reais/m^2)*st_area(spl), big.mark=".", decimal.mark = ","),
+  logradouro = "12",
+  trecho = "03",
+  aval = set_units(278.99, Reais/m^2)*st_area(spl),
   dataaval = as.Date("2020-07-14"))
 #
 # 4. União dos atributos à geometria
@@ -98,11 +96,12 @@ spl_df <- st_sf(attr,
 ```
 
 ```{r, results='hide'}
-polUniao <- st_zm(st_read("../Poligonos_LPM_Homologada.geojson"))
-lpm_demarcada <- st_read("../linhas/LPM_DEMARCADA.geojson")
-lpm_presumida <- st_read("../linhas/LPM_PRESUMIDA.geojson")
-lltm_demarcada <- st_read("../linhas/LLTM_DEMARCADA.geojson")
-lltm_presumida <- st_read("../linhas/LLTM_PRESUMIDA.geojson")
+polUniao <- st_zm(st_read("../../../SPU-SC-NUDEM/Poligonos_LPM_Homologada.geojson"))
+entregas <- st_read("../entregas.geojson")
+lpm_demarcada <- st_read("../../../SPU-SC-NUDEM/linhas/LPM_DEMARCADA.geojson")
+lpm_presumida <- st_read("../../../SPU-SC-NUDEM/linhas/LPM_PRESUMIDA.geojson")
+lltm_demarcada <- st_read("../../../SPU-SC-NUDEM/linhas/LLTM_DEMARCADA.geojson")
+lltm_presumida <- st_read("../../../SPU-SC-NUDEM/linhas/LLTM_PRESUMIDA.geojson")
 ```
 
 ## IMAGEM DOS POLÍGONOS ENVIADOS
@@ -130,9 +129,9 @@ m <- spl_df %>%
   addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
                   offset.x = 15, offset.y = 15, 
                   width = 75, height = 75)
-mapview::mapshot(m, file = "./mapa_enviado.png", 
-                 remove_controls = NULL, remove_url = FALSE)
-knitr::include_graphics("mapa_enviado.png")
+mapview::mapshot(m, file = paste(nup, ".png", sep = ""),
+                 remove_controls = NULL)
+knitr::include_graphics(paste(nup, ".png", sep = ""))
 ```
 
 
@@ -148,6 +147,6 @@ kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, col.names = c("Atributos"),
 ## Salvar no disco
 
 ```{r, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
-st_write(spl_df, "MAPA_Porto_Belo.geojson", 
+st_write(spl_df, paste(nup, ".geojson", sep = ""), 
          delete_dsn = TRUE)
 ```

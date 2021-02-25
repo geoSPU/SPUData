@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "10154-129486-2020-19",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "destinacao": "entrega", "tipo": "aquatica", "rip": null, "interessado": "Denis Carlos dos Santos", "area": 10057.5, "area_uniao": 10057.5, "nup": "10154-129486-2020-19", "protocolo": "Ofício 10388228 (7491863)", "ref": 10247233.0, "municipio": 8113.0, "logradouro": "14", "trecho": "00", "aval": 8203198.725, "dataaval": "2021\/02\/21" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.61550856316299, -28.018568335698959 ], [ -48.615948229868209, -28.019379003440012 ], [ -48.616871696288612, -28.018998021817545 ], [ -48.61643222248577, -28.018178337231692 ], [ -48.61550856316299, -28.018568335698959 ] ] ] } }
+]
+}

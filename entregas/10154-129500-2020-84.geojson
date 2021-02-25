@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "10154-129500-2020-84",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "destinacao": "entrega", "tipo": "aquatica", "rip": null, "interessado": "Quirino Juvêncio Lopes Neto", "area": 4119.0, "area_uniao": 4119.0, "nup": "10154.129500\/2020-84", "protocolo": "Ofício 10388277 (7493304)", "ref": 7114861.0, "municipio": 8113.0, "logradouro": "17", "trecho": "00", "aval": 2698933.56, "dataaval": "2020\/06\/15" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.613653575283642, -28.016616977396897 ], [ -48.614107959515849, -28.017220379676107 ], [ -48.614540986429034, -28.016948191107463 ], [ -48.614066075203382, -28.016353456532197 ], [ -48.613653575283642, -28.016616977396897 ] ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "10154-129510-2020-10",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "destinacao": "entrega", "tipo": "aquatica", "rip": null, "interessado": "Quality Fish Brasil Ltda EPP", "area": 66955.83321005851, "area_uniao": 66955.83321005851, "nup": "10154.129510\/2020-10", "protocolo": "Ofício MAPA - 8973358 (7494143)", "ref": 8415439.0, "municipio": 8257.0, "logradouro": null, "trecho": null, "aval": 1053.79, "dataaval": "2019\/09\/09" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -51.755855325299571, -27.475560113878718 ], [ -51.753785856653622, -27.472457331386334 ], [ -51.752330292860528, -27.473229565126395 ], [ -51.754396993095042, -27.476332339170927 ], [ -51.755855325299571, -27.475560113878718 ] ] ] } }
+]
+}

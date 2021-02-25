@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "10154-123292-2019-76",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "destinacao": "entrega", "tipo": "aquatica", "rip": null, "interessado": "Cavalo Marinho - Criação e beneficiamento de frutos do mar Ltda. EPP", "area": 1473684.1552653909, "area_uniao": 1473684.1552653909, "nup": "10154.123292\/2019-76", "protocolo": "Anexo Minuta_de_Oficio_15 (3854006)", "ref": 3853558.0, "municipio": 5537.0, "logradouro": "12", "trecho": "03", "aval": "411.143.142 [Reais]", "dataaval": "2020\/07\/14" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -48.557052110855103, -27.199466048408635 ], [ -48.550088313521918, -27.205965602912727 ], [ -48.560720372135165, -27.215283883184426 ], [ -48.567700674402921, -27.208767857364148 ], [ -48.557052110855103, -27.199466048408635 ] ] ] } }
+]
+}

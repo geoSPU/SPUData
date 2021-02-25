@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "10154-129506-2020-51",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "destinacao": "entrega", "tipo": "aquatica", "rip": null, "interessado": "PISCICULTURA BMS LTDA- ME", "area": 67050.214280029759, "area_uniao": 67050.214280029759, "nup": "10154.129506\/2020-51", "protocolo": "Ofício 8758341 (7493604)", "ref": 8496000.0, "municipio": null, "logradouro": null, "trecho": null, "aval": null, "dataaval": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -51.749813622920051, -27.478168473442231 ], [ -51.751205317459451, -27.481557370730705 ], [ -51.752799777844473, -27.481037916877455 ], [ -51.751405300147866, -27.477646243362241 ], [ -51.749813622920051, -27.478168473442231 ] ] ] } }
+]
+}

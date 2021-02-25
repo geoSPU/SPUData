@@ -2,7 +2,7 @@
 title: "Entrega"
 subtitle: |
   Secretaria de Pesca e Aquicultura  
-  10154.129486/2020-19  
+  10154.129506/2020-51    
 author: "Luiz Fernando Palin Droubi"
 date: \today
 institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
@@ -36,15 +36,15 @@ install_symbolic_unit(name = "Reais", warn = TRUE, dimensionless = TRUE)
 ```
 
 ```{r}
-nup <- "10154-129486-2020-19"
+nup <- "10154-129506-2020-51"
 # 1. Digitação da Geometria
 #  
 coords <- 
-  matrix(c(734447.093, 6898448.139, #V1
-           734402.093, 6898359.139, #V2
-           734312.093, 6898403.139, #V3
-           734357.093, 6898493.139, #V4
-           734447.093, 6898448.139),#V1
+  matrix(c(425923.119, 6960377.736, #V1
+           425787.895, 6960001.509, #V2
+           425630.023, 6960058.096, #V3
+           425765.516, 6960434.634, #V4
+           425923.119, 6960377.736),#V1
          ncol = 2, byrow = TRUE)
 #
 # 2. Criação da feição  
@@ -65,17 +65,17 @@ attr <- data.frame(
   destinacao = "entrega",
   tipo = "aquatica",
   rip = NA,
-  interessado = "Denis Carlos dos Santos",
+  interessado = "PISCICULTURA BMS LTDA- ME",
   area = st_area(spl),
   area_uniao = st_area(spl),
-  nup = nup,
-  protocolo = "Ofício 10388228 (7491863)",
-  ref = 10247233,
-  municipio = 8113,
-  logradouro = "14",
-  trecho = "00",
-  aval = set_units(815.63, Reais/m^2)*st_area(spl),
-  dataaval = as.Date("2021-02-21"))
+  nup = "10154.129506/2020-51",
+  protocolo = "Ofício 8758341 (7493604)",
+  ref = 8496000,
+  municipio = NA,
+  logradouro = NA,
+  trecho = NA,
+  aval = NA,
+  dataaval = NA)
 #
 # 4. União dos atributos à geometria
 #
@@ -103,7 +103,7 @@ lltm_presumida <- st_read("../../../SPU-SC-NUDEM/linhas/LLTM_PRESUMIDA.geojson")
 
 ## IMAGEM DOS POLÍGONOS ENVIADOS
 
-```{r}
+```{r mapa}
 ext <- extent(spl_df)
 centroide <- st_coordinates(st_centroid(spl_df))
 m <- spl_df %>%
@@ -111,36 +111,29 @@ m <- spl_df %>%
   #addTiles() %>%
   addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
               layers = list("OrtoRGB-Landsat-2012")) %>%
-  # addProviderTiles(providers$Esri.WorldImagery) %>%
   addPolygons(stroke = TRUE, weight = 2, color = "white", fillColor = "red",
-            dashArray = "10 5", group = "Em análise") %>%
-  addPolygons(data = polUniao, color = "orange", group = "Terras da União") %>%
-  addPolygons(data = entregas, color = "blue", group = "Áreas entregues") %>% 
+              dashArray = "10 5") %>%
+  addPolygons(data = polUniao, color = "yellow") %>% 
+# addProviderTiles(providers$Esri.WorldImagery) %>%
   addPolylines(data = lpm_demarcada, dashArray = "20 20", color = "blue") %>% 
   addPolylines(data= lpm_presumida, dashArray = "20 20", color = "blue", 
                opacity = .2) %>% 
   addPolylines(data = lltm_demarcada, dashArray = "20 20", color = "red") %>% 
   addPolylines(data = lltm_presumida, dashArray = "20 20", color = "red", 
                opacity = .2) %>% 
-  addLegend(labels = "Terras de Marinha", colors = "orange",
-            group = "Terras da União", position = "topright") %>%
-  addLegend(labels = "Em análise", colors = "red",
-            group = "Em análise", position = "topright") %>%
-  addLegend(labels = "Áreas entregues", colors = "blue", 
-            group = "Áreas entregues", position = "topright") %>% 
-  # fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
   setView(lng = centroide[1], lat = centroide[2], zoom = 15) %>% 
+  #  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
   addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
                   offset.x = 15, offset.y = 15, 
                   width = 75, height = 75)
- mapview::mapshot(m, file = paste("imagem_", nup, ".png", sep = ""),
+ mapview::mapshot(m, file = paste("imagem_", nup, ".png", sep = ""), 
                  remove_controls = NULL)
 knitr::include_graphics(paste("imagem_", nup, ".png", sep = ""))
 ```
 
 ## Tabela de coordenadas
 
-```{r}
+```{r tabela}
 df <- st_coordinates(spl_df)[, c(1, 2)]
 
 df_SIRGAS <- st_coordinates(st_transform(spl_df, crs = 31982))[, c(1, 2)]
@@ -187,12 +180,12 @@ kable(df_SIRGAS,
 
 ## Memorial
 
-```{r}
+```{r memorial1}
 n <- nrow(df_SIRGAS) - 1
 ```
 
 
-```{r, results='asis', mysize=TRUE, size='\\tiny'}
+```{r memorial2, results='asis', mysize=TRUE, size='\\tiny'}
 cat(" Inicia-se este memorial pelo vértice ")
 for (i in seq_len(n)) {
   cat("**", rownames(df_SIRGAS)[i], "** com coordenadas **N ", brf(df_SIRGAS[i, 2]), "** e 
@@ -203,9 +196,9 @@ for (i in seq_len(n)) {
 cat("**", rownames(df_SIRGAS)[1], "**, origem desta descrição.", sep = "")
 ```
 
-## Metadados
+## Atributos
 
-```{r}
+```{r atributos}
 kable(t(st_drop_geometry(spl_df)), booktabs = TRUE, 
       format.args = list(nsmall = 3, decimal.mark = ",", big.mark = "."))%>%
   kable_styling(font_size = 8)
@@ -214,7 +207,7 @@ kable(t(st_drop_geometry(spl_df)), booktabs = TRUE,
 
 ## Salvar no disco
 
-```{r, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
+```{r salvar, echo=TRUE,  mysize=TRUE, size='\\scriptsize'}
 st_write(spl_df, paste(nup, ".geojson", sep = ""), 
          delete_dsn = TRUE)
 ```
