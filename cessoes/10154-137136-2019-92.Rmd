@@ -1,0 +1,149 @@
+---
+title: "Cessão de Espaço Aquático"
+subtitle: |
+  PDBS - Ports Developed by Shiphandlers  
+  10154.137136/2019-92
+author: "Luiz Fernando Palin Droubi"
+date: \today
+institute: Superintendência do Patrimônio da União em Santa Catarina - SPU/SC
+output: 
+  binb::metropolis:
+    df_print: tibble
+header-includes:
+ \usepackage[brazil]{babel}
+ \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+nup <- "10154-137136-2019-92"
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", out.width = "75%", 
+                      warning = FALSE, message = FALSE)
+knitr::knit_hooks$set(mysize = function(before, options, envir) {
+  if (before) 
+    return(options$size)
+})
+library(sf)
+library(leaflet)
+library(leafem)
+library(raster)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(units)
+install_symbolic_unit(name = "Reais", warn = TRUE, dimensionless = TRUE)
+```
+
+
+
+```{r}
+# 1. Digitação da Geometria
+#  
+# Ler as coordenadas de arquivo excel/csv
+#
+coords <- read.csv2("10154-137136-2019-92.csv")
+#
+# 2. Criação da feição  
+#
+# Atentar para a definição do crs apropriado
+# 
+#
+# Exemplos:
+# WGS 84 = 4326
+# SAD 69 22S = 29192
+# SIRGAS 2000 22S = 31982
+#
+lines <- coords %>% 
+  st_as_sf(coords = c("E", "N")) %>% 
+  group_by(L1, L2, L3) %>% 
+  summarise(do_union = FALSE) %>% 
+  st_cast("LINESTRING")
+# to visualise
+# lines %>% 
+#   ggplot() +
+#   geom_sf()
+# to generate polygons
+pl <- lines %>% 
+  st_cast("POLYGON") 
+# pl %>% 
+#   ggplot() +
+#   geom_sf()
+mpl <- st_combine(pl)
+area <- set_units(st_area(mpl), m^2)
+area_canal_dragado <- set_units(201027.668, m^2)
+#
+# 3. Criação dos metadados  
+#
+attr <- data.frame(
+  destinacao = "cessao",
+  tipo = "aquatica",
+  rip = NA,
+  interessado = "PDBS - Ports Developed by Shiphandlers",
+  area = area - area_canal_dragado,
+  area_uniao = area,
+  inicio = NA,
+  prazo = 20,
+  vigencia = NA,
+  nup = "10154.137136/2019-92",
+  protocolo = NA,
+  ref = 6904013,
+  concedida = FALSE,
+  municipio = 8105,
+  logradouro = "01",
+  trecho = "01",
+  aval = set_units(4056.34, Reais/m^2)*(area - area_canal_dragado),
+  dataaval = as.Date("2021-01-21"),
+  refaval = NA,
+  onerosa = TRUE,
+  geometriaAproximada = FALSE
+)
+#
+# 4. União dos atributos à geometria
+#
+spl_df <- st_sf(attr,
+                geometry = mpl,
+                crs = 31982) %>%
+  st_transform(crs = 4326) # Transforma para WGS84.
+```
+
+## MAPA
+
+```{r, out.width=".99\\linewidth"}
+ext <- extent(spl_df)
+#centroide <- st_coordinates(st_centroid(spl_df))
+m <- spl_df %>%
+  leaflet() %>%
+  #addTiles() %>%
+  #addWMSTiles(baseUrl = "http://sigsc.sc.gov.br/sigserver/SIGSC/wms", 
+  #             layers = list("OrtoRGB-Landsat-2012")) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addPolygons(stroke = TRUE, weight = 2, color = "yellow") %>%
+  fitBounds(lng1 = ext[1], lat1 = ext[3], lng2 = ext[2], lat2 = ext[4]) %>% 
+#  setView(lng = centroide[1], lat = centroide[2], zoom = 16) %>% 
+  addMiniMap(position = "topright", tiles = "Esri.WorldGrayCanvas",
+             width = 100, height = 100) %>% 
+  addMouseCoordinates() %>%
+  addLogo("../SPU.jpg", src = "local", position = "bottomleft", 
+                  offset.x = 15, offset.y = 15, 
+                  width = 75, height = 75)
+mapview::mapshot(m, file = paste("imagem_", nup, ".png", sep = ""), 
+                 remove_controls = NULL)
+knitr::include_graphics( paste("imagem_", nup, ".png", sep = ""))
+```
+
+## Tabela de atributos
+
+```{r atributos}
+kable(t(st_drop_geometry(spl_df)), 
+      col.names = NULL, 
+      booktabs = TRUE, 
+      digits = 2,
+      format.args = list(nsmall = 2, decimal.mark = ",", big.mark = "."),)%>%
+  kable_styling(font_size = 6)
+```
+
+## Salvar em disco
+
+```{r, echo = TRUE, results='hide',  mysize=TRUE, size='\\scriptsize'}
+st_write(spl_df,  paste(nup, ".geojson", sep = ""), delete_dsn = TRUE)
+```
+
