@@ -2,7 +2,7 @@ library(sf)
 
 cessoes <- read_sf("cessoes.geojson") 
 
-cessao_nova <- read_sf("cessoes/04972-005004-2018-85.geojson")
+cessao_nova <- read_sf("cessoes/10154-139616-2021-11.geojson")
 
 # cessao_nova <- read_sf("G:/.shortcut-targets-by-id/1nUTlixFUMjdbt5j123GxmYTojiaoNMMS/SPUVIZ_Projeto EAN Portos/polígonos e tabelas já feitas/GEOJSON_criados/04972.000936_2005-17.geojson")
 
